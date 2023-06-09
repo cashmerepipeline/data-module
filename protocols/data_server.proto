@@ -1,0 +1,27 @@
+syntax = "proto3";
+package data.cashmere;
+
+message DataServerConfigs{
+  string root_dir_path = 1; 
+  // 文件最大大小, 16MB
+  uint64 max_file_size =  2;
+  // 文件集最大数量, 1000
+  uint32 max_set_size = 3;
+  // 文件序列最大数量
+  uint64 max_sequence_length = 4;
+  // 最大文件上传连接
+  uint32 max_file_upload_number = 5;
+  // 最大文件下载连接
+  uint32 max_file_download_number = 6;
+  // 块最大大小，1024*128=128KB
+  uint32 transfer_chunk_size = 7;
+  // 内部文件路径，不需要通过服务器上传文件, 可将文件直接存储到目标位置
+  // {"windows"="X:/data_root/dir", "linux"="/mnt/data_root/dir", "macos" = "/mnt/data_root/dir"}
+  map<string, string> internal_root_dir_map =   8;
+}
+
+// 取得数据服务设置
+message GetDataServerConfigsRequest{}
+message GetDataServerConfigsResponse {
+  DataServerConfigs configs = 1;
+}

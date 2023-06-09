@@ -1,0 +1,5 @@
+pub const DATAS_MANAGE_ID:i32 = 10005; 
+pub const SPECSES_MANAGE_ID:i32 = 10025; 
+pub const STAGES_MANAGE_ID:i32 = 10026; 
+pub const PREFABS_MANAGE_ID:i32 = 10027; 
+pub const DATA_SERVER_MANAGE_ID:i32 = 10003; 

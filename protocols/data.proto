@@ -1,0 +1,65 @@
+/*
+Author: 闫刚 (yes7rose@sina.com)
+data.proto (c) 2020
+Desc: 数据
+Created:  2020-11-24T16:29:35.230Z
+Modified: !date!
+*/
+
+syntax = "proto3";
+package data.cashmere;
+
+import "name.proto";
+
+enum DataType{
+  FileData = 0; // 单个文件
+  SequenceData = 1; // 序列文件
+  FileSetData = 2; // 多类型文件集合
+  DocumentData = 3; // 类json格式数据
+}
+
+message DataInfo {
+  DataType data_type = 1;
+  int32 owner_manage_id = 3;
+  string owner_entity_id = 4;
+  repeated string specs = 5;
+}
+
+// 新建数据
+message NewDataRequest {
+  .cashmere.Name name = 1;
+  DataType data_type = 2;
+  int32 owner_manage_id = 3;
+  string owner_entity_id = 4;
+}
+message NewDataResponse {
+  // 成功返回 "ok"
+  string result = 1;
+}
+
+// 取得数据信息
+message  GetDataInfoRequest {
+  string data_id = 1;
+}
+message GetDataInfoResponse{
+  DataInfo data_info = 1;
+}
+
+// 删除数据
+message MarkDataRemovedRequest {
+  int32 owner_manage_id = 1;
+  string owner_entity_id = 2;
+  string data_id = 3;
+}
+message MarkDataRemovedResponse {
+  string result = 1;
+}
+
+// 取得实体数据表
+message ListEntityDataRequest{
+  int32 manage_id = 1;
+  string entity_id = 2;
+}
+message ListEntityDataResponse{
+  repeated string data_ids = 1;
+}

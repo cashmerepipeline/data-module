@@ -1,0 +1,132 @@
+syntax = "proto3";
+package data.cashmere;
+
+message Version{
+    string name = 1;
+    // protobuf不支持嵌套repeated，所以使用 “,” 分隔的字符串, 形式为["sub_dir, ...,file_name"]
+    // 路径不允许使用相对路径符号"."和".."
+    // 文件集为多个文件列表
+    // 文件序列为规则: ["base_name, start, end, padding, extension"]
+    // 使用bson格式存储
+    repeated string files = 2;
+    // 移除标记，文件不删除
+    bool removed = 3;
+  }
+
+// 添加数据版本到阶段
+message AddStageVersionRequest {
+  string stage_id = 1;
+  // 版本一般有具体的含义，不只是一个数字，比如"v001", 数据的名应该与版本一致
+  string version = 3;
+}
+message AddStageVersionResponse {
+  // 成功返回 "ok"
+  string result = 1;
+}
+
+// 取得数据阶段版本表
+message ListStageVersionsRequest {
+  string stage_id = 1;
+}
+message ListStageVersionsResponse {
+  repeated Version versions = 1;
+}
+
+// 改变阶段文件连接
+message SetStageCurrentVersionRequest {
+  string stage_id = 1;
+  string target_version = 3;
+}
+message SetStageCurrentVersionResponse {
+  // 成功返回 当前版本
+  string result = 1;
+}
+
+// 删除数据版本
+message RemoveStageVersionRequest {
+  string stage_id = 1;
+  string version = 3;
+}
+message RemoveStageVersionResponse {
+  // 成功返回 "ok"
+  string result = 1;
+}
+
+// 添加文件到数据阶段，文件路径以版本路径为根，<version_root>/["sub_dir", ..., "file_name"]
+// 路径在使用时再拼接
+message AddFileToVersionRequest {
+  string stage_id = 1;
+  string version = 2;
+  repeated string file_path = 3;
+} 
+message AddFileToVersionResponse {
+  // 成功返回 "ok"
+  string result = 1;
+}
+
+// 添加文件到数据阶段，文件路径以版本路径为根，<version_root>/["sub_dir", ..., "file_name"]
+// 路径在使用时再拼接
+message AddFileSetToVersionRequest {
+  string stage_id = 1;
+  string version = 2;
+  // 因为不支持嵌套repeated，所以使用“,”分隔的字符串, 形式为["sub_dir, ...,file_name"]
+  repeated string file_pathes = 3;
+}
+message AddFileSetToVersionResponse {
+  // 成功返回 "ok"
+  string result = 1;
+}
+
+// 数据类型为文件序列时, 序列文件直接存储在版本目录下
+// 使用规则解析文件路径[base_name, start, end, padding, extension]，不记录所有文件的路径
+// 严格使用这个顺序，不使用类似{base_name: name, start: start, end: end, padding: padding, ext: ext, number_pos: [mid, end]}的格式
+// 文件、文件集、序列存储形式上一致，易于mongodb文件查询
+message AddFileSequenceToVersionRequest {
+  string stage_id = 1;
+  string version = 3;
+  string base_name = 7;
+  int32 start = 5;
+  int32 end = 6;
+  int32 padding=2;
+  string extension = 8;
+}
+message AddFileSequenceToVersionResponse {
+  // 成功返回 "ok"
+  string result = 1;
+}
+
+// 从版本中移除多个文件，只支持文件、文件集， 不支持文件序列
+message RemoveFilesFromVersionRequest {
+  string stage_id = 1;
+  string version = 2;
+  repeated string file_pathes = 3;
+}
+message RemoveFilesFromVersionResponse {
+  // 成功返回被删除的文件路径
+  string result = 1;
+}
+
+// 列出版本文件目录下的文件和文件夹
+message ListVersionFolderRequest {
+  string stage_id = 1;
+  string version = 2;
+}
+message ListVersionFolderResponse {
+  // 文件夹
+  repeated string folders = 1;
+  // 文件
+  repeated string files = 2;
+}
+
+// 删除版本目录下的文件或文件夹，若文件或文件夹在版本文件列表中，否则返回，不做任何操作
+// 注意路径表示规则
+message DeleteVersionFolderEntriesRequest {
+  string stage_id = 1;
+  string version = 2;
+  repeated string file_pathes = 3;
+}
+message DeleteVersionFolderEntriesResponse {
+  // 成功返回被删除的文件路径
+  repeated string result = 1;
+}
+

@@ -1,0 +1,46 @@
+syntax = "proto3";
+package data.cashmere;
+
+
+// 序列数据信息
+// 文件名格式：prefix_name.pattern.type_suffix
+message SequenceDataInfo {
+  string prefix_name  = 1;
+  uint64 sequence_pattern = 2;
+  uint64 type_suffix = 3;
+  uint64 start_index = 4;
+  uint64 end_index = 5;
+  uint64 total_size = 6;
+  string md5 = 7;
+}
+
+// 上传文件序列
+message SequenceDataUploadSequenceRequest {
+  string sequence_name = 1;
+  string serial_pattern = 2;
+  uint32 sequence_length = 3;
+  string current_file = 4;
+  uint64 total_chancks = 5;
+  uint64 current_chunck = 6;
+  bytes chunck = 7;
+  string data_id = 8;
+}
+message SequenceDataUploadSequenceResponse {
+  string result = 1;
+}
+
+// 下载文件序列
+message SequenceDataDownloadSequenceRequest {
+  string data_id = 1;
+}
+message SequenceDataDownloadSequenceResponse {
+  string data_id = 8;
+  string sequence_name = 1;
+  string serial_pattern = 2;
+  uint32 sequence_length = 3;
+  string current_file = 4;
+  uint64 total_chancks = 5;
+  uint64 current_chunck = 6;
+  bytes chunck = 7;
+}
+

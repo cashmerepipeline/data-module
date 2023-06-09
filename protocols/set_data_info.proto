@@ -1,0 +1,11 @@
+syntax = "proto3";
+package data.cashmere;
+
+import "file_info.proto";
+
+// 集合数据信息
+message SetDataInfo {
+  string data_id = 1;
+  uint64 total_size = 2;
+  repeated FileInfo file_infos = 3;
+}

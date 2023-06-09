@@ -1,0 +1,5 @@
+const int DATAS_MANAGE_ID = 10005; 
+const int SPECSES_MANAGE_ID = 10025; 
+const int STAGES_MANAGE_ID = 10026; 
+const int PREFABS_MANAGE_ID = 10027; 
+const int DATA_SERVER_MANAGE_ID = 10003; 

@@ -1,0 +1,10 @@
+syntax = "proto3";
+package data.cashmere;
+
+// 文件信息
+message FileInfo {
+  string file_name = 1;
+  string md5 = 2;
+  uint64 size = 3;
+  int64 last_modified_time = 4;
+}

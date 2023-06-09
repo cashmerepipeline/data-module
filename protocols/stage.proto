@@ -1,0 +1,41 @@
+syntax = "proto3";
+package data.cashmere;
+
+import "name.proto";
+import "version.proto";
+
+// 数据阶段信息
+message StageInfo {
+  string name = 1;
+  // stage目录下的文件列表, 文件为文件列表，集合为集合目录列表
+  repeated bytes versions = 2;
+  // 当前连接所指版本
+  string current_version = 3;
+}
+
+// 新阶段
+message NewStageRequest {
+  string specs_id = 1;
+  // 这里可能因为软件对路径字符集支持的不同只能使用英文作为文件名，比如Maya
+  .cashmere.Name stage_name = 2;
+  string description = 3;
+}
+message NewStageResponse {
+  // 成功返回 "ok"
+  string result = 1;
+}
+
+// 删除阶段，只删除阶段->数据的文件连接，不删除数据
+message RemoveStageRequest {
+  string specs_id = 1;
+  string stage = 2;
+}
+message RemoveStageResponse {
+  // 成功返回 "ok"
+  string result = 1;
+}
+
+// 取得数据阶段表
+message ListStagesRequest {string specs_id = 1;}
+message ListStagesResponse {repeated bytes stages = 1;}
+

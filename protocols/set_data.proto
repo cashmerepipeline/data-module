@@ -1,0 +1,53 @@
+syntax = "proto3";
+package data.cashmere;
+
+import "file_info.proto";
+import "set_data_info.proto";
+
+
+// 取得数据集合信息
+message GetSetDataInfoRequest {
+    string data_id =1;
+}
+message GetSetDataInfoResponse {
+    SetDataInfo data_info = 1;
+}
+
+// 上传单个文件到集合
+message SetDataUploadFileRequest {
+  string data_id = 1;
+  uint64 total_chunks = 2;
+  uint64 current_chunk_index = 3;
+  bytes chunk = 4;
+  FileInfo file_info = 5;
+}
+message SetDataUploadFileResponse {
+  string result = 1;
+}
+
+//上传多个文件到集合, 批量上传可能不是很需要
+message SetDataUploadFilesRequest {
+  string data_id = 1;
+  uint64 current_total_chunks = 2;
+  uint64 current_chunk_index = 3;
+  bytes chunk = 4;
+  repeated FileInfo file_info = 5;
+  string current_md5 =6;
+}
+message SetDataUploadFilesResponse {
+    string result =1;
+} 
+
+// 下载文件集合
+message SetDataDownloadSetRequest {
+  string data_id = 1;
+}
+message SetDataDownloadSetResponse {
+  string data_id = 1;
+  string set_name = 2;
+  uint32 file_counts = 3;
+  string current_file = 4;
+  uint64 total_chancks = 5;
+  uint32 current_chunck = 6;
+  bytes chunck = 7;
+}

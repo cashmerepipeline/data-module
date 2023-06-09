@@ -1,0 +1,29 @@
+syntax = "proto3";
+package data.cashmere;
+
+import "name.proto";
+
+message NewSpecsRequest{
+    string data_id = 2;
+    .cashmere.Name name = 3;
+    string description = 4;
+    
+}
+message NewSpecsResponse{
+    string result = 1;
+}
+
+message ListSpecsRequest{
+    string data_id = 1;
+}
+message ListSpecsResponse{
+    repeated bytes specses = 1;
+}
+
+message ListSpecsPrefabsRequest{
+    string specs_id = 1;
+}
+message ListSpecsPrefabsResponse{
+    repeated bytes prefabs = 1;
+}
+

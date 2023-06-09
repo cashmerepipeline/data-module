@@ -1,0 +1,26 @@
+syntax = "proto3";
+package data.cashmere;
+
+import "name.proto";
+
+message NewPrefabRequest{
+    string specs_id = 1;
+    string stage_id = 2;
+    string version = 3;
+    .cashmere.Name name = 4;
+
+    // 使用bson格式存储修改信息
+    bytes modifies = 5;
+    string description = 6;
+}
+message NewPrefabResponse{
+    string result = 1;
+}
+
+// 列出预制件
+message ListPrefabRequest{
+    string specs_id = 1;
+}
+message ListPrefabResponse{
+    repeated bytes prefabs = 1;
+}
