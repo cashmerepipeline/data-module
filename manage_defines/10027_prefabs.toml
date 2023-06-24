@@ -3,7 +3,7 @@
 #
 
 id = 10027
-name_map = { zh = "预组件", en = "prefabs" }
+name_map = { zh = "预制件", en = "prefabs" }
 
 # 数据描写 或者 模式
 schema = [

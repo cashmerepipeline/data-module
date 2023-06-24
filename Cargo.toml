@@ -47,4 +47,4 @@ dependencies_sync = { path = "../cashmere_core/dependencies_sync", features = [
 manage_define = { path = "../cashmere_core/manage_define" }
 
 [features]
-view_rules_validate = ["view/view_rules_validate"]
+# view_rules_validate = ["view/view_rules_validate"]
