@@ -1,0 +1,11 @@
+protoc -I../../../cashmere_core/protocols  -I../../protocols --dart_out=lib/protocols ../../protocols/data.proto
+protoc -I../../../cashmere_core/protocols  -I../../protocols --dart_out=lib/protocols ../../protocols/data_server.proto
+protoc -I../../../cashmere_core/protocols  -I../../protocols --dart_out=lib/protocols ../../protocols/file_info.proto
+protoc -I../../../cashmere_core/protocols  -I../../protocols --dart_out=lib/protocols ../../protocols/file_transfer.proto
+protoc -I../../../cashmere_core/protocols  -I../../protocols --dart_out=lib/protocols ../../protocols/prefab.proto
+protoc -I../../../cashmere_core/protocols  -I../../protocols --dart_out=lib/protocols ../../protocols/sequence_data.proto
+protoc -I../../../cashmere_core/protocols  -I../../protocols --dart_out=lib/protocols ../../protocols/set_data.proto
+protoc -I../../../cashmere_core/protocols  -I../../protocols --dart_out=lib/protocols ../../protocols/set_data_info.proto
+protoc -I../../../cashmere_core/protocols  -I../../protocols --dart_out=lib/protocols ../../protocols/specs.proto
+protoc -I../../../cashmere_core/protocols  -I../../protocols --dart_out=lib/protocols ../../protocols/stage.proto
+protoc -I../../../cashmere_core/protocols  -I../../protocols --dart_out=lib/protocols ../../protocols/version.proto
