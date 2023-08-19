@@ -1,4 +1,4 @@
-use dependencies_sync::bson::doc;
+use dependencies_sync::bson::{self, doc};
 use dependencies_sync::futures::TryFutureExt;
 use dependencies_sync::tonic::async_trait;
 
@@ -57,21 +57,24 @@ async fn handle_new_specs(
 ) -> Result<Response<NewSpecsResponse>, Status> {
     let (account_id, _groups, role_group) = request_account_context(request.metadata());
 
-    let data_id = &request.get_ref().data_id;
+    let manage_id = &request.get_ref().manage_id;
+    let entity_id = &request.get_ref().entity_id;
     let name = &request.get_ref().name;
     let description = &request.get_ref().description;
+    let targets = &request.get_ref().targets;
 
     if validate_name(name).is_err() {
         return Err(Status::data_loss(format!(
-            "{}: {}",
+            "{}: {}-{}",
             t!("名字不能为空"),
-            data_id
+            manage_id,
+            entity_id
         )));
     }
     let local_name = match name {
         Some(n) => n,
         None => {
-            return Err(Status::aborted(format!("没有指定名称--{}", data_id)));
+            return Err(Status::aborted(format!("{}--{}-{}", t!("没有指定名称"), manage_id, entity_id)));
         }
     };
     let name_doc = doc! {local_name.language.clone():local_name.name.clone()};
@@ -89,17 +92,23 @@ async fn handle_new_specs(
             SPECSES_MANAGE_ID
         )));
     };
+    let new_id = new_entity_doc
+        .get_str(ID_FIELD_ID.to_string())
+        .unwrap()
+        .to_owned();
 
-    new_entity_doc.insert(SPECSES_DATA_ID_FIELD_ID.to_string(), data_id.clone());
+    new_entity_doc.insert(SPECSES_MANAGE_ID_FIELD_ID.to_string(), manage_id.clone());
+    new_entity_doc.insert(SPECSES_ENTITY_ID_FIELD_ID.to_string(), entity_id.clone());
     new_entity_doc.insert(NAME_MAP_FIELD_ID.to_string(), name_doc);
     new_entity_doc.insert(DESCRIPTIONS_FIELD_ID.to_string(), description.clone());
+    new_entity_doc.insert(SPECSES_TARGETS_FIELD_ID.to_string(), targets.iter().map(|t| bson::from_slice(t).unwrap()).collect::<Vec<bson::Bson>>());
 
     let new_specs_result = specs_manager
         .sink_entity(&mut new_entity_doc, &account_id, &role_group)
         .await;
 
     match new_specs_result {
-        Ok(r) => Ok(Response::new(NewSpecsResponse { result: r })),
+        Ok(_r) => Ok(Response::new(NewSpecsResponse { result: new_id })),
         Err(e) => Err(Status::aborted(format!(
             "{} {}",
             e.operation(),

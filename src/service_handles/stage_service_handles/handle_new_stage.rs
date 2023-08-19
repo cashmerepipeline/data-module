@@ -55,7 +55,7 @@ async fn handle_new_stage(
 ) -> Result<Response<NewStageResponse>, Status> {
     let (account_id, _groups, role_group) = request_account_context(request.metadata());
 
-    let specs_id = &request.get_ref().specs_id;
+    let data_id = &request.get_ref().data_id;
     let name = &request.get_ref().stage_name;
     let description = &request.get_ref().description;
 
@@ -63,7 +63,7 @@ async fn handle_new_stage(
         return Err(Status::data_loss(format!(
             "{}: {}",
             t!("名字不能为空"),
-            specs_id
+            data_id
         )));
     }
     let _name = name.as_ref().unwrap();
@@ -82,7 +82,7 @@ async fn handle_new_stage(
         )));
     };
 
-    new_entity_doc.insert(STAGES_SPECS_ID_FIELD_ID.to_string(), specs_id.clone());
+    new_entity_doc.insert(STAGES_DATA_ID_FIELD_ID.to_string(), data_id.clone());
     new_entity_doc.insert(DESCRIPTIONS_FIELD_ID.to_string(), description.clone());
 
     let new_id = new_entity_doc

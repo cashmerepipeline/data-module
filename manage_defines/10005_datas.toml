@@ -1,5 +1,6 @@
 #
 # 数据
+# 数据属于规格，即数据是在明确指标下的产物
 #
 
 id = 10005
@@ -7,12 +8,13 @@ name_map = { zh = "数据", en = "datas" }
 
 # 描写，模式
 schema = [
+  # 2001
   { data_type = "String", name_map = { zh = "类型", en = "data_type" }, removed = false },
-  { data_type = "Int32", name_map = { zh = "主管理", en = "owner_manage_id" }, removed = false },
-  { data_type = "String", name_map = { zh = "主实体", en = "owner_entity_id" }, removed = false },
-
+  # 2002
+  { data_type = "String", name_map = { zh = "主管理", en = "specs_id" }, removed = false },
+  # 2003
   # [{name:stage, versions:[files or dirs], current_version: file or dir},...}
-  { data_type = "Map", name_map = { zh = "阶段表", en = "specs" }, removed = false },
+  { data_type = "Map", name_map = { zh = "阶段表", en = "stages" }, removed = false },
 ]
 
 [items]

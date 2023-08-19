@@ -63,7 +63,7 @@ async fn handle_list_stage_versions(
         .unwrap();
 
     let mut filter_doc = Document::new();
-    filter_doc.insert(STAGES_SPECS_ID_FIELD_ID.to_string(), stage_id);
+    filter_doc.insert(STAGES_DATA_ID_FIELD_ID.to_string(), stage_id);
 
     let result = manager.get_entity_by_id(stage_id).await;
 

@@ -4,6 +4,7 @@ use dependencies_sync::tonic::async_trait;
 use dependencies_sync::tonic::{Request, Response, Status};
 
 use majordomo::{self, get_majordomo};
+use crate::ids_codes::manage_ids::DATAS_MANAGE_ID;
 use crate::protocols::*;
 
 
@@ -55,14 +56,13 @@ async fn handle_mark_data_remved(
 ) -> Result<Response<MarkDataRemovedResponse>, Status> {
     let (account_id, _groups, _role_group) = request_account_context(request.metadata());
 
-    let manage_id = &request.get_ref().owner_manage_id;
-    let entity_id = &request.get_ref().owner_entity_id;
+    let data_id = &request.get_ref().data_id;
 
     let majordomo_arc = get_majordomo();
-    let data_manager = majordomo_arc.get_manager_by_id(*manage_id).unwrap();
+    let data_manager = majordomo_arc.get_manager_by_id(DATAS_MANAGE_ID).unwrap();
 
     let result = data_manager
-        .mark_entity_removed(entity_id, &account_id)
+        .mark_entity_removed(data_id, &account_id)
         .await;
 
     match result {

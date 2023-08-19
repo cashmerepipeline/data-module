@@ -20,20 +20,18 @@ enum DataType{
 
 message DataInfo {
   DataType data_type = 1;
-  int32 owner_manage_id = 3;
-  string owner_entity_id = 4;
-  repeated string specs = 5;
+  string specs_id = 2;
+  repeated string stages = 3;
 }
 
 // 新建数据
 message NewDataRequest {
   .cashmere.Name name = 1;
   DataType data_type = 2;
-  int32 owner_manage_id = 3;
-  string owner_entity_id = 4;
+  string specs_id = 3;
 }
 message NewDataResponse {
-  // 成功返回 "ok"
+  // 成功返回新id，失败返回错误
   string result = 1;
 }
 
@@ -47,19 +45,8 @@ message GetDataInfoResponse{
 
 // 删除数据
 message MarkDataRemovedRequest {
-  int32 owner_manage_id = 1;
-  string owner_entity_id = 2;
-  string data_id = 3;
+  string data_id = 1;
 }
 message MarkDataRemovedResponse {
   string result = 1;
-}
-
-// 取得实体数据表
-message ListEntityDataRequest{
-  int32 manage_id = 1;
-  string entity_id = 2;
-}
-message ListEntityDataResponse{
-  repeated string data_ids = 1;
 }

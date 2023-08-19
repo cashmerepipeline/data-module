@@ -8,14 +8,13 @@ name_map = { zh = "规格", en = "specses" }
 # 数据描写 或者 模式
 schema = [
     # 2001
-    { data_type = "String", name_map = { zh = "所属数据", en = "data_id"}, removed = false },
-
+    { data_type = "Int32", name_map = { zh = "管理", en = "manage_id"}, removed = false },
     # 2002
-    { data_type = "List", name_map = { zh = "阶段表", en = "stages"}, removed = false },
+    { data_type = "String", name_map = { zh = "实体", en = "entity_id"}, removed = false },
 
     # 2003
     # bson bytes
-    { data_type = "Map", name_map = { zh = "指标", en = "target"}, removed = false },
+    { data_type = "Map", name_map = { zh = "指标", en = "targets"}, removed = false },
 
     # done, suspending, cancel
     # { data_type = "String", name_map = { zh = "状态", en = "status"}, removed = false },

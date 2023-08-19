@@ -55,7 +55,7 @@ async fn handle_list_stages(
 ) -> Result<Response<ListStagesResponse>, Status> {
     let (_account_id, _groups, _role_group) = request_account_context(request.metadata());
 
-    let specs_id = &request.get_ref().specs_id;
+    let data_id = &request.get_ref().data_id;
 
     
 
@@ -65,7 +65,7 @@ async fn handle_list_stages(
         .unwrap();
 
     let mut filter_doc = Document::new();
-    filter_doc.insert(STAGES_SPECS_ID_FIELD_ID.to_string(), specs_id);
+    filter_doc.insert(STAGES_DATA_ID_FIELD_ID.to_string(), data_id);
 
     let result = manager.get_entities_by_filter(&Some(filter_doc)).await;
 

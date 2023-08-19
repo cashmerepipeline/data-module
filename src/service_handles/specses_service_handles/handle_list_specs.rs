@@ -1,14 +1,14 @@
 use dependencies_sync::bson::{self, doc};
-use dependencies_sync::tonic::async_trait;
 use dependencies_sync::futures::TryFutureExt;
+use dependencies_sync::tonic::async_trait;
 use dependencies_sync::tonic::{Request, Response, Status};
 
 use request_utils::request_account_context;
 use service_utils::types::UnaryResponseResult;
 
-use majordomo::{self, get_majordomo};
-use crate::protocols::*;
 use crate::ids_codes::field_ids::*;
+use crate::protocols::*;
+use majordomo::{self, get_majordomo};
 
 use crate::ids_codes::manage_ids::*;
 use managers::traits::ManagerTrait;
@@ -56,7 +56,8 @@ async fn handle_list_specs(
 ) -> Result<Response<ListSpecsResponse>, Status> {
     let (account_id, _groups, role_group) = request_account_context(request.metadata());
 
-    let data_id = &request.get_ref().data_id;
+    let owner_manage_id = &request.get_ref().manage_id;
+    let owner_entity_id = &request.get_ref().entity_id;
 
     let manage_id = SPECSES_MANAGE_ID;
 
@@ -79,7 +80,8 @@ async fn handle_list_specs(
     };
 
     let filter_doc = doc! {
-        SPECSES_DATA_ID_FIELD_ID.to_string(): data_id,
+        SPECSES_MANAGE_ID_FIELD_ID.to_string(): owner_manage_id.to_string(),
+        SPECSES_ENTITY_ID_FIELD_ID.to_string(): owner_entity_id.to_string(),
     };
 
     let result = manager.get_entities_by_filter(&Some(filter_doc)).await;

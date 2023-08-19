@@ -8,7 +8,7 @@ name_map = { zh = "阶段", en = "stages" }
 # 数据描写 或者 模式
 schema = [
     # 2001
-    { data_type = "String", name_map = { zh = "规格", en = "specs_id"}, removed = false },
+    { data_type = "String", name_map = { zh = "规格", en = "data_id"}, removed = false },
 
     # 2002
     # version: {files: [file_infos], description: "", status: "done", created_at: "", updated_at: ""]}

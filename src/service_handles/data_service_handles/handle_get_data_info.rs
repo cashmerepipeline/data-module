@@ -1,15 +1,14 @@
-use dependencies_sync::tonic::async_trait;
 use dependencies_sync::futures::TryFutureExt;
+use dependencies_sync::tonic::async_trait;
 
-use majordomo::{self, get_majordomo};
-use crate::protocols::*;
 use crate::ids_codes::field_ids::*;
 use crate::ids_codes::manage_ids::*;
+use crate::protocols::*;
+use majordomo::{self, get_majordomo};
 use managers::traits::ManagerTrait;
 use request_utils::request_account_context;
 
 use dependencies_sync::tonic::{Request, Response, Status};
-
 
 use service_utils::types::UnaryResponseResult;
 
@@ -23,9 +22,8 @@ pub trait HandleGetDataInfo {
             .and_then(validate_request_params)
             .and_then(handle_get_data_info)
             .await
-        }
+    }
 }
-
 
 async fn validate_view_rules(
     request: Request<GetDataInfoRequest>,
@@ -34,7 +32,9 @@ async fn validate_view_rules(
     {
         let manage_id = DATAS_MANAGE_ID;
         let (_account_id, _groups, role_group) = request_account_context(request.metadata());
-        if let Err(e) = view::validates::validate_collection_can_write(&manage_id, &role_group).await {
+        if let Err(e) =
+            view::validates::validate_collection_can_write(&manage_id, &role_group).await
+        {
             return Err(e);
         }
     }
@@ -56,24 +56,16 @@ async fn handle_get_data_info(
     let data_id = &request.get_ref().data_id;
 
     let majordomo_arc = get_majordomo();
-    let data_manager = majordomo_arc
-        .get_manager_by_id(DATAS_MANAGE_ID)
-        .unwrap();
+    let data_manager = majordomo_arc.get_manager_by_id(DATAS_MANAGE_ID).unwrap();
 
     let result = data_manager.get_entity_by_id(data_id).await;
     match result {
         Ok(r) => Ok(Response::new(GetDataInfoResponse {
             data_info: Some(DataInfo {
                 data_type: r.get_i32(DATAS_DATA_TYPE_FIELD_ID.to_string()).unwrap(),
-                owner_manage_id: r
-                    .get_i32(DATAS_OWNER_MANAGE_ID_FIELD_ID.to_string())
-                    .unwrap(),
-                owner_entity_id: r
-                    .get_str(DATAS_OWNER_ENTITY_ID_FIELD_ID.to_string())
-                    .unwrap()
-                    .to_string(),
-                specs: r
-                    .get_array(DATAS_SPECS_FIELD_ID.to_string())
+                specs_id: r.get_str(DATAS_SPECS_ID_FIELD_ID.to_string()).unwrap().to_owned(),
+                stages: r
+                    .get_array(DATAS_STAGES_FIELD_ID.to_string())
                     .unwrap_or(&vec![])
                     .iter()
                     .map(|x| String::from(x.as_str().unwrap()))

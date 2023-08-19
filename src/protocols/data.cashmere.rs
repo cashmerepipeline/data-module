@@ -3,12 +3,10 @@
 pub struct DataInfo {
     #[prost(enumeration = "DataType", tag = "1")]
     pub data_type: i32,
-    #[prost(int32, tag = "3")]
-    pub owner_manage_id: i32,
-    #[prost(string, tag = "4")]
-    pub owner_entity_id: ::prost::alloc::string::String,
-    #[prost(string, repeated, tag = "5")]
-    pub specs: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    #[prost(string, tag = "2")]
+    pub specs_id: ::prost::alloc::string::String,
+    #[prost(string, repeated, tag = "3")]
+    pub stages: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 /// 新建数据
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -18,15 +16,13 @@ pub struct NewDataRequest {
     pub name: ::core::option::Option<::manage_define::cashmere::Name>,
     #[prost(enumeration = "DataType", tag = "2")]
     pub data_type: i32,
-    #[prost(int32, tag = "3")]
-    pub owner_manage_id: i32,
-    #[prost(string, tag = "4")]
-    pub owner_entity_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub specs_id: ::prost::alloc::string::String,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct NewDataResponse {
-    /// 成功返回 "ok"
+    /// 成功返回新id，失败返回错误
     #[prost(string, tag = "1")]
     pub result: ::prost::alloc::string::String,
 }
@@ -47,11 +43,7 @@ pub struct GetDataInfoResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct MarkDataRemovedRequest {
-    #[prost(int32, tag = "1")]
-    pub owner_manage_id: i32,
-    #[prost(string, tag = "2")]
-    pub owner_entity_id: ::prost::alloc::string::String,
-    #[prost(string, tag = "3")]
+    #[prost(string, tag = "1")]
     pub data_id: ::prost::alloc::string::String,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -59,21 +51,6 @@ pub struct MarkDataRemovedRequest {
 pub struct MarkDataRemovedResponse {
     #[prost(string, tag = "1")]
     pub result: ::prost::alloc::string::String,
-}
-/// 取得实体数据表
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ListEntityDataRequest {
-    #[prost(int32, tag = "1")]
-    pub manage_id: i32,
-    #[prost(string, tag = "2")]
-    pub entity_id: ::prost::alloc::string::String,
-}
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ListEntityDataResponse {
-    #[prost(string, repeated, tag = "1")]
-    pub data_ids: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
@@ -450,16 +427,21 @@ pub struct SetDataDownloadSetResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct NewSpecsRequest {
+    #[prost(string, tag = "1")]
+    pub manage_id: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
-    pub data_id: ::prost::alloc::string::String,
+    pub entity_id: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "3")]
     pub name: ::core::option::Option<::manage_define::cashmere::Name>,
     #[prost(string, tag = "4")]
     pub description: ::prost::alloc::string::String,
+    #[prost(bytes = "vec", repeated, tag = "5")]
+    pub targets: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct NewSpecsResponse {
+    /// 成功反回id，失败返回错误信息
     #[prost(string, tag = "1")]
     pub result: ::prost::alloc::string::String,
 }
@@ -467,7 +449,9 @@ pub struct NewSpecsResponse {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListSpecsRequest {
     #[prost(string, tag = "1")]
-    pub data_id: ::prost::alloc::string::String,
+    pub manage_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub entity_id: ::prost::alloc::string::String,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -475,6 +459,7 @@ pub struct ListSpecsResponse {
     #[prost(bytes = "vec", repeated, tag = "1")]
     pub specses: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
 }
+/// 列出规格的预制件
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListSpecsPrefabsRequest {
@@ -709,7 +694,7 @@ pub struct StageInfo {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct NewStageRequest {
     #[prost(string, tag = "1")]
-    pub specs_id: ::prost::alloc::string::String,
+    pub data_id: ::prost::alloc::string::String,
     /// 这里可能因为软件对路径字符集支持的不同只能使用英文作为文件名，比如Maya
     #[prost(message, optional, tag = "2")]
     pub stage_name: ::core::option::Option<::manage_define::cashmere::Name>,
@@ -728,7 +713,7 @@ pub struct NewStageResponse {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct RemoveStageRequest {
     #[prost(string, tag = "1")]
-    pub specs_id: ::prost::alloc::string::String,
+    pub data_id: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
     pub stage: ::prost::alloc::string::String,
 }
@@ -744,7 +729,7 @@ pub struct RemoveStageResponse {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListStagesRequest {
     #[prost(string, tag = "1")]
-    pub specs_id: ::prost::alloc::string::String,
+    pub data_id: ::prost::alloc::string::String,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

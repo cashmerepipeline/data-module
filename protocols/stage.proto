@@ -15,7 +15,7 @@ message StageInfo {
 
 // 新阶段
 message NewStageRequest {
-  string specs_id = 1;
+  string data_id = 1;
   // 这里可能因为软件对路径字符集支持的不同只能使用英文作为文件名，比如Maya
   .cashmere.Name stage_name = 2;
   string description = 3;
@@ -27,7 +27,7 @@ message NewStageResponse {
 
 // 删除阶段，只删除阶段->数据的文件连接，不删除数据
 message RemoveStageRequest {
-  string specs_id = 1;
+  string data_id = 1;
   string stage = 2;
 }
 message RemoveStageResponse {
@@ -36,6 +36,6 @@ message RemoveStageResponse {
 }
 
 // 取得数据阶段表
-message ListStagesRequest {string specs_id = 1;}
+message ListStagesRequest {string data_id = 1;}
 message ListStagesResponse {repeated bytes stages = 1;}
 

@@ -122,7 +122,7 @@ async fn handle_delete_version_folder_entries(
         .collect::<Vec<String>>();
 
     let specs_id = stage_entity
-        .get_str(STAGES_SPECS_ID_FIELD_ID.to_string())
+        .get_str(STAGES_DATA_ID_FIELD_ID.to_string())
         .unwrap()
         .to_string();
     let specs_entity = match specses_manager.get_entity_by_id(&specs_id).await {
@@ -135,20 +135,10 @@ async fn handle_delete_version_folder_entries(
             )));
         }
     };
-    let data_id = specs_entity
-        .get_str(SPECSES_DATA_ID_FIELD_ID.to_string())
+    let data_id = stage_entity
+        .get_str(STAGES_DATA_ID_FIELD_ID.to_string())
         .unwrap()
         .to_string();
-    let _data_entity = match datas_manager.get_entity_by_id(&data_id).await {
-        Ok(r) => r,
-        Err(_e) => {
-            return Err(Status::not_found(format!(
-                "{}: {}",
-                t!("未找到数据"),
-                data_id
-            )));
-        }
-    };
 
     let version_foler = match get_version_folder(&data_id, &specs_id, stage_id, version) {
         Ok(r) => r,
