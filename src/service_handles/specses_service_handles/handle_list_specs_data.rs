@@ -15,22 +15,22 @@ use managers::traits::ManagerTrait;
 use view::add_query_filters;
 
 #[async_trait]
-pub trait HandleListSpecs {
+pub trait HandleListSpecsData {
     /// 取得产品分页
-    async fn handle_list_specs(
+    async fn handle_list_specs_data(
         &self,
-        request: Request<ListSpecsRequest>,
-    ) -> UnaryResponseResult<ListSpecsResponse> {
+        request: Request<ListSpecsDataRequest>,
+    ) -> UnaryResponseResult<ListSpecsDataResponse> {
         validate_view_rules(request)
             .and_then(validate_request_params)
-            .and_then(handle_list_specs)
+            .and_then(handle_list_specs_data)
             .await
     }
 }
 
 async fn validate_view_rules(
-    request: Request<ListSpecsRequest>,
-) -> Result<Request<ListSpecsRequest>, Status> {
+    request: Request<ListSpecsDataRequest>,
+) -> Result<Request<ListSpecsDataRequest>, Status> {
     #[cfg(feature = "view_rules_validate")]
     {
         let manage_id = SPECSES_MANAGE_ID;
@@ -46,35 +46,28 @@ async fn validate_view_rules(
 }
 
 async fn validate_request_params(
-    request: Request<ListSpecsRequest>,
-) -> Result<Request<ListSpecsRequest>, Status> {
-    // 管理编号不能为空
-    let manage_id = &request.get_ref().manage_id;
-    if manage_id.is_empty() {
-        return Err(Status::invalid_argument(
-            t!("管理编号不能为空")
-        ));
-    }
-    // 实体编号不能为空
-    let entity_id = &request.get_ref().entity_id;
-    if entity_id.is_empty() {
-        return Err(Status::invalid_argument(
-            t!("实体编号不能为空")
-        ));
-    }
+    request: Request<ListSpecsDataRequest>,
+) -> Result<Request<ListSpecsDataRequest>, Status> {
+    let specs_id = &request.get_ref().specs_id;
 
+    // specs_id 不能为空
+    if specs_id.is_empty() {
+        return Err(Status::invalid_argument(
+            t!("规格编号不能为空"),
+        ));
+    }
+    
     Ok(request)
 }
 
-async fn handle_list_specs(
-    request: Request<ListSpecsRequest>,
-) -> Result<Response<ListSpecsResponse>, Status> {
+async fn handle_list_specs_data(
+    request: Request<ListSpecsDataRequest>,
+) -> Result<Response<ListSpecsDataResponse>, Status> {
     let (account_id, _groups, role_group) = request_account_context(request.metadata());
 
-    let owner_manage_id = &request.get_ref().manage_id;
-    let owner_entity_id = &request.get_ref().entity_id;
+    let specs_id = &request.get_ref().specs_id;
 
-    let manage_id = SPECSES_MANAGE_ID;
+    let manage_id = DATAS_MANAGE_ID;
 
     let majordomo_arc = get_majordomo();
     let manager = majordomo_arc.get_manager_by_id(manage_id).unwrap();
@@ -95,15 +88,14 @@ async fn handle_list_specs(
     };
 
     let filter_doc = doc! {
-        SPECSES_MANAGE_ID_FIELD_ID.to_string(): owner_manage_id.to_string(),
-        SPECSES_ENTITY_ID_FIELD_ID.to_string(): owner_entity_id.to_string(),
+        DATAS_SPECS_ID_FIELD_ID.to_string(): specs_id.to_string(),
     };
 
     let result = manager.get_entities_by_filter(&Some(filter_doc)).await;
 
     match result {
-        Ok(entities) => Ok(Response::new(ListSpecsResponse {
-            specses: entities.iter().map(|x| bson::to_vec(x).unwrap()).collect(),
+        Ok(entities) => Ok(Response::new(ListSpecsDataResponse {
+            data: entities.iter().map(|x| bson::to_vec(x).unwrap()).collect(),
         })),
         Err(e) => Err(Status::aborted(format!(
             "{} {}",

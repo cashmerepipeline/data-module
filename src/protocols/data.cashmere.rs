@@ -64,6 +64,10 @@ pub enum DataType {
     FileSetData = 2,
     /// 类json格式数据
     DocumentData = 3,
+    /// 图片
+    ImageData = 4,
+    /// 视频
+    VideoData = 5,
 }
 impl DataType {
     /// String value of the enum field names used in the ProtoBuf definition.
@@ -76,6 +80,8 @@ impl DataType {
             DataType::SequenceData => "SequenceData",
             DataType::FileSetData => "FileSetData",
             DataType::DocumentData => "DocumentData",
+            DataType::ImageData => "ImageData",
+            DataType::VideoData => "VideoData",
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
@@ -85,6 +91,8 @@ impl DataType {
             "SequenceData" => Some(Self::SequenceData),
             "FileSetData" => Some(Self::FileSetData),
             "DocumentData" => Some(Self::DocumentData),
+            "ImageData" => Some(Self::ImageData),
+            "VideoData" => Some(Self::VideoData),
             _ => None,
         }
     }
@@ -427,8 +435,8 @@ pub struct SetDataDownloadSetResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct NewSpecsRequest {
-    #[prost(string, tag = "1")]
-    pub manage_id: ::prost::alloc::string::String,
+    #[prost(int32, tag = "1")]
+    pub manage_id: i32,
     #[prost(string, tag = "2")]
     pub entity_id: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "3")]
@@ -436,7 +444,7 @@ pub struct NewSpecsRequest {
     #[prost(string, tag = "4")]
     pub description: ::prost::alloc::string::String,
     #[prost(bytes = "vec", repeated, tag = "5")]
-    pub targets: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
+    pub attibutes: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -459,6 +467,20 @@ pub struct ListSpecsResponse {
     #[prost(bytes = "vec", repeated, tag = "1")]
     pub specses: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
 }
+/// 列出规格的数据
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListSpecsDataRequest {
+    #[prost(string, tag = "1")]
+    pub specs_id: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListSpecsDataResponse {
+    /// bson 列表
+    #[prost(bytes = "vec", repeated, tag = "1")]
+    pub data: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
+}
 /// 列出规格的预制件
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -469,8 +491,57 @@ pub struct ListSpecsPrefabsRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListSpecsPrefabsResponse {
+    /// bson 列表
     #[prost(bytes = "vec", repeated, tag = "1")]
     pub prefabs: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct NewSpecsAttributeRequest {
+    #[prost(int32, tag = "1")]
+    pub manage_id: i32,
+    #[prost(message, optional, tag = "2")]
+    pub name: ::core::option::Option<::manage_define::cashmere::Name>,
+    #[prost(enumeration = "::manage_define::cashmere::FieldDataType", tag = "3")]
+    pub data_type: i32,
+    #[prost(string, tag = "4")]
+    pub description: ::prost::alloc::string::String,
+    #[prost(bytes = "vec", tag = "5")]
+    pub default_value: ::prost::alloc::vec::Vec<u8>,
+    #[prost(int32, tag = "6")]
+    pub index: i32,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct NewSpecsAttributeResponse {
+    #[prost(string, tag = "1")]
+    pub result: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DeleteSpecsAttributeRequest {
+    #[prost(int32, tag = "1")]
+    pub manage_id: i32,
+    #[prost(uint32, tag = "2")]
+    pub index: u32,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DeleteSpecsAttributeResponse {
+    #[prost(string, tag = "1")]
+    pub result: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GetSpecsAttributesRequest {
+    #[prost(int32, tag = "1")]
+    pub manage_id: i32,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GetSpecsAttributesResponse {
+    #[prost(bytes = "vec", repeated, tag = "1")]
+    pub attributes: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
 }
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]

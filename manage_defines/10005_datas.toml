@@ -20,7 +20,6 @@ schema = [
 [items]
 
 [view_rules]
-
 [view_rules.manage]
 10000 = { read_rule = "Read", write_rule = "Write", read_filters = [
   "NoLimit",

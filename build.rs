@@ -6,6 +6,7 @@ fn main() {
         .build_client(false)
         .build_server(false)
         .extern_path(".cashmere", "::manage_define::cashmere")
+        .type_attribute("SpecsAttribute", "#[derive(serde::Serialize, serde::Deserialize)]")
         .type_attribute(
             "DataServerConfigs",
             "#[derive(serde::Serialize, serde::Deserialize)]",

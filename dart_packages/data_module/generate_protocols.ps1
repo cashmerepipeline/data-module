@@ -7,5 +7,6 @@ protoc -I../../../cashmere_core/protocols  -I../../protocols --dart_out=lib/prot
 protoc -I../../../cashmere_core/protocols  -I../../protocols --dart_out=lib/protocols ../../protocols/set_data.proto
 protoc -I../../../cashmere_core/protocols  -I../../protocols --dart_out=lib/protocols ../../protocols/set_data_info.proto
 protoc -I../../../cashmere_core/protocols  -I../../protocols --dart_out=lib/protocols ../../protocols/specs.proto
+protoc -I../../../cashmere_core/protocols  -I../../protocols --dart_out=lib/protocols ../../protocols/specs_attribute.proto
 protoc -I../../../cashmere_core/protocols  -I../../protocols --dart_out=lib/protocols ../../protocols/stage.proto
 protoc -I../../../cashmere_core/protocols  -I../../protocols --dart_out=lib/protocols ../../protocols/version.proto

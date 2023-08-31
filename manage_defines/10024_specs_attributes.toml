@@ -1,27 +1,31 @@
 #
-# 数据服务
-# 
-# 不存存储数据，只用于权限控制
+# 规格属性， 规格所属管理的规格属性管理, 用于收集规格属性
+#
 
-id = 10003
-name_map = { zh = "数据服务", en = "data_server" }
+id = 10024
+name_map = { zh = "规格", en = "specs_attributes" }
 
 # 数据描写 或者 模式
 schema = [
-  # { data_type = "String", name_map = { zh = "事件", en = "event_id" }, removed = false },
+  # 2001
+  # 规格属性所属管理
+  { data_type = "Int32", name_map = { zh = "管理编号", en = "manage_id" }, removed = false },
+
+  # 2002
+  # 属性编号，用于标记属性，同时用于排序，可以修观
+  { data_type = "Int32", name_map = { zh = "编号", en = "index" }, removed = false },
+  
+  # 2003
+  # 默认值
+  { data_type = "Bytes", name_map = { zh = "默认值", en = "default_value" }, removed = false },
+  
+  # 2004
+  # 属性数据类型
+  { data_type = "Int32", name_map = { zh = "数据类型", en = "data_type" }, removed = false },
 ]
-
-# 事件队列和消息队列表
-[queues]
-event_queue = []
-massage_queue = []
-
-# 事件定义, 不是必须
-[events]
 
 # 初始实体
 [items]
-
 
 [view_rules]
 
@@ -39,8 +43,8 @@ massage_queue = []
   "NoLimit",
 ], write_filters = [
 ] }
-10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
-  "NoLimit",
+10001 = { read_rule = "Read", write_rule = "OwnerWrite", read_filters = [
+  "OnlyOwner",
 ], write_filters = [
 ] }
 
@@ -109,7 +113,7 @@ massage_queue = []
 ], write_filters = [
 ] }
 [view_rules.schema.1008]
-10000 = { read_rule = "Read", write_rule = "Write", read_filters = [
+10000 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
   "NoLimit",
 ], write_filters = [
 ] }
@@ -117,7 +121,7 @@ massage_queue = []
 ], write_filters = [
 ] }
 [view_rules.schema.1009]
-10000 = { read_rule = "Read", write_rule = "Write", read_filters = [
+10000 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
   "NoLimit",
 ], write_filters = [
 ] }
@@ -151,6 +155,7 @@ massage_queue = []
 10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
 ], write_filters = [
 ] }
+
 [view_rules.schema.2002]
 10000 = { read_rule = "Read", write_rule = "Write", read_filters = [
   "NoLimit",
@@ -159,6 +164,7 @@ massage_queue = []
 10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
 ], write_filters = [
 ] }
+
 [view_rules.schema.2003]
 10000 = { read_rule = "Read", write_rule = "Write", read_filters = [
   "NoLimit",
@@ -167,7 +173,12 @@ massage_queue = []
 10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
 ], write_filters = [
 ] }
-# [view_rules.schema.scripts]
-# 10000 = { read_rule = "Read", write_rule = "Write", read_filters = [], write_filters = [] }
-# 10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [], write_filters = [] }
 
+[view_rules.schema.2004]
+10000 = { read_rule = "Read", write_rule = "Write", read_filters = [
+  "NoLimit",
+], write_filters = [
+] }
+10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
+], write_filters = [
+] }

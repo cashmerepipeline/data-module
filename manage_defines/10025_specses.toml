@@ -13,7 +13,7 @@ schema = [
     { data_type = "String", name_map = { zh = "实体", en = "entity_id"}, removed = false },
 
     # 2003
-    # bson bytes
+    # bson bytes, 一组规格属性
     { data_type = "Map", name_map = { zh = "指标", en = "targets"}, removed = false },
 
     # done, suspending, cancel

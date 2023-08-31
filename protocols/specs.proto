@@ -4,11 +4,11 @@ package data.cashmere;
 import "name.proto";
 
 message NewSpecsRequest{
-    string manage_id = 1;
+    int32 manage_id = 1;
     string entity_id = 2;
     .cashmere.Name name = 3;
     string description = 4;
-    repeated bytes targets = 5;
+    repeated bytes attibutes = 5;
 }
 message NewSpecsResponse{
     //成功反回id，失败返回错误信息
@@ -23,11 +23,21 @@ message ListSpecsResponse{
     repeated bytes specses = 1;
 }
 
+// 列出规格的数据
+message ListSpecsDataRequest{
+    string specs_id = 1;
+}
+message ListSpecsDataResponse{
+    // bson 列表
+    repeated bytes data = 1;
+}
+
 // 列出规格的预制件
 message ListSpecsPrefabsRequest{
     string specs_id = 1;
 }
 message ListSpecsPrefabsResponse{
+    // bson 列表
     repeated bytes prefabs = 1;
 }
 
