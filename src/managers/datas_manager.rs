@@ -15,14 +15,14 @@ use dependencies_sync::parking_lot::RwLock;
 
 use managers::{Manager, ManagerInner, ManagerTrait};
 
+use crate::ids_codes::manage_ids::*;
 use cash_core::{manage_from_document, Manage};
 use cash_result::*;
-use crate::ids_codes::manage_ids::*;
 
-use managers::declare_get_manager;
+use crate::ids_codes::manage_ids::DATAS_MANAGE_ID;
 use dependencies_sync::bson::Document;
 use manage_define::manage_ids::MANAGES_MANAGE_ID;
-use crate::ids_codes::manage_ids::DATAS_MANAGE_ID;
+use managers::declare_get_manager;
 
 #[derive(Default)]
 pub struct DatasManager;
@@ -41,7 +41,15 @@ declare_get_manager!(DatasManager, DATAS_MANAGER);
 #[async_trait]
 impl ManagerTrait for DatasManager {
     fn unregister(&self) -> Result<OperationResult, OperationResult> {
-        Err(operation_failed("unregister", "账户管理器不能被注销"))
+        Err(operation_failed(
+            "unregister",
+            format!(
+                    "{}-{}-{}",
+                    t!("管理器不能被注销"),
+                    self.get_manager_id(),
+                    self.get_manager_name()
+            ),
+        ))
     }
 
     fn get_manager_id(&self) -> i32 {

@@ -18,8 +18,8 @@ use cash_core::{manage_from_document, Manage};
 use cash_result::*;
 use managers::{declare_get_manager, traits::ManagerTrait, Manager, ManagerInner};
 
-use manage_define::manage_ids::MANAGES_MANAGE_ID;
 use crate::ids_codes::manage_ids::STAGES_MANAGE_ID;
+use manage_define::manage_ids::MANAGES_MANAGE_ID;
 
 #[derive(Default)]
 pub struct StagesManager;
@@ -38,7 +38,15 @@ declare_get_manager!(StagesManager, STAGES_MANAGER);
 #[async_trait]
 impl ManagerTrait for StagesManager {
     fn unregister(&self) -> Result<OperationResult, OperationResult> {
-        Err(operation_failed("unregister", "账户管理器不能被注销"))
+        Err(operation_failed(
+            "unregister",
+            format!(
+                    "{}-{}-{}",
+                    t!("管理器不能被注销"),
+                    self.get_manager_id(),
+                    self.get_manager_name()
+            ),
+        ))
     }
 
     fn get_manager_id(&self) -> i32 {
@@ -89,5 +97,3 @@ impl ManagerTrait for StagesManager {
         }
     }
 }
-
-

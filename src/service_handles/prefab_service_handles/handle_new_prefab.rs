@@ -4,11 +4,11 @@ use dependencies_sync::tonic::async_trait;
 
 use dependencies_sync::tonic::{Request, Response, Status};
 
-use majordomo::{self, get_majordomo};
-use crate::protocols::*;
 use crate::ids_codes::field_ids::*;
-use manage_define::general_field_ids::*;
 use crate::ids_codes::manage_ids::*;
+use crate::protocols::*;
+use majordomo::{self, get_majordomo};
+use manage_define::general_field_ids::*;
 use managers::traits::ManagerTrait;
 use request_utils::request_account_context;
 use service_utils::validate_name;
@@ -36,7 +36,9 @@ async fn validate_view_rules(
     {
         let manage_id = PREFABS_MANAGE_ID;
         let (account_id, groups, role_group) = request_account_context(request.metadata());
-        if let Err(e) = view::validates::validate_collection_can_write(&manage_id, &role_group).await {
+        if let Err(e) =
+            view::validates::validate_collection_can_write(&manage_id, &role_group).await
+        {
             return Err(e);
         }
     }
@@ -47,6 +49,11 @@ async fn validate_view_rules(
 async fn validate_request_params(
     request: Request<NewPrefabRequest>,
 ) -> Result<Request<NewPrefabRequest>, Status> {
+    let name = &request.get_ref().name;
+    if !validate_name(name) {
+        return Err(Status::data_loss("名字不能为空."));
+    }
+
     Ok(request)
 }
 
@@ -61,9 +68,6 @@ async fn handle_new_prefab(
     let _modifies = &request.get_ref().modifies;
     let description = &request.get_ref().description;
 
-    if validate_name(name).is_err() {
-        return Err(Status::data_loss("名字不能为空."));
-    }
     let name = name.as_ref().unwrap();
 
     let majordomo_arc = get_majordomo();

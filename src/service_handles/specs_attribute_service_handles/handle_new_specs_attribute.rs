@@ -68,7 +68,7 @@ async fn validate_request_params(
             )))
         }
     };
-    if validate_name(name).is_err() {
+    if !validate_name(name) {
         return Err(Status::data_loss(format!(
             "{}: {}",
             t!("名字不能为空"),

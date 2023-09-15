@@ -81,7 +81,7 @@ async fn handle_new_specs(
     let description = &request.get_ref().description;
     let attributes = &request.get_ref().attibutes;
 
-    if validate_name(name).is_err() {
+    if !validate_name(name) {
         return Err(Status::data_loss(format!(
             "{}: {}-{}",
             t!("名字不能为空"),
@@ -105,7 +105,7 @@ async fn handle_new_specs(
         r
     } else {
         return Err(Status::aborted(format!(
-            "{}: 管理 {}",
+            "{}: {}",
             t!("新建实体文档失败"),
             SPECSES_MANAGE_ID
         )));
