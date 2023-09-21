@@ -1,34 +1,25 @@
 #
-# 规格属性， 规格所属管理的规格属性管理, 用于收集规格属性
+# 数据
+# 数据属于规格，即数据是在明确指标下的产物
 #
 
-id = 10024
-name_map = { zh = "规格", en = "specs_attributes" }
+id = 11002
+name_map = { zh = "数据", en = "datas" }
 
-# 数据描写 或者 模式
+# 描写，模式
 schema = [
   # 2001
-  # 规格属性所属管理
-  { data_type = "Int32", name_map = { zh = "管理编号", en = "manage_id" }, removed = false },
-
+  { data_type = "String", name_map = { zh = "类型", en = "data_type" }, removed = false },
   # 2002
-  # 属性编号，用于标记属性，同时用于排序，可以修观
-  { data_type = "Int32", name_map = { zh = "编号", en = "index" }, removed = false },
-  
+  { data_type = "String", name_map = { zh = "主管理", en = "specs_id" }, removed = false },
   # 2003
-  # 默认值
-  { data_type = "Bytes", name_map = { zh = "默认值", en = "default_value" }, removed = false },
-  
-  # 2004
-  # 属性数据类型
-  { data_type = "Int32", name_map = { zh = "数据类型", en = "data_type" }, removed = false },
+  # [{name:stage, versions:[files or dirs], current_version: file or dir},...}
+  { data_type = "Map", name_map = { zh = "阶段表", en = "stages" }, removed = false },
 ]
 
-# 初始实体
 [items]
 
 [view_rules]
-
 [view_rules.manage]
 10000 = { read_rule = "Read", write_rule = "Write", read_filters = [
   "NoLimit",
@@ -155,7 +146,6 @@ schema = [
 10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
 ], write_filters = [
 ] }
-
 [view_rules.schema.2002]
 10000 = { read_rule = "Read", write_rule = "Write", read_filters = [
   "NoLimit",
@@ -164,21 +154,11 @@ schema = [
 10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
 ], write_filters = [
 ] }
-
 [view_rules.schema.2003]
 10000 = { read_rule = "Read", write_rule = "Write", read_filters = [
   "NoLimit",
 ], write_filters = [
 ] }
-10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
-], write_filters = [
-] }
-
-[view_rules.schema.2004]
-10000 = { read_rule = "Read", write_rule = "Write", read_filters = [
-  "NoLimit",
-], write_filters = [
-] }
-10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
+10001 = { read_rule = "InVisible", write_rule = "InVisible", read_filters = [
 ], write_filters = [
 ] }

@@ -1,14 +1,22 @@
 #
-# 数据服务
-# 
-# 不存存储数据，只用于权限控制
+# 集
+#
 
-id = 10003
-name_map = { zh = "数据服务", en = "data_server" }
+id = 11005
+name_map = { zh = "预制件", en = "prefabs" }
 
 # 数据描写 或者 模式
 schema = [
-  # { data_type = "String", name_map = { zh = "事件", en = "event_id" }, removed = false },
+    # 2001
+    { data_type = "String", name_map = { zh = "基规格", en = "specs_id"}, removed = false },
+    # 2002
+    { data_type = "String", name_map = { zh = "阶段", en = "stage_id"}, removed = false },
+
+    # 2003
+    { data_type = "Map", name_map = { zh = "预制表", en = "prefab_attributes"}, removed = false },
+    
+    # preview files list
+    { data_type = "List", name_map = { zh = "预览", en = "previews"}, removed = false },
 ]
 
 # 初始实体
@@ -19,26 +27,26 @@ schema = [
 
 [view_rules.manage]
 10000 = { read_rule = "Read", write_rule = "Write", read_filters = [
-  "NoLimit",
+    "NoLimit",
 ], write_filters = [
 ] }
 10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
-  "NoLimit",
+    "NoLimit",
 ], write_filters = [
 ] }
 [view_rules.collection]
 10000 = { read_rule = "Read", write_rule = "Write", read_filters = [
-  "NoLimit",
+    "NoLimit",
 ], write_filters = [
 ] }
-10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
-  "NoLimit",
+10001 = { read_rule = "Read", write_rule = "OwnerWrite", read_filters = [
+    "OnlyOwner",
 ], write_filters = [
 ] }
 
 [view_rules.schema.1000]
 10000 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
-  "NoLimit",
+    "NoLimit",
 ], write_filters = [
 ] }
 10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
@@ -46,7 +54,7 @@ schema = [
 ] }
 [view_rules.schema.1001]
 10000 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
-  "NoLimit",
+    "NoLimit",
 ], write_filters = [
 ] }
 10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
@@ -54,7 +62,7 @@ schema = [
 ] }
 [view_rules.schema.1002]
 10000 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
-  "NoLimit",
+    "NoLimit",
 ], write_filters = [
 ] }
 10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
@@ -62,7 +70,7 @@ schema = [
 ] }
 [view_rules.schema.1003]
 10000 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
-  "NoLimit",
+    "NoLimit",
 ], write_filters = [
 ] }
 10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
@@ -70,7 +78,7 @@ schema = [
 ] }
 [view_rules.schema.1004]
 10000 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
-  "NoLimit",
+    "NoLimit",
 ], write_filters = [
 ] }
 10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
@@ -78,7 +86,7 @@ schema = [
 ] }
 [view_rules.schema.1005]
 10000 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
-  "NoLimit",
+    "NoLimit",
 ], write_filters = [
 ] }
 10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
@@ -86,7 +94,7 @@ schema = [
 ] }
 [view_rules.schema.1006]
 10000 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
-  "NoLimit",
+    "NoLimit",
 ], write_filters = [
 ] }
 10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
@@ -94,23 +102,23 @@ schema = [
 ] }
 [view_rules.schema.1007]
 10000 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
-  "NoLimit",
+    "NoLimit",
 ], write_filters = [
 ] }
 10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
 ], write_filters = [
 ] }
 [view_rules.schema.1008]
-10000 = { read_rule = "Read", write_rule = "Write", read_filters = [
-  "NoLimit",
+10000 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
+    "NoLimit",
 ], write_filters = [
 ] }
 10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
 ], write_filters = [
 ] }
 [view_rules.schema.1009]
-10000 = { read_rule = "Read", write_rule = "Write", read_filters = [
-  "NoLimit",
+10000 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
+    "NoLimit",
 ], write_filters = [
 ] }
 10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
@@ -118,26 +126,26 @@ schema = [
 ] }
 [view_rules.schema.1010]
 10000 = { read_rule = "Read", write_rule = "Write", read_filters = [
-  "NoLimit",
+    "NoLimit",
 ], write_filters = [
 ] }
 10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
-  "NoLimit",
+    "NoLimit",
 ], write_filters = [
 ] }
 [view_rules.schema.1011]
 10000 = { read_rule = "Read", write_rule = "Write", read_filters = [
-  "NoLimit",
+    "NoLimit",
 ], write_filters = [
 ] }
 10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
-  "NoLimit",
+    "NoLimit",
 ], write_filters = [
 ] }
 
 [view_rules.schema.2001]
 10000 = { read_rule = "Read", write_rule = "Write", read_filters = [
-  "NoLimit",
+    "NoLimit",
 ], write_filters = [
 ] }
 10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
@@ -145,7 +153,7 @@ schema = [
 ] }
 [view_rules.schema.2002]
 10000 = { read_rule = "Read", write_rule = "Write", read_filters = [
-  "NoLimit",
+    "NoLimit",
 ], write_filters = [
 ] }
 10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
@@ -153,13 +161,9 @@ schema = [
 ] }
 [view_rules.schema.2003]
 10000 = { read_rule = "Read", write_rule = "Write", read_filters = [
-  "NoLimit",
+    "NoLimit",
 ], write_filters = [
 ] }
-10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
+10001 = { read_rule = "InVisible", write_rule = "InVisible", read_filters = [
 ], write_filters = [
 ] }
-# [view_rules.schema.scripts]
-# 10000 = { read_rule = "Read", write_rule = "Write", read_filters = [], write_filters = [] }
-# 10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [], write_filters = [] }
-

@@ -1,27 +1,29 @@
 #
-# 集
+# 阶段，specs产出的不同阶段, 例如：设计，开发，测试，上线
 #
 
-id = 10027
-name_map = { zh = "预制件", en = "prefabs" }
+id = 11004
+name_map = { zh = "阶段", en = "stages" }
 
 # 数据描写 或者 模式
 schema = [
     # 2001
-    { data_type = "String", name_map = { zh = "基规格", en = "specs_id"}, removed = false },
-    # 2002
-    { data_type = "String", name_map = { zh = "阶段", en = "stage_id"}, removed = false },
+    { data_type = "String", name_map = { zh = "规格", en = "data_id"}, removed = false },
 
-    # 2003
-    { data_type = "Map", name_map = { zh = "预制表", en = "prefab_attributes"}, removed = false },
+    # 2002
+    # version: {files: [file_infos], description: "", status: "done", created_at: "", updated_at: ""]}
+    { data_type = "List", name_map = { zh = "版本", en = "versions"}, removed = false },
     
-    # preview files list
+    # 2003
+    # 预览文件表
     { data_type = "List", name_map = { zh = "预览", en = "previews"}, removed = false },
+
+    # 2004
+    { data_type = "String", name_map = { zh = "当前版本", en = "current_version"}, removed = false },
 ]
 
 # 初始实体
 [items]
-
 
 [view_rules]
 
@@ -167,3 +169,4 @@ schema = [
 10001 = { read_rule = "InVisible", write_rule = "InVisible", read_filters = [
 ], write_filters = [
 ] }
+
