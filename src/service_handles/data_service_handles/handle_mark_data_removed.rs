@@ -8,7 +8,7 @@ use crate::ids_codes::manage_ids::DATAS_MANAGE_ID;
 use crate::protocols::*;
 
 
-use managers::traits::ManagerTrait;
+use managers::ManagerTrait;
 use request_utils::request_account_context;
 
 

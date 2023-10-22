@@ -16,7 +16,7 @@ use dependencies_sync::parking_lot::RwLock;
 
 use cash_core::{manage_from_document, Manage};
 use cash_result::*;
-use managers::{declare_get_manager, traits::ManagerTrait, Manager, ManagerInner};
+use managers::{declare_get_manager, ManagerTrait, Manager, ManagerInner};
 
 use crate::ids_codes::manage_ids::PREFABS_MANAGE_ID;
 use manage_define::manage_ids::MANAGES_MANAGE_ID;
@@ -43,17 +43,17 @@ impl ManagerTrait for PrefabsManager {
             format!(
                     "{}-{}-{}",
                     t!("管理器不能被注销"),
-                    self.get_manager_id(),
-                    self.get_manager_name()
+                    self.get_id(),
+                    self.get_name()
             ),
         ))
     }
 
-    fn get_manager_id(&self) -> i32 {
+    fn get_id(&self) -> i32 {
         PREFABS_MANAGE_ID
     }
 
-    fn get_manager_name(&self) -> String {
+    fn get_name(&self) -> String {
         "PrefabsManager".to_string()
     }
 

@@ -7,7 +7,7 @@ use crate::ids_codes::manage_ids::*;
 use crate::protocols::*;
 use majordomo::{self, get_majordomo};
 use manage_define::general_field_ids::*;
-use managers::traits::ManagerTrait;
+use managers::ManagerTrait;
 use managers::utils::make_new_entity_document;
 use request_utils::request_account_context;
 
@@ -73,7 +73,7 @@ async fn handle_new_data(
         name.language.clone(): name.name.clone()
     };
 
-    if let Some(mut new_entity_doc) = make_new_entity_document(&data_manager).await {
+    if let Some(mut new_entity_doc) = make_new_entity_document(&data_manager, &account_id).await {
         new_entity_doc.insert(NAME_MAP_FIELD_ID.to_string(), local_name);
         new_entity_doc.insert(DATAS_DATA_TYPE_FIELD_ID.to_string(), data_type);
         new_entity_doc.insert(DATAS_SPECS_ID_FIELD_ID.to_string(), specs_id);

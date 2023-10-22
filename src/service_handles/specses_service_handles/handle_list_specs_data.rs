@@ -11,7 +11,7 @@ use crate::protocols::*;
 use majordomo::{self, get_majordomo};
 
 use crate::ids_codes::manage_ids::*;
-use managers::traits::ManagerTrait;
+use managers::ManagerTrait;
 use view::add_query_filters;
 
 #[async_trait]

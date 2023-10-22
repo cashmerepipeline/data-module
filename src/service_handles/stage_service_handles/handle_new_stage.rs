@@ -6,7 +6,7 @@ use crate::protocols::*;
 use crate::ids_codes::field_ids::*;
 use manage_define::general_field_ids::*;
 use crate::ids_codes::manage_ids::*;
-use managers::traits::ManagerTrait;
+use managers::ManagerTrait;
 use managers::utils::make_new_entity_document;
 use request_utils::request_account_context;
 
@@ -72,7 +72,7 @@ async fn handle_new_stage(
     let manager = majordomo_arc.get_manager_by_id(STAGES_MANAGE_ID).unwrap();
 
     // 新建条目
-    let mut new_entity_doc = if let Some(r) = make_new_entity_document(&manager).await {
+    let mut new_entity_doc = if let Some(r) = make_new_entity_document(&manager, &account_id).await {
         r
     } else {
         return Err(Status::aborted(format!(

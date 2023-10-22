@@ -7,7 +7,7 @@ use crate::protocols::*;
 use crate::ids_codes::field_ids::*;
 use manage_define::general_field_ids::*;
 use crate::ids_codes::manage_ids::*;
-use managers::traits::ManagerTrait;
+use managers::ManagerTrait;
 
 use dependencies_sync::tonic::{Request, Response, Status};
 use request_utils::request_account_context;
