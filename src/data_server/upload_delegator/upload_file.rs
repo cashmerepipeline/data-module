@@ -10,6 +10,7 @@ use dependencies_sync::tokio::io::{AsyncWriteExt, BufWriter};
 use dependencies_sync::tokio::sync::mpsc;
 use dependencies_sync::tokio::sync::mpsc::Sender;
 use dependencies_sync::tokio;
+use dependencies_sync::rust_i18n::{self, t};
 
 use crate::data_server::file_utils::check_space_enough;
 use crate::protocols::FileInfo;

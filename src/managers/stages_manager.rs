@@ -13,6 +13,7 @@ use dependencies_sync::tonic::async_trait;
 
 use dependencies_sync::bson::Document;
 use dependencies_sync::parking_lot::RwLock;
+use dependencies_sync::rust_i18n::{self, t};
 
 use cash_core::{manage_from_document, Manage};
 use cash_result::*;

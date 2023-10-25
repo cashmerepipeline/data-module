@@ -4,6 +4,7 @@ use dependencies_sync::log::debug;
 use dependencies_sync::tokio::fs;
 use dependencies_sync::tokio::fs::File;
 use dependencies_sync::tokio::io::{AsyncReadExt, AsyncWriteExt};
+use dependencies_sync::rust_i18n::{self, t};
 use dependencies_sync::toml;
 
 use cash_result::{operation_failed, OperationResult};

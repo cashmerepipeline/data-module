@@ -1,6 +1,7 @@
 use std::path::PathBuf;
 
 use dependencies_sync::tokio::fs;
+use dependencies_sync::rust_i18n::{self, t};
 
 use cash_result::{operation_failed, OperationResult};
 

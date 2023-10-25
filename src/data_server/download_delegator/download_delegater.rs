@@ -3,6 +3,7 @@ use std::path::PathBuf;
 
 use dependencies_sync::log::info;
 use dependencies_sync::log::{error};
+use dependencies_sync::rust_i18n::{self, t};
 use dependencies_sync::bytes;
 
 use dependencies_sync::tokio::fs::File;

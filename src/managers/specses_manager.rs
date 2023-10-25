@@ -10,6 +10,7 @@ use std::sync::Arc;
 
 // use dependencies_sync::log::{error, info, warn};
 use dependencies_sync::tonic::async_trait;
+use dependencies_sync::rust_i18n::{self, t};
 
 use dependencies_sync::bson::Document;
 use dependencies_sync::parking_lot::RwLock;

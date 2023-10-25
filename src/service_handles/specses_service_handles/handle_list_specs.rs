@@ -2,6 +2,7 @@ use dependencies_sync::bson::{self, doc};
 use dependencies_sync::futures::TryFutureExt;
 use dependencies_sync::tonic::async_trait;
 use dependencies_sync::tonic::{Request, Response, Status};
+use dependencies_sync::rust_i18n::{self, t};
 
 use request_utils::request_account_context;
 use service_utils::types::UnaryResponseResult;

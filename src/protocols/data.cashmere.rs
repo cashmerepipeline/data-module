@@ -549,10 +549,10 @@ pub struct GetSpecsAttributesResponse {
 pub struct Version {
     #[prost(string, tag = "1")]
     pub name: ::prost::alloc::string::String,
-    /// protobuf不支持嵌套repeated，所以使用 “,” 分隔的字符串, 形式为["sub_dir, ...,file_name"]
+    /// protobuf不支持嵌套repeated，所以使用 “,” 分隔的字符串, 形式为\["sub_dir, ...,file_name"\]
     /// 路径不允许使用相对路径符号"."和".."
     /// 文件集为多个文件列表
-    /// 文件序列为规则: ["base_name, start, end, padding, extension"]
+    /// 文件序列为规则: \["base_name, start, end, padding, extension"\]
     /// 使用bson格式存储
     #[prost(string, repeated, tag = "2")]
     pub files: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
@@ -622,7 +622,7 @@ pub struct RemoveStageVersionResponse {
     #[prost(string, tag = "1")]
     pub result: ::prost::alloc::string::String,
 }
-/// 添加文件到数据阶段，文件路径以版本路径为根，<version_root>/["sub_dir", ..., "file_name"]
+/// 添加文件到数据阶段，文件路径以版本路径为根，<version_root>/\["sub_dir", ..., "file_name"\]
 /// 路径在使用时再拼接
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -641,7 +641,7 @@ pub struct AddFileToVersionResponse {
     #[prost(string, tag = "1")]
     pub result: ::prost::alloc::string::String,
 }
-/// 添加文件到数据阶段，文件路径以版本路径为根，<version_root>/["sub_dir", ..., "file_name"]
+/// 添加文件到数据阶段，文件路径以版本路径为根，<version_root>/\["sub_dir", ..., "file_name"\]
 /// 路径在使用时再拼接
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -650,7 +650,7 @@ pub struct AddFileSetToVersionRequest {
     pub stage_id: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
     pub version: ::prost::alloc::string::String,
-    /// 因为不支持嵌套repeated，所以使用“,”分隔的字符串, 形式为["sub_dir, ...,file_name"]
+    /// 因为不支持嵌套repeated，所以使用“,”分隔的字符串, 形式为\["sub_dir, ...,file_name"\]
     #[prost(string, repeated, tag = "3")]
     pub file_pathes: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
@@ -662,8 +662,8 @@ pub struct AddFileSetToVersionResponse {
     pub result: ::prost::alloc::string::String,
 }
 /// 数据类型为文件序列时, 序列文件直接存储在版本目录下
-/// 使用规则解析文件路径[base_name, start, end, padding, extension]，不记录所有文件的路径
-/// 严格使用这个顺序，不使用类似{base_name: name, start: start, end: end, padding: padding, ext: ext, number_pos: [mid, end]}的格式
+/// 使用规则解析文件路径\[base_name, start, end, padding, extension\]，不记录所有文件的路径
+/// 严格使用这个顺序，不使用类似{base_name: name, start: start, end: end, padding: padding, ext: ext, number_pos: \[mid, end\]}的格式
 /// 文件、文件集、序列存储形式上一致，易于mongodb文件查询
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

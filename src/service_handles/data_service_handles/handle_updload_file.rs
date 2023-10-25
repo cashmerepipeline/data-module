@@ -2,6 +2,7 @@ use dependencies_sync::tonic::{async_trait};
 use dependencies_sync::futures::TryFutureExt;
 use dependencies_sync::tokio_stream::{wrappers::ReceiverStream, StreamExt};
 use dependencies_sync::tonic::{Response, Status};
+use dependencies_sync::rust_i18n::{self, t};
 use dependencies_sync::{tokio, tokio::sync::mpsc};
 
 use data_server::file_utils::check_chunk_md5;

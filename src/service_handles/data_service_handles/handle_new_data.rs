@@ -1,6 +1,7 @@
 use dependencies_sync::bson::doc;
 use dependencies_sync::futures::TryFutureExt;
 use dependencies_sync::tonic::async_trait;
+use dependencies_sync::rust_i18n::{self, t};
 
 use crate::ids_codes::field_ids::*;
 use crate::ids_codes::manage_ids::*;
