@@ -1,19 +1,20 @@
-use dependencies_sync::bytes::{self, BufMut};
 use cash_result::{operation_failed, Failed, OperationResult};
+use dependencies_sync::bytes::{self, BufMut};
 use dependencies_sync::log::{debug, info};
 use std::path::{Path, PathBuf};
 
 use dependencies_sync::fs4;
+use dependencies_sync::rust_i18n::{self, t};
+use dependencies_sync::tokio;
 use dependencies_sync::tokio::fs;
 use dependencies_sync::tokio::fs::{File, OpenOptions};
 use dependencies_sync::tokio::io::{AsyncWriteExt, BufWriter};
 use dependencies_sync::tokio::sync::mpsc;
 use dependencies_sync::tokio::sync::mpsc::Sender;
-use dependencies_sync::tokio;
-use dependencies_sync::rust_i18n::{self, t};
 
 use crate::data_server::file_utils::check_space_enough;
 use crate::protocols::FileInfo;
+use crate::DataServerConfigs;
 
 use super::UploadDelegator;
 
@@ -30,7 +31,9 @@ impl UploadDelegator {
         file_info: &FileInfo,
         request_size: u64,
     ) -> Result<(PathBuf, PathBuf), OperationResult> {
-        let data_root = &configs::get_data_server_configs().root_dir_path;
+        let data_root = &configs::get_config::<DataServerConfigs>()
+            .unwrap()
+            .root_dir_path;
 
         let mut data_dir_path = PathBuf::new();
         data_dir_path.push(data_root);
@@ -97,16 +100,14 @@ impl UploadDelegator {
 
                 match OpenOptions::new().append(true).open(&data_file_path).await {
                     Ok(f) => Ok(f),
-                    Err(_e) => {
-                        Err(operation_failed(
-                            "get_upload_target_file",
-                            format!(
-                                "{}: {}",
-                                t!("打开文件失败"),
-                                data_file_path.to_str().unwrap()
-                            ),
-                        ))
-                    }
+                    Err(_e) => Err(operation_failed(
+                        "get_upload_target_file",
+                        format!(
+                            "{}: {}",
+                            t!("打开文件失败"),
+                            data_file_path.to_str().unwrap()
+                        ),
+                    )),
                 }
             } else {
                 // 如果文件已存在，但是没有续传点文件，则截断文件，从头开始写入
@@ -126,16 +127,14 @@ impl UploadDelegator {
                     .await
                 {
                     Ok(f) => Ok(f),
-                    Err(_e) => {
-                        Err(operation_failed(
-                            "get_upload_target_file",
-                            format!(
-                                "{}: {}",
-                                t!("打开文件失败"),
-                                data_file_path.to_str().unwrap()
-                            ),
-                        ))
-                    }
+                    Err(_e) => Err(operation_failed(
+                        "get_upload_target_file",
+                        format!(
+                            "{}: {}",
+                            t!("打开文件失败"),
+                            data_file_path.to_str().unwrap()
+                        ),
+                    )),
                 }
             }
         } else {
@@ -166,7 +165,9 @@ impl UploadDelegator {
 
     /// 检查磁盘空间是否足够
     pub async fn check_disk_space_enough(&self, file_size: u64) -> bool {
-        let data_root = &configs::get_data_server_configs().root_dir_path;
+        let data_root = &configs::get_config::<DataServerConfigs>()
+            .unwrap()
+            .root_dir_path;
         let data_root_path = Path::new(data_root);
 
         let available_space = match fs4::available_space(data_root_path) {

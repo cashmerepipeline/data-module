@@ -3,8 +3,8 @@ use std::path::PathBuf;
 
 use dependencies_sync::log::info;
 
-use dependencies_sync::rust_i18n::{self, t};
 use dependencies_sync::fs4::tokio::AsyncFileExt;
+use dependencies_sync::rust_i18n::{self, t};
 
 use dependencies_sync::tokio::fs;
 use dependencies_sync::tokio::fs::File;
@@ -12,8 +12,9 @@ use dependencies_sync::tokio::io::AsyncWriteExt;
 use dependencies_sync::tokio::sync::mpsc;
 use dependencies_sync::tokio::sync::mpsc::Sender;
 
-use cash_result::{operation_failed, OperationResult};
 use crate::protocols::FileInfo;
+use crate::DataServerConfigs;
+use cash_result::{operation_failed, OperationResult};
 
 use crate::data_server::file_utils::check_space_enough::check_space_enough;
 
@@ -26,16 +27,20 @@ pub async fn create_recieve_data_file_stream(
     // TODO:尝试使用其他方式不需要移动，或者
     let data_id = data_id.clone();
 
-
-
     // 创建文件，失败则需要提前返回
-    let data_server_configes = configs::get_data_server_configs();
+    let data_server_configes = configs::get_config::<DataServerConfigs>().unwrap();
 
-    let data_folder: PathBuf = [&data_server_configes.root_dir_path, &data_id].iter().collect();
-    let file_ext = path::Path::new(&file_info.file_name).extension().unwrap();
-    let mut file_path_buf: PathBuf = [&data_server_configes.root_dir_path, &data_id, &file_info.md5]
+    let data_folder: PathBuf = [&data_server_configes.root_dir_path, &data_id]
         .iter()
         .collect();
+    let file_ext = path::Path::new(&file_info.file_name).extension().unwrap();
+    let mut file_path_buf: PathBuf = [
+        &data_server_configes.root_dir_path,
+        &data_id,
+        &file_info.md5,
+    ]
+    .iter()
+    .collect();
     file_path_buf.set_extension(file_ext);
 
     // 检查文件空间是否足够传参不使用引用

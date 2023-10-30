@@ -1,4 +1,4 @@
-use configs::DataServerConfigs;
+use crate::DataServerConfigs;
 use std::sync::Arc;
 
 ///  数据服务器
@@ -19,7 +19,7 @@ pub struct DataServer {
 static mut DATA_SERVER: Option<Arc<DataServer>> = None;
 
 pub fn get_data_server() -> Arc<DataServer> {
-    let data_configs = configs::get_data_server_configs();
+    let data_configs = &configs::get_config::<DataServerConfigs>().unwrap();
     unsafe {
         // 有数据
         if DATA_SERVER.is_none() {

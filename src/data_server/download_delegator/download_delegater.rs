@@ -1,21 +1,23 @@
 use std::io::SeekFrom;
 use std::path::PathBuf;
 
-use dependencies_sync::log::info;
-use dependencies_sync::log::{error};
-use dependencies_sync::rust_i18n::{self, t};
 use dependencies_sync::bytes;
+use dependencies_sync::log::error;
+use dependencies_sync::log::info;
+use dependencies_sync::rust_i18n::{self, t};
 
+use dependencies_sync::tokio;
 use dependencies_sync::tokio::fs::File;
 use dependencies_sync::tokio::io::{AsyncReadExt, AsyncSeekExt};
 use dependencies_sync::tokio::sync::mpsc::Sender;
-use dependencies_sync::tokio;
 
 use cash_result::{Failed, OperationResult};
 
+use crate::DataServerConfigs;
+
 #[derive(Debug, Default)]
 /// 上传代理
-pub struct DownloadDelegator{
+pub struct DownloadDelegator {
     pub transfer_chunk_size: usize,
 }
 
@@ -29,7 +31,9 @@ impl DownloadDelegator {
         sub_path: &String,
         file_name: &String,
     ) -> Result<PathBuf, OperationResult> {
-        let data_root = &configs::get_data_server_configs().root_dir_path;
+        let data_root = &configs::get_config::<DataServerConfigs>()
+            .unwrap()
+            .root_dir_path;
 
         let mut file_pathbuf = PathBuf::new();
         file_pathbuf.push(data_root);
@@ -68,7 +72,9 @@ impl DownloadDelegator {
             }
         };
 
-        let chunk_size = configs::get_data_server_configs().transfer_chunk_size as usize;
+        let chunk_size = configs::get_config::<DataServerConfigs>()
+            .unwrap()
+            .transfer_chunk_size as usize;
         // 缓存容量, 为 chunk_size*5，满后写入临时文件,缓存长度是5
         let capacity = chunk_size * 5;
         info!(
@@ -88,9 +94,14 @@ impl DownloadDelegator {
                 .seek(SeekFrom::Start(chunk_size as u64 * start_index))
                 .await
             {
-                error!("{}: {}, {}", t!("设置读取位置失败"), file_path_str, e.to_string());
+                error!(
+                    "{}: {}, {}",
+                    t!("设置读取位置失败"),
+                    file_path_str,
+                    e.to_string()
+                );
                 error!("{}: {}", t!("发送文件失败"), file_path_str);
-                return ;
+                return;
             };
 
             // let send_buffer = async |buffer: &bytes::BytesMut| {
@@ -122,7 +133,12 @@ impl DownloadDelegator {
                     // });
                     while let Some(chunk) = buffer.chunks(chunk_size).next() {
                         match ftx.send(chunk.to_vec()).await {
-                            Err(e) => error!("{}: {}, {}", t!("发送数据块失败"), file_path_str, e.to_string()),
+                            Err(e) => error!(
+                                "{}: {}, {}",
+                                t!("发送数据块失败"),
+                                file_path_str,
+                                e.to_string()
+                            ),
                             _ => (),
                         }
                     }
@@ -142,7 +158,12 @@ impl DownloadDelegator {
                         // send_buffer(&buffer).await;
                         for chunk in buffer.chunks(chunk_size).by_ref() {
                             match ftx.send(chunk.to_vec()).await {
-                                Err(e) => error!("{}: {}, {}", t!("变送数据失败"), file_path_str, e.to_string()),
+                                Err(e) => error!(
+                                    "{}: {}, {}",
+                                    t!("变送数据失败"),
+                                    file_path_str,
+                                    e.to_string()
+                                ),
                                 _ => (),
                             }
                         }
