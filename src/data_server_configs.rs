@@ -1,9 +1,12 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, sync::OnceLock};
 
-use configs::ConfigTrait;
+use dependencies_sync::rust_i18n::{self, t};
+
+use configs::{ConfigTrait, get_config};
 use serde_derive::{Serialize, Deserialize};
 
 pub const DATA_SERVER_CONFIGS_NAME : &str = "data_server";
+static DATA_SERVER_CONFIGS: OnceLock<DataServerConfigs> = OnceLock::new();
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct DataServerConfigs {
@@ -27,6 +30,17 @@ pub struct DataServerConfigs {
 impl ConfigTrait for DataServerConfigs {
     fn name() -> &'static str {
         return DATA_SERVER_CONFIGS_NAME;
+    }
+
+    fn get() -> &'static Self {
+        if let Some(configs) = DATA_SERVER_CONFIGS.get() {
+            return configs;
+        } else {
+            let configs = get_config::<DataServerConfigs>().expect(t!("取得配置失败").as_str());
+            DATA_SERVER_CONFIGS.set(configs).expect("设置配置失败");
+        }
+
+        DATA_SERVER_CONFIGS.get().unwrap()
     }
 }
 

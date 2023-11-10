@@ -4,6 +4,8 @@
 
 id = 11004
 name_map = { zh = "阶段", en = "stages" }
+is_searchable = true
+
 
 # 数据描写 或者 模式
 schema = [

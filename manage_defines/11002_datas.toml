@@ -5,6 +5,8 @@
 
 id = 11002
 name_map = { zh = "数据", en = "datas" }
+is_searchable = true
+
 
 # 描写，模式
 schema = [

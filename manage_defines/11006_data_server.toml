@@ -5,6 +5,8 @@
 
 id = 11006
 name_map = { zh = "数据服务", en = "data_server" }
+is_searchable = true
+
 
 # 数据描写 或者 模式
 schema = [

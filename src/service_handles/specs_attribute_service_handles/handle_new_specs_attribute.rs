@@ -123,7 +123,7 @@ async fn handle_new_specs_attribute(
         .to_owned();
 
     new_entity_doc.insert(NAME_MAP_FIELD_ID.to_string(), name_doc);
-    new_entity_doc.insert(DESCRIPTIONS_FIELD_ID.to_string(), description.clone());
+    new_entity_doc.insert(DESCRIPTION_FIELD_ID.to_string(), description.clone());
     new_entity_doc.insert(SPECS_ATTRIBUTES_INDEX_FIELD_ID.to_string(), manage_id.clone());
     new_entity_doc.insert(SPECS_ATTRIBUTES_MANAGE_ID_FIELD_ID.to_string(), manage_id.clone());
     new_entity_doc.insert(SPECS_ATTRIBUTES_DATA_TYPE_FIELD_ID.to_string(), data_type.clone());

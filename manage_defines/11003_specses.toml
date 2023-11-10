@@ -4,6 +4,8 @@
 
 id = 11003
 name_map = { zh = "规格", en = "specses" }
+is_searchable = true
+
 
 # 数据描写 或者 模式
 schema = [

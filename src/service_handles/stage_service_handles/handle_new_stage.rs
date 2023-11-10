@@ -84,7 +84,7 @@ async fn handle_new_stage(
     };
 
     new_entity_doc.insert(STAGES_DATA_ID_FIELD_ID.to_string(), data_id.clone());
-    new_entity_doc.insert(DESCRIPTIONS_FIELD_ID.to_string(), description.clone());
+    new_entity_doc.insert(DESCRIPTION_FIELD_ID.to_string(), description.clone());
 
     let new_id = new_entity_doc
         .get_str(ID_FIELD_ID.to_string())
