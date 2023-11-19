@@ -5,6 +5,7 @@
 id = 11003
 name_map = { zh = "规格", en = "specses" }
 is_searchable = true
+description = ""
 
 
 # 数据描写 或者 模式
@@ -16,7 +17,7 @@ schema = [
 
     # 2003
     # bson bytes, 一组规格属性
-    { data_type = "Map", name_map = { zh = "指标", en = "targets"}, removed = false },
+    { data_type = "Document", name_map = { zh = "指标", en = "targets"}, removed = false },
 
     # done, suspending, cancel
     # { data_type = "String", name_map = { zh = "状态", en = "status"}, removed = false },
@@ -167,5 +168,15 @@ schema = [
 ], write_filters = [
 ] }
 10001 = { read_rule = "InVisible", write_rule = "InVisible", read_filters = [
+], write_filters = [
+] }
+
+
+[view_rules.schema.1200]
+10000 = { read_rule = "Read", write_rule = "Write", read_filters = [
+  "NoLimit",
+], write_filters = [
+] }
+10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
 ], write_filters = [
 ] }

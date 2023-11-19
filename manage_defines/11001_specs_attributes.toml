@@ -5,6 +5,7 @@
 id = 10001
 name_map = { zh = "规格", en = "specs_attributes" }
 is_searchable = true
+description = ""
 
 
 # 数据描写 或者 模式
@@ -19,7 +20,7 @@ schema = [
   
   # 2003
   # 默认值
-  { data_type = "Bytes", name_map = { zh = "默认值", en = "default_value" }, removed = false },
+  { data_type = "Binary", name_map = { zh = "默认值", en = "default_value" }, removed = false },
   
   # 2004
   # 属性数据类型
@@ -177,6 +178,16 @@ schema = [
 ] }
 
 [view_rules.schema.2004]
+10000 = { read_rule = "Read", write_rule = "Write", read_filters = [
+  "NoLimit",
+], write_filters = [
+] }
+10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
+], write_filters = [
+] }
+
+
+[view_rules.schema.1200]
 10000 = { read_rule = "Read", write_rule = "Write", read_filters = [
   "NoLimit",
 ], write_filters = [

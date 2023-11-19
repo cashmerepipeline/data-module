@@ -5,6 +5,7 @@
 id = 11005
 name_map = { zh = "预制件", en = "prefabs" }
 is_searchable = true
+description = ""
 
 
 # 数据描写 或者 模式
@@ -15,10 +16,10 @@ schema = [
     { data_type = "String", name_map = { zh = "阶段", en = "stage_id"}, removed = false },
 
     # 2003
-    { data_type = "Map", name_map = { zh = "预制表", en = "prefab_attributes"}, removed = false },
+    { data_type = "Document", name_map = { zh = "预制表", en = "prefab_attributes"}, removed = false },
     
     # preview files list
-    { data_type = "List", name_map = { zh = "预览", en = "previews"}, removed = false },
+    { data_type = "Array", name_map = { zh = "预览", en = "previews"}, removed = false },
 ]
 
 # 初始实体
@@ -167,5 +168,15 @@ schema = [
 ], write_filters = [
 ] }
 10001 = { read_rule = "InVisible", write_rule = "InVisible", read_filters = [
+], write_filters = [
+] }
+
+
+[view_rules.schema.1200]
+10000 = { read_rule = "Read", write_rule = "Write", read_filters = [
+  "NoLimit",
+], write_filters = [
+] }
+10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
 ], write_filters = [
 ] }

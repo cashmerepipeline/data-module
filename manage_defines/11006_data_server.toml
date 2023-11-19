@@ -6,6 +6,7 @@
 id = 11006
 name_map = { zh = "数据服务", en = "data_server" }
 is_searchable = true
+description = ""
 
 
 # 数据描写 或者 模式
@@ -165,3 +166,11 @@ schema = [
 # 10000 = { read_rule = "Read", write_rule = "Write", read_filters = [], write_filters = [] }
 # 10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [], write_filters = [] }
 
+[view_rules.schema.1200]
+10000 = { read_rule = "Read", write_rule = "Write", read_filters = [
+  "NoLimit",
+], write_filters = [
+] }
+10001 = { read_rule = "Read", write_rule = "InVisible", read_filters = [
+], write_filters = [
+] }

@@ -35,7 +35,6 @@ managers = { path = "../cashmere_core/managers" }
 manage_define = { path = "../cashmere_core/manage_define" }
 auth = { path = "../cashmere_core/auth" }
 entity = { path = "../cashmere_core/entity" }
-property_field = { path = "../cashmere_core/property_field" }
 view = { path = "../cashmere_core/view" }
 request_utils = { path = "../cashmere_core/request_utils" }
 service_utils = { path = "../cashmere_core/service_utils" }
@@ -44,7 +43,7 @@ service_utils = { path = "../cashmere_core/service_utils" }
 dependencies_sync = { path = "../cashmere_core/dependencies_sync", features = [
   "tonic-build",
 ] }
-manage_define = { path = "../cashmere_core/manage_define" }
+define_utils = { path = "../cashmere_core/define_utils" }
 
 [features]
 # view_rules_validate = ["view/view_rules_validate"]

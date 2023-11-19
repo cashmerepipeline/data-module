@@ -31,7 +31,7 @@ async fn validate_view_rules(
     #[cfg(feature = "view_rules_validate")]
     {
         let manage_id = DATA_SERVER_MANAGE_ID;
-        let (_account_id, _groups, role_group) = request_account_context(request.metadata());
+        let (_account_id, _groups, role_group) = request_account_context(request.metadata())?;
         if let Err(e) = view::validates::validate_collection_can_read(&manage_id, &role_group).await {
             return Err(e);
         }
@@ -49,7 +49,7 @@ async fn validate_request_params(
 async fn handle_get_data_server_configs(
     request: Request<GetDataServerConfigsRequest>,
 ) -> Result<Response<GetDataServerConfigsResponse>, Status> {
-    let (_account_id, _groups, _role_group) = request_account_context(request.metadata());
+    let (_account_id, _groups, _role_group) = request_account_context(request.metadata())?;
 
     let data_server_configs = bson::to_document(&configs::get_config::<DataServerConfigs>().unwrap()).unwrap();
 

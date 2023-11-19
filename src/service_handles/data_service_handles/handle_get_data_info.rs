@@ -32,7 +32,7 @@ async fn validate_view_rules(
     #[cfg(feature = "view_rules_validate")]
     {
         let manage_id = DATAS_MANAGE_ID;
-        let (_account_id, _groups, role_group) = request_account_context(request.metadata());
+        let (_account_id, _groups, role_group) = request_account_context(request.metadata())?;
         if let Err(e) =
             view::validates::validate_collection_can_write(&manage_id, &role_group).await
         {
@@ -52,7 +52,7 @@ async fn validate_request_params(
 async fn handle_get_data_info(
     request: Request<GetDataInfoRequest>,
 ) -> Result<Response<GetDataInfoResponse>, Status> {
-    let (_account_id, _groups, _role_group) = request_account_context(request.metadata());
+    let (_account_id, _groups, _role_group) = request_account_context(request.metadata())?;
 
     let data_id = &request.get_ref().data_id;
 

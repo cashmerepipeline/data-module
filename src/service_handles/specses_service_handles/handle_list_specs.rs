@@ -35,7 +35,7 @@ async fn validate_view_rules(
     #[cfg(feature = "view_rules_validate")]
     {
         let manage_id = SPECSES_MANAGE_ID;
-        let (_account_id, _groups, role_group) = request_account_context(request.metadata());
+        let (_account_id, _groups, role_group) = request_account_context(request.metadata())?;
         if let Err(e) =
             view::validates::validate_collection_can_write(&manage_id, &role_group).await
         {
@@ -70,7 +70,7 @@ async fn validate_request_params(
 async fn handle_list_specs(
     request: Request<ListSpecsRequest>,
 ) -> Result<Response<ListSpecsResponse>, Status> {
-    let (account_id, _groups, role_group) = request_account_context(request.metadata());
+    let (account_id, _groups, role_group) = request_account_context(request.metadata())?;
 
     let owner_manage_id = &request.get_ref().manage_id;
     let owner_entity_id = &request.get_ref().entity_id;
