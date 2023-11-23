@@ -12,7 +12,7 @@ use majordomo::{self, get_majordomo};
 use manage_define::general_field_ids::*;
 use managers::ManagerTrait;
 use request_utils::request_account_context;
-use service_utils::validate_name;
+use validates::validate_name;
 
 use service_utils::types::UnaryResponseResult;
 
@@ -51,10 +51,8 @@ async fn validate_request_params(
     request: Request<NewPrefabRequest>,
 ) -> Result<Request<NewPrefabRequest>, Status> {
     let name = &request.get_ref().name;
-    if !validate_name(name) {
-        return Err(Status::data_loss("名字不能为空."));
-    }
-
+    validate_name(name)?;
+    
     Ok(request)
 }
 

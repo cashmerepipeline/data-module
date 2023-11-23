@@ -14,7 +14,7 @@ use majordomo::{self, get_majordomo};
 use manage_define::general_field_ids::*;
 
 use service_utils::types::UnaryResponseResult;
-use service_utils::validate_name;
+use validates::{validate_name, validate_manage_id};
 
 use managers::ManagerTrait;
 use managers::utils::make_new_entity_document;
@@ -58,25 +58,9 @@ async fn validate_request_params(
     let manage_id = &request.get_ref().manage_id;
     let name = &request.get_ref().name;
 
-    let majordomo_arc = get_majordomo();
-    match majordomo_arc.get_manager_by_id(*manage_id) {
-        Ok(_m) => _m,
-        Err(_) => {
-            return Err(Status::not_found(format!(
-                "{}: {}",
-                t!("管理不存在"),
-                manage_id
-            )))
-        }
-    };
-    if !validate_name(name) {
-        return Err(Status::data_loss(format!(
-            "{}: {}",
-            t!("名字不能为空"),
-            manage_id,
-        )));
-    }
-
+    validate_manage_id(manage_id).await?;
+    validate_name(name)?;
+    
     Ok(request)
 }
 

@@ -38,6 +38,7 @@ entity = { path = "../cashmere_core/entity" }
 view = { path = "../cashmere_core/view" }
 request_utils = { path = "../cashmere_core/request_utils" }
 service_utils = { path = "../cashmere_core/service_utils" }
+validates = { path = "../cashmere_core/validates" }
 
 [build-dependencies]
 dependencies_sync = { path = "../cashmere_core/dependencies_sync", features = [

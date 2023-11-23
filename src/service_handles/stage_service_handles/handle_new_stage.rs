@@ -15,7 +15,7 @@ use dependencies_sync::tonic::{Request, Response, Status};
 
 
 use service_utils::types::UnaryResponseResult;
-use service_utils::validate_name;
+use validates::{validate_name, validate_description_length};
 
 #[async_trait]
 pub trait HandleNewStage {
@@ -48,6 +48,12 @@ async fn validate_view_rules(
 async fn validate_request_params(
     request: Request<NewStageRequest>,
 ) -> Result<Request<NewStageRequest>, Status> {
+    let name = &request.get_ref().stage_name;
+    let description = &request.get_ref().description;
+
+    validate_name(name)?;
+    validate_description_length(description)?;
+
     Ok(request)
 }
 
@@ -60,13 +66,6 @@ async fn handle_new_stage(
     let name = &request.get_ref().stage_name;
     let description = &request.get_ref().description;
 
-    if !validate_name(name) {
-        return Err(Status::data_loss(format!(
-            "{}: {}",
-            t!("名字不能为空"),
-            data_id
-        )));
-    }
     let _name = name.as_ref().unwrap();
 
     let majordomo_arc = get_majordomo();

@@ -12,7 +12,7 @@ use majordomo::{self, get_majordomo};
 use manage_define::general_field_ids::*;
 
 use service_utils::types::UnaryResponseResult;
-use service_utils::validate_name;
+use validates::{validate_name, validate_manage_id, validate_entity_id, validate_description_length};
 
 use managers::utils::make_new_entity_document;
 use managers::ManagerTrait;
@@ -55,31 +55,13 @@ async fn validate_request_params(
     // 检查目标实体存在
     let manage_id = &request.get_ref().manage_id;
     let entity_id = &request.get_ref().entity_id;
-
-    let majordomo_arc = get_majordomo();
-    match majordomo_arc.get_manager_by_id(*manage_id) {
-        Ok(m) => {
-            let query_doc = doc! {
-                ID_FIELD_ID.to_string(): entity_id.clone()
-            };
-            // 实体不存在
-            if m.entity_exists(&query_doc).await.is_none() {
-                return Err(Status::not_found(format!(
-                    "{}: {}-{}",
-                    t!("实体不存在"),
-                    manage_id,
-                    entity_id
-                )));
-            };
-        }
-        Err(_) => {
-            return Err(Status::not_found(format!(
-                "{}: {}",
-                t!("管理不存在"),
-                manage_id
-            )))
-        }
-    };
+    let name = &request.get_ref().name;
+    let description = &request.get_ref().description;
+    
+    validate_manage_id(&manage_id).await?;
+    validate_entity_id(manage_id, entity_id).await?;
+    validate_name(name)?;
+    validate_description_length(description)?;
 
     Ok(request)
 }
@@ -95,14 +77,6 @@ async fn handle_new_specs(
     let description = &request.get_ref().description;
     let attributes = &request.get_ref().attibutes;
 
-    if !validate_name(name) {
-        return Err(Status::data_loss(format!(
-            "{}: {}-{}",
-            t!("名字不能为空"),
-            manage_id,
-            entity_id
-        )));
-    }
     let local_name = match name {
         Some(n) => n,
         None => {
