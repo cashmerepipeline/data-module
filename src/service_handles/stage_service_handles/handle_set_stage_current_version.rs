@@ -61,7 +61,7 @@ async fn handle_set_stage_current_version(
     let majordomo_arc = get_majordomo();
     let manager = majordomo_arc.get_manager_by_id(STAGES_MANAGE_ID).unwrap();
 
-    let stage_entity = match manager.get_entity_by_id(stage_id).await {
+    let stage_entity = match manager.get_entity_by_id(stage_id, &vec![]).await {
         Ok(e) => e,
         Err(e) => {
             // 不存在

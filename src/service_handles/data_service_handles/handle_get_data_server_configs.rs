@@ -1,3 +1,4 @@
+use configs::ConfigTrait;
 use dependencies_sync::tonic::async_trait;
 use dependencies_sync::bson::{self, doc};
 use dependencies_sync::futures::TryFutureExt;
@@ -51,7 +52,7 @@ async fn handle_get_data_server_configs(
 ) -> Result<Response<GetDataServerConfigsResponse>, Status> {
     let (_account_id, _groups, _role_group) = request_account_context(request.metadata())?;
 
-    let data_server_configs = bson::to_document(&configs::get_config::<DataServerConfigs>().unwrap()).unwrap();
+    let data_server_configs = bson::to_document(&DataServerConfigs::get()).unwrap();
 
     Ok(Response::new(GetDataServerConfigsResponse {
         configs: bson::from_document(data_server_configs).unwrap(),

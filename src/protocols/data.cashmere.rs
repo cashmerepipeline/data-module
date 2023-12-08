@@ -443,8 +443,9 @@ pub struct NewSpecsRequest {
     pub name: ::core::option::Option<::manage_define::cashmere::Name>,
     #[prost(string, tag = "4")]
     pub description: ::prost::alloc::string::String,
-    #[prost(bytes = "vec", repeated, tag = "5")]
-    pub attibutes: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
+    /// bson document
+    #[prost(bytes = "vec", tag = "5")]
+    pub targets: ::prost::alloc::vec::Vec<u8>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -456,8 +457,8 @@ pub struct NewSpecsResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListSpecsRequest {
-    #[prost(string, tag = "1")]
-    pub manage_id: ::prost::alloc::string::String,
+    #[prost(int32, tag = "1")]
+    pub manage_id: i32,
     #[prost(string, tag = "2")]
     pub entity_id: ::prost::alloc::string::String,
 }

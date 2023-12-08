@@ -10,6 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  bson: ^5.0.2
+  hooks_riverpod: ^2.4.3
   cashmere_core:
     path: ../../../cashmere_core/dart_packages/cashmere_core
 

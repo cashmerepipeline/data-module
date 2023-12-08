@@ -13,20 +13,6 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
-@$core.Deprecated('Use specsAttributeDescriptor instead')
-const SpecsAttribute$json = {
-  '1': 'SpecsAttribute',
-  '2': [
-    {'1': 'name', '3': 1, '4': 1, '5': 11, '6': '.cashmere.Name', '10': 'name'},
-    {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
-  ],
-};
-
-/// Descriptor for `SpecsAttribute`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List specsAttributeDescriptor = $convert.base64Decode(
-    'Cg5TcGVjc0F0dHJpYnV0ZRIiCgRuYW1lGAEgASgLMg4uY2FzaG1lcmUuTmFtZVIEbmFtZRIUCg'
-    'V2YWx1ZRgCIAEoCVIFdmFsdWU=');
-
 @$core.Deprecated('Use newSpecsRequestDescriptor instead')
 const NewSpecsRequest$json = {
   '1': 'NewSpecsRequest',
@@ -35,7 +21,7 @@ const NewSpecsRequest$json = {
     {'1': 'entity_id', '3': 2, '4': 1, '5': 9, '10': 'entityId'},
     {'1': 'name', '3': 3, '4': 1, '5': 11, '6': '.cashmere.Name', '10': 'name'},
     {'1': 'description', '3': 4, '4': 1, '5': 9, '10': 'description'},
-    {'1': 'attibutes', '3': 5, '4': 3, '5': 12, '10': 'attibutes'},
+    {'1': 'targets', '3': 5, '4': 1, '5': 12, '10': 'targets'},
   ],
 };
 
@@ -43,8 +29,8 @@ const NewSpecsRequest$json = {
 final $typed_data.Uint8List newSpecsRequestDescriptor = $convert.base64Decode(
     'Cg9OZXdTcGVjc1JlcXVlc3QSGwoJbWFuYWdlX2lkGAEgASgFUghtYW5hZ2VJZBIbCgllbnRpdH'
     'lfaWQYAiABKAlSCGVudGl0eUlkEiIKBG5hbWUYAyABKAsyDi5jYXNobWVyZS5OYW1lUgRuYW1l'
-    'EiAKC2Rlc2NyaXB0aW9uGAQgASgJUgtkZXNjcmlwdGlvbhIcCglhdHRpYnV0ZXMYBSADKAxSCW'
-    'F0dGlidXRlcw==');
+    'EiAKC2Rlc2NyaXB0aW9uGAQgASgJUgtkZXNjcmlwdGlvbhIYCgd0YXJnZXRzGAUgASgMUgd0YX'
+    'JnZXRz');
 
 @$core.Deprecated('Use newSpecsResponseDescriptor instead')
 const NewSpecsResponse$json = {
@@ -62,14 +48,14 @@ final $typed_data.Uint8List newSpecsResponseDescriptor = $convert.base64Decode(
 const ListSpecsRequest$json = {
   '1': 'ListSpecsRequest',
   '2': [
-    {'1': 'manage_id', '3': 1, '4': 1, '5': 9, '10': 'manageId'},
+    {'1': 'manage_id', '3': 1, '4': 1, '5': 5, '10': 'manageId'},
     {'1': 'entity_id', '3': 2, '4': 1, '5': 9, '10': 'entityId'},
   ],
 };
 
 /// Descriptor for `ListSpecsRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List listSpecsRequestDescriptor = $convert.base64Decode(
-    'ChBMaXN0U3BlY3NSZXF1ZXN0EhsKCW1hbmFnZV9pZBgBIAEoCVIIbWFuYWdlSWQSGwoJZW50aX'
+    'ChBMaXN0U3BlY3NSZXF1ZXN0EhsKCW1hbmFnZV9pZBgBIAEoBVIIbWFuYWdlSWQSGwoJZW50aX'
     'R5X2lkGAIgASgJUghlbnRpdHlJZA==');
 
 @$core.Deprecated('Use listSpecsResponseDescriptor instead')

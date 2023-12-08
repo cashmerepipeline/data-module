@@ -1,7 +1,9 @@
+use std::path::{Path, PathBuf};
 use cash_result::{operation_failed, Failed, OperationResult};
+use configs::ConfigTrait;
+
 use dependencies_sync::bytes::{self, BufMut};
 use dependencies_sync::log::{debug, info};
-use std::path::{Path, PathBuf};
 
 use dependencies_sync::fs4;
 use dependencies_sync::rust_i18n::{self, t};
@@ -31,9 +33,7 @@ impl UploadDelegator {
         file_info: &FileInfo,
         request_size: u64,
     ) -> Result<(PathBuf, PathBuf), OperationResult> {
-        let data_root = &configs::get_config::<DataServerConfigs>()
-            .unwrap()
-            .root_dir_path;
+        let data_root = &DataServerConfigs::get().root_dir_path;
 
         let mut data_dir_path = PathBuf::new();
         data_dir_path.push(data_root);
@@ -165,9 +165,7 @@ impl UploadDelegator {
 
     /// 检查磁盘空间是否足够
     pub async fn check_disk_space_enough(&self, file_size: u64) -> bool {
-        let data_root = &configs::get_config::<DataServerConfigs>()
-            .unwrap()
-            .root_dir_path;
+        let data_root = &DataServerConfigs::get().root_dir_path;
         let data_root_path = Path::new(data_root);
 
         let available_space = match fs4::available_space(data_root_path) {

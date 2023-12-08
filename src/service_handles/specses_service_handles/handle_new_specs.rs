@@ -1,5 +1,8 @@
-use dependencies_sync::bson::{self, doc};
+use std::ops::Deref;
+
+use dependencies_sync::bson::{self, doc, Document};
 use dependencies_sync::futures::TryFutureExt;
+use dependencies_sync::log;
 use dependencies_sync::rust_i18n::{self, t};
 use dependencies_sync::tonic::async_trait;
 
@@ -58,6 +61,8 @@ async fn validate_request_params(
     let name = &request.get_ref().name;
     let description = &request.get_ref().description;
     
+    log::info!("---{:?}", name);
+
     validate_manage_id(&manage_id).await?;
     validate_entity_id(manage_id, entity_id).await?;
     validate_name(name)?;
@@ -75,20 +80,12 @@ async fn handle_new_specs(
     let entity_id = &request.get_ref().entity_id;
     let name = &request.get_ref().name;
     let description = &request.get_ref().description;
-    let attributes = &request.get_ref().attibutes;
+    let targets = &request.get_ref().targets;
 
-    let local_name = match name {
-        Some(n) => n,
-        None => {
-            return Err(Status::aborted(format!(
-                "{}--{}-{}",
-                t!("没有指定名称"),
-                manage_id,
-                entity_id
-            )));
-        }
-    };
+    let local_name = name.as_ref().unwrap(); 
+
     let name_doc = doc! {local_name.language.clone():local_name.name.clone()};
+    let targets_doc = bson::from_slice::<Document>(targets).unwrap();
 
     let majordomo_arc = get_majordomo();
     let specs_manager = majordomo_arc.get_manager_by_id(SPECSES_MANAGE_ID).unwrap();
@@ -115,10 +112,7 @@ async fn handle_new_specs(
     new_entity_doc.insert(DESCRIPTION_FIELD_ID.to_string(), description.clone());
     new_entity_doc.insert(
         SPECSES_TARGETS_FIELD_ID.to_string(),
-        attributes
-            .iter()
-            .map(|t| bson::from_slice(t).unwrap())
-            .collect::<Vec<bson::Bson>>(),
+        targets_doc,
     );
 
     let new_specs_result = specs_manager

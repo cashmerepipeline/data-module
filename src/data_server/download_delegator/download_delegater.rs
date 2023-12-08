@@ -12,6 +12,7 @@ use dependencies_sync::tokio::io::{AsyncReadExt, AsyncSeekExt};
 use dependencies_sync::tokio::sync::mpsc::Sender;
 
 use cash_result::{Failed, OperationResult};
+use configs::ConfigTrait;
 
 use crate::DataServerConfigs;
 
@@ -31,9 +32,7 @@ impl DownloadDelegator {
         sub_path: &String,
         file_name: &String,
     ) -> Result<PathBuf, OperationResult> {
-        let data_root = &configs::get_config::<DataServerConfigs>()
-            .unwrap()
-            .root_dir_path;
+        let data_root = &DataServerConfigs::get().root_dir_path;
 
         let mut file_pathbuf = PathBuf::new();
         file_pathbuf.push(data_root);

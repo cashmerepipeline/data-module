@@ -6,6 +6,7 @@ use dependencies_sync::rust_i18n::{self, t};
 
 use request_utils::request_account_context;
 use service_utils::types::UnaryResponseResult;
+use validates::{validate_manage_id, validate_entity_id};
 
 use crate::ids_codes::field_ids::*;
 use crate::protocols::*;
@@ -51,18 +52,10 @@ async fn validate_request_params(
 ) -> Result<Request<ListSpecsRequest>, Status> {
     // 管理编号不能为空
     let manage_id = &request.get_ref().manage_id;
-    if manage_id.is_empty() {
-        return Err(Status::invalid_argument(
-            t!("管理编号不能为空")
-        ));
-    }
-    // 实体编号不能为空
     let entity_id = &request.get_ref().entity_id;
-    if entity_id.is_empty() {
-        return Err(Status::invalid_argument(
-            t!("实体编号不能为空")
-        ));
-    }
+
+    validate_manage_id(manage_id).await?;
+    validate_entity_id(manage_id, entity_id).await?;
 
     Ok(request)
 }

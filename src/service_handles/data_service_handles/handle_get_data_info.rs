@@ -1,6 +1,6 @@
 use dependencies_sync::futures::TryFutureExt;
-use dependencies_sync::tonic::async_trait;
 use dependencies_sync::rust_i18n::{self, t};
+use dependencies_sync::tonic::async_trait;
 
 use crate::ids_codes::field_ids::*;
 use crate::ids_codes::manage_ids::*;
@@ -59,12 +59,15 @@ async fn handle_get_data_info(
     let majordomo_arc = get_majordomo();
     let data_manager = majordomo_arc.get_manager_by_id(DATAS_MANAGE_ID).unwrap();
 
-    let result = data_manager.get_entity_by_id(data_id).await;
+    let result = data_manager.get_entity_by_id(data_id, &vec![]).await;
     match result {
         Ok(r) => Ok(Response::new(GetDataInfoResponse {
             data_info: Some(DataInfo {
                 data_type: r.get_i32(DATAS_DATA_TYPE_FIELD_ID.to_string()).unwrap(),
-                specs_id: r.get_str(DATAS_SPECS_ID_FIELD_ID.to_string()).unwrap().to_owned(),
+                specs_id: r
+                    .get_str(DATAS_SPECS_ID_FIELD_ID.to_string())
+                    .unwrap()
+                    .to_owned(),
                 stages: r
                     .get_array(DATAS_STAGES_FIELD_ID.to_string())
                     .unwrap_or(&vec![])

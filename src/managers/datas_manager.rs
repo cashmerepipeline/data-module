@@ -72,7 +72,7 @@ impl ManagerTrait for DatasManager {
             } else {
                 let collection_name = MANAGES_MANAGE_ID.to_string();
                 let id_str = DATAS_MANAGE_ID.to_string();
-                let m_doc = match entity::get_entity_by_id(&collection_name, &id_str).await {
+                let m_doc = match entity::get_entity_by_id(&collection_name, &id_str, &[]).await {
                     Ok(r) => r,
                     Err(e) => panic!("{} {}", e.operation(), e.details()),
                 };
@@ -91,7 +91,7 @@ impl ManagerTrait for DatasManager {
             } else {
                 let collection_name = MANAGES_MANAGE_ID.to_string();
                 let id_str = DATAS_MANAGE_ID.to_string();
-                let m_doc = match entity::get_entity_by_id(&collection_name, &id_str).await {
+                let m_doc = match entity::get_entity_by_id(&collection_name, &id_str, &[]).await {
                     Ok(r) => r,
                     Err(e) => panic!("{} {}", e.operation(), e.details()),
                 };

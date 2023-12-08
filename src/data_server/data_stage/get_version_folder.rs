@@ -3,6 +3,7 @@ use std::path::PathBuf;
 use dependencies_sync::rust_i18n::{self, t};
 use cash_result::{operation_failed, OperationResult};
 use crate::DataServerConfigs;
+use configs::ConfigTrait;
 
 
 pub fn get_version_folder(
@@ -11,7 +12,7 @@ pub fn get_version_folder(
     stage_id: &String,
     version: &String,
 ) -> Result<PathBuf, OperationResult> {
-    let data_root = &configs::get_config::<DataServerConfigs>().unwrap().root_dir_path;
+    let data_root = &DataServerConfigs::get().root_dir_path;
 
     // TODO: 目录规则解析出specs、stage、version
 
