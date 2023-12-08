@@ -10,7 +10,7 @@ static DATA_SERVER_CONFIGS: OnceLock<DataServerConfigs> = OnceLock::new();
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct DataServerConfigs {
-    // 数据根目录
+    // 数据根目录，数据服务文件存储根目录
     pub root_dir_path: String,
     // 文件最大大小
     pub max_file_size: u64,
@@ -20,16 +20,19 @@ pub struct DataServerConfigs {
     pub max_sequence_length: u32,
     // 上传数据块最大数量
     pub transfer_chunk_size: u32,
+    // 文件传输超时设置，根据实际文件大小设置，0为不限定时间
+    pub transfer_timeout: u32,
     // 最大文件上传连接
     pub max_file_upload_number: u16,
     // 最大文件下载连接
     pub max_file_download_number: u16,
+    // 内部网络访问路径，window需要设置共享盘符，posix需要设置挂载路径
     pub internal_root_dir_map: HashMap<String, String>
 }
 
 impl ConfigTrait for DataServerConfigs {
     fn name() -> &'static str {
-        return DATA_SERVER_CONFIGS_NAME;
+        DATA_SERVER_CONFIGS_NAME
     }
 
     fn get() -> &'static Self {
@@ -57,9 +60,10 @@ impl Default for DataServerConfigs {
             max_set_size: 1000,
             max_sequence_length: 10000,
             transfer_chunk_size: 1024 * 128,
+            transfer_timeout: 0,
             max_file_upload_number: 256,
             max_file_download_number: 256,
-            internal_root_dir_map: internal_root_dir_map
+            internal_root_dir_map
         }
     }
     

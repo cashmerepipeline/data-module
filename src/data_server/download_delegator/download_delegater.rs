@@ -25,8 +25,8 @@ pub struct DownloadDelegator {
 impl DownloadDelegator {
     pub async fn check_request_file_exists(
         &self,
+        specs_id: &String,
         data_id: &String,
-        specs: &String,
         stage: &String,
         version: &String,
         sub_path: &String,
@@ -36,8 +36,8 @@ impl DownloadDelegator {
 
         let mut file_pathbuf = PathBuf::new();
         file_pathbuf.push(data_root);
+        file_pathbuf.push(specs_id);
         file_pathbuf.push(data_id);
-        file_pathbuf.push(specs);
         file_pathbuf.push(stage);
         file_pathbuf.push(version);
         file_pathbuf.push(sub_path);

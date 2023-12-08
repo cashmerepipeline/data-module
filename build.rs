@@ -35,7 +35,7 @@ fn main() {
         .unwrap();
 
     define_utils::generate_manage_defines(
-        &vec!["manage_defines"],
+        &["manage_defines"],
         "src/ids_codes",
         Some("dart_packages/data_module/lib"),
     );

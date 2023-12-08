@@ -71,8 +71,8 @@ async fn handle_download_file(
         return Err(Status::data_loss(t!("数据流错误")));
     };
 
+    let specs_id = first_request.specs_id.clone();
     let data_id = first_request.data_id.clone();
-    let specs = first_request.specs.clone();
     let stage = first_request.stage.clone();
     let version = first_request.version.clone();
     let sub_path = first_request.sub_path.clone();
@@ -80,7 +80,7 @@ async fn handle_download_file(
     let chunk_index = first_request.chunk_index;
 
     // 检查必填项
-    if data_id.is_empty() || specs.is_empty() || stage.is_empty() || version.is_empty() {
+    if data_id.is_empty() || stage.is_empty() || version.is_empty() {
         return Err(Status::invalid_argument(t!("必填项缺失")));
     }
 
@@ -99,7 +99,7 @@ async fn handle_download_file(
     };
 
     let file_path = match delegator
-        .check_request_file_exists(&data_id, &specs, &stage, &version, &sub_path, &file_name)
+        .check_request_file_exists(&specs_id, &data_id, &stage, &version, &sub_path, &file_name)
         .await
     {
         Ok(r) => r,
@@ -133,7 +133,7 @@ async fn handle_download_file(
     let mut current_chunk_index = chunk_index;
 
     info!(
-        "{}: {data_id}--{specs}--{stage}--{version}--{sub_path}--{file_name}",
+        "{}: {data_id}--{stage}--{version}--{sub_path}--{file_name}",
         t!("开始发送文件"),
     );
 

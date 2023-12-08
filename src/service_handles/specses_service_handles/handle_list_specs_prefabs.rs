@@ -1,7 +1,7 @@
 use dependencies_sync::bson::{self, doc};
 use dependencies_sync::futures::TryFutureExt;
 use dependencies_sync::tonic::async_trait;
-use dependencies_sync::rust_i18n::{self, t};
+
 use dependencies_sync::tonic::{Request, Response, Status};
 
 use majordomo::{self, get_majordomo};
@@ -14,8 +14,8 @@ use request_utils::request_account_context;
 use service_utils::types::UnaryResponseResult;
 use view::add_query_filters;
 
-use crate::ids_codes::field_ids::*;
-use crate::ids_codes::manage_ids::*;
+
+
 
 #[async_trait]
 pub trait HandleListSpecsPrefabs {

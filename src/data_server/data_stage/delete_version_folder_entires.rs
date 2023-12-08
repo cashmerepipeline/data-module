@@ -19,15 +19,13 @@ pub async fn delete_version_folder_entries(
                     format!("{}: {}", t!("删除文件夹失败"), e),
                 ));
             };
-        } else {
-            if let Err(e) = fs::remove_file(entry_path).await{
-                error!("{}: {}", t!("删除文件失败"), e);
-                
-                return Err(operation_failed(
-                    "delete_version_folder_entries",
-                    format!("{}: {}", t!("删除文件失败"), e),
-                ));
-            };
+        } else if let Err(e) = fs::remove_file(entry_path).await{
+            error!("{}: {}", t!("删除文件失败"), e);
+            
+            return Err(operation_failed(
+                "delete_version_folder_entries",
+                format!("{}: {}", t!("删除文件失败"), e),
+            ));
         }
     }
     Ok(())

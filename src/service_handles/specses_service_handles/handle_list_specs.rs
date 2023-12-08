@@ -2,7 +2,7 @@ use dependencies_sync::bson::{self, doc};
 use dependencies_sync::futures::TryFutureExt;
 use dependencies_sync::tonic::async_trait;
 use dependencies_sync::tonic::{Request, Response, Status};
-use dependencies_sync::rust_i18n::{self, t};
+
 
 use request_utils::request_account_context;
 use service_utils::types::UnaryResponseResult;
@@ -89,7 +89,7 @@ async fn handle_list_specs(
     };
 
     let filter_doc = doc! {
-        SPECSES_MANAGE_ID_FIELD_ID.to_string(): owner_manage_id.to_string(),
+        SPECSES_MANAGE_ID_FIELD_ID.to_string(): owner_manage_id,
         SPECSES_ENTITY_ID_FIELD_ID.to_string(): owner_entity_id.to_string(),
     };
 

@@ -9,7 +9,7 @@ mod download_delegator;
 mod dowload_delegator_pool;
 
 pub use upload_delegator::*;
-pub use download_delegator::*;
+
 
 pub use data_server::*;
 pub(crate) use upload_delegators_pool::*;

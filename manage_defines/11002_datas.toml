@@ -18,6 +18,7 @@ schema = [
   # 2003
   # [{name:stage, versions:[files or dirs], current_version: file or dir},...}
   { data_type = "Document", name_map = { zh = "阶段表", en = "stages" }, removed = false },
+  { data_type = "String", name_map = { zh = "标记", en = "mark" }, removed = false },
 ]
 
 [items]

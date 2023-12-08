@@ -1,9 +1,13 @@
-///
+//
 //  Generated code. Do not modify.
 //  source: file_transfer.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
+
+// ignore_for_file: annotate_overrides, camel_case_types, comment_references
+// ignore_for_file: constant_identifier_names, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_final_fields
+// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
 
 import 'dart:core' as $core;
 
@@ -12,24 +16,13 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'file_info.pb.dart' as $0;
 
+/// 上传文件数据
+/// 第一个包块编号为0，最后一个包块编号为0, 即从0开始，到0结束
+/// 第一个包和最后一个包不包含文件数据，作为传输标记用
+/// 最终路径为：/{specs_id}/{data_id}/{stage}/{version}/{sub_path}/{file_name}
 class UploadFileRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UploadFileRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dataId')
-    ..a<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'totalChunks', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$fixnum.Int64>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'currentChunkIndex', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'chunk', $pb.PbFieldType.OY)
-    ..aOM<$0.FileInfo>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fileInfo', subBuilder: $0.FileInfo.create)
-    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'chunkMd5')
-    ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stage')
-    ..aOS(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'version')
-    ..aOS(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'specs')
-    ..aOS(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'subPath')
-    ..hasRequiredFields = false
-  ;
-
-  UploadFileRequest._() : super();
   factory UploadFileRequest({
-    $core.String? dataId,
+    $core.String? specsId,
     $fixnum.Int64? totalChunks,
     $fixnum.Int64? currentChunkIndex,
     $core.List<$core.int>? chunk,
@@ -37,44 +30,60 @@ class UploadFileRequest extends $pb.GeneratedMessage {
     $core.String? chunkMd5,
     $core.String? stage,
     $core.String? version,
-    $core.String? specs,
+    $core.String? dataId,
     $core.String? subPath,
   }) {
-    final _result = create();
-    if (dataId != null) {
-      _result.dataId = dataId;
+    final $result = create();
+    if (specsId != null) {
+      $result.specsId = specsId;
     }
     if (totalChunks != null) {
-      _result.totalChunks = totalChunks;
+      $result.totalChunks = totalChunks;
     }
     if (currentChunkIndex != null) {
-      _result.currentChunkIndex = currentChunkIndex;
+      $result.currentChunkIndex = currentChunkIndex;
     }
     if (chunk != null) {
-      _result.chunk = chunk;
+      $result.chunk = chunk;
     }
     if (fileInfo != null) {
-      _result.fileInfo = fileInfo;
+      $result.fileInfo = fileInfo;
     }
     if (chunkMd5 != null) {
-      _result.chunkMd5 = chunkMd5;
+      $result.chunkMd5 = chunkMd5;
     }
     if (stage != null) {
-      _result.stage = stage;
+      $result.stage = stage;
     }
     if (version != null) {
-      _result.version = version;
+      $result.version = version;
     }
-    if (specs != null) {
-      _result.specs = specs;
+    if (dataId != null) {
+      $result.dataId = dataId;
     }
     if (subPath != null) {
-      _result.subPath = subPath;
+      $result.subPath = subPath;
     }
-    return _result;
+    return $result;
   }
+  UploadFileRequest._() : super();
   factory UploadFileRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory UploadFileRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'UploadFileRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'specsId')
+    ..a<$fixnum.Int64>(2, _omitFieldNames ? '' : 'totalChunks', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$fixnum.Int64>(3, _omitFieldNames ? '' : 'currentChunkIndex', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$core.List<$core.int>>(4, _omitFieldNames ? '' : 'chunk', $pb.PbFieldType.OY)
+    ..aOM<$0.FileInfo>(5, _omitFieldNames ? '' : 'fileInfo', subBuilder: $0.FileInfo.create)
+    ..aOS(6, _omitFieldNames ? '' : 'chunkMd5')
+    ..aOS(8, _omitFieldNames ? '' : 'stage')
+    ..aOS(9, _omitFieldNames ? '' : 'version')
+    ..aOS(10, _omitFieldNames ? '' : 'dataId')
+    ..aOS(11, _omitFieldNames ? '' : 'subPath')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -84,8 +93,10 @@ class UploadFileRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  UploadFileRequest copyWith(void Function(UploadFileRequest) updates) => super.copyWith((message) => updates(message as UploadFileRequest)) as UploadFileRequest; // ignore: deprecated_member_use
+  UploadFileRequest copyWith(void Function(UploadFileRequest) updates) => super.copyWith((message) => updates(message as UploadFileRequest)) as UploadFileRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static UploadFileRequest create() => UploadFileRequest._();
   UploadFileRequest createEmptyInstance() => create();
@@ -95,13 +106,13 @@ class UploadFileRequest extends $pb.GeneratedMessage {
   static UploadFileRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get dataId => $_getSZ(0);
+  $core.String get specsId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set dataId($core.String v) { $_setString(0, v); }
+  set specsId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasDataId() => $_has(0);
+  $core.bool hasSpecsId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearDataId() => clearField(1);
+  void clearSpecsId() => clearField(1);
 
   @$pb.TagNumber(2)
   $fixnum.Int64 get totalChunks => $_getI64(1);
@@ -150,6 +161,7 @@ class UploadFileRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   void clearChunkMd5() => clearField(6);
 
+  /// 阶段，如：开发，测试，生产
   @$pb.TagNumber(8)
   $core.String get stage => $_getSZ(6);
   @$pb.TagNumber(8)
@@ -159,6 +171,7 @@ class UploadFileRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   void clearStage() => clearField(8);
 
+  /// 版本，如：v01
   @$pb.TagNumber(9)
   $core.String get version => $_getSZ(7);
   @$pb.TagNumber(9)
@@ -168,15 +181,17 @@ class UploadFileRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   void clearVersion() => clearField(9);
 
+  /// 规格，如：普通款，高级款，豪华款
   @$pb.TagNumber(10)
-  $core.String get specs => $_getSZ(8);
+  $core.String get dataId => $_getSZ(8);
   @$pb.TagNumber(10)
-  set specs($core.String v) { $_setString(8, v); }
+  set dataId($core.String v) { $_setString(8, v); }
   @$pb.TagNumber(10)
-  $core.bool hasSpecs() => $_has(8);
+  $core.bool hasDataId() => $_has(8);
   @$pb.TagNumber(10)
-  void clearSpecs() => clearField(10);
+  void clearDataId() => clearField(10);
 
+  /// 相对于版本目录的子路径，用于保持文件集的相对良好组织，如：v01/a/b/c
   @$pb.TagNumber(11)
   $core.String get subPath => $_getSZ(9);
   @$pb.TagNumber(11)
@@ -187,24 +202,26 @@ class UploadFileRequest extends $pb.GeneratedMessage {
   void clearSubPath() => clearField(11);
 }
 
+/// 下一个包块编号
 class UploadFileResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UploadFileResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..a<$fixnum.Int64>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nextChunkIndex', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..hasRequiredFields = false
-  ;
-
-  UploadFileResponse._() : super();
   factory UploadFileResponse({
     $fixnum.Int64? nextChunkIndex,
   }) {
-    final _result = create();
+    final $result = create();
     if (nextChunkIndex != null) {
-      _result.nextChunkIndex = nextChunkIndex;
+      $result.nextChunkIndex = nextChunkIndex;
     }
-    return _result;
+    return $result;
   }
+  UploadFileResponse._() : super();
   factory UploadFileResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory UploadFileResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'UploadFileResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..a<$fixnum.Int64>(1, _omitFieldNames ? '' : 'nextChunkIndex', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -214,8 +231,10 @@ class UploadFileResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  UploadFileResponse copyWith(void Function(UploadFileResponse) updates) => super.copyWith((message) => updates(message as UploadFileResponse)) as UploadFileResponse; // ignore: deprecated_member_use
+  UploadFileResponse copyWith(void Function(UploadFileResponse) updates) => super.copyWith((message) => updates(message as UploadFileResponse)) as UploadFileResponse;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static UploadFileResponse create() => UploadFileResponse._();
   UploadFileResponse createEmptyInstance() => create();
@@ -234,54 +253,57 @@ class UploadFileResponse extends $pb.GeneratedMessage {
   void clearNextChunkIndex() => clearField(1);
 }
 
+/// 下载文件数据
+/// 编号为0请求返回文件信息
 class DownloadFileRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DownloadFileRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dataId')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stage')
-    ..a<$fixnum.Int64>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'chunkIndex', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'version')
-    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fileName')
-    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'specs')
-    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'subPath')
-    ..hasRequiredFields = false
-  ;
-
-  DownloadFileRequest._() : super();
   factory DownloadFileRequest({
     $core.String? dataId,
     $core.String? stage,
     $fixnum.Int64? chunkIndex,
     $core.String? version,
     $core.String? fileName,
-    $core.String? specs,
+    $core.String? specsId,
     $core.String? subPath,
   }) {
-    final _result = create();
+    final $result = create();
     if (dataId != null) {
-      _result.dataId = dataId;
+      $result.dataId = dataId;
     }
     if (stage != null) {
-      _result.stage = stage;
+      $result.stage = stage;
     }
     if (chunkIndex != null) {
-      _result.chunkIndex = chunkIndex;
+      $result.chunkIndex = chunkIndex;
     }
     if (version != null) {
-      _result.version = version;
+      $result.version = version;
     }
     if (fileName != null) {
-      _result.fileName = fileName;
+      $result.fileName = fileName;
     }
-    if (specs != null) {
-      _result.specs = specs;
+    if (specsId != null) {
+      $result.specsId = specsId;
     }
     if (subPath != null) {
-      _result.subPath = subPath;
+      $result.subPath = subPath;
     }
-    return _result;
+    return $result;
   }
+  DownloadFileRequest._() : super();
   factory DownloadFileRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory DownloadFileRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DownloadFileRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'dataId')
+    ..aOS(2, _omitFieldNames ? '' : 'stage')
+    ..a<$fixnum.Int64>(3, _omitFieldNames ? '' : 'chunkIndex', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..aOS(4, _omitFieldNames ? '' : 'version')
+    ..aOS(5, _omitFieldNames ? '' : 'fileName')
+    ..aOS(6, _omitFieldNames ? '' : 'specsId')
+    ..aOS(7, _omitFieldNames ? '' : 'subPath')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -291,8 +313,10 @@ class DownloadFileRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  DownloadFileRequest copyWith(void Function(DownloadFileRequest) updates) => super.copyWith((message) => updates(message as DownloadFileRequest)) as DownloadFileRequest; // ignore: deprecated_member_use
+  DownloadFileRequest copyWith(void Function(DownloadFileRequest) updates) => super.copyWith((message) => updates(message as DownloadFileRequest)) as DownloadFileRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static DownloadFileRequest create() => DownloadFileRequest._();
   DownloadFileRequest createEmptyInstance() => create();
@@ -328,6 +352,7 @@ class DownloadFileRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   void clearChunkIndex() => clearField(3);
 
+  /// 如果给出版本，则下载对应版本的文件，没有则下载阶段软连接指向的文件
   @$pb.TagNumber(4)
   $core.String get version => $_getSZ(3);
   @$pb.TagNumber(4)
@@ -347,13 +372,13 @@ class DownloadFileRequest extends $pb.GeneratedMessage {
   void clearFileName() => clearField(5);
 
   @$pb.TagNumber(6)
-  $core.String get specs => $_getSZ(5);
+  $core.String get specsId => $_getSZ(5);
   @$pb.TagNumber(6)
-  set specs($core.String v) { $_setString(5, v); }
+  set specsId($core.String v) { $_setString(5, v); }
   @$pb.TagNumber(6)
-  $core.bool hasSpecs() => $_has(5);
+  $core.bool hasSpecsId() => $_has(5);
   @$pb.TagNumber(6)
-  void clearSpecs() => clearField(6);
+  void clearSpecsId() => clearField(6);
 
   @$pb.TagNumber(7)
   $core.String get subPath => $_getSZ(6);
@@ -365,39 +390,43 @@ class DownloadFileRequest extends $pb.GeneratedMessage {
   void clearSubPath() => clearField(7);
 }
 
+/// 返回文件流
+/// 最后一个包编号为0, 表示下载完成
+/// 最后一个包不包含文件数据，作为传输标记用
 class DownloadFileResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DownloadFileResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dataId')
-    ..a<$fixnum.Int64>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'chunkIndex', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'chunk', $pb.PbFieldType.OY)
-    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'chunkMd5')
-    ..hasRequiredFields = false
-  ;
-
-  DownloadFileResponse._() : super();
   factory DownloadFileResponse({
     $core.String? dataId,
     $fixnum.Int64? chunkIndex,
     $core.List<$core.int>? chunk,
     $core.String? chunkMd5,
   }) {
-    final _result = create();
+    final $result = create();
     if (dataId != null) {
-      _result.dataId = dataId;
+      $result.dataId = dataId;
     }
     if (chunkIndex != null) {
-      _result.chunkIndex = chunkIndex;
+      $result.chunkIndex = chunkIndex;
     }
     if (chunk != null) {
-      _result.chunk = chunk;
+      $result.chunk = chunk;
     }
     if (chunkMd5 != null) {
-      _result.chunkMd5 = chunkMd5;
+      $result.chunkMd5 = chunkMd5;
     }
-    return _result;
+    return $result;
   }
+  DownloadFileResponse._() : super();
   factory DownloadFileResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory DownloadFileResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DownloadFileResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'dataId')
+    ..a<$fixnum.Int64>(3, _omitFieldNames ? '' : 'chunkIndex', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$core.List<$core.int>>(4, _omitFieldNames ? '' : 'chunk', $pb.PbFieldType.OY)
+    ..aOS(5, _omitFieldNames ? '' : 'chunkMd5')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -407,8 +436,10 @@ class DownloadFileResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  DownloadFileResponse copyWith(void Function(DownloadFileResponse) updates) => super.copyWith((message) => updates(message as DownloadFileResponse)) as DownloadFileResponse; // ignore: deprecated_member_use
+  DownloadFileResponse copyWith(void Function(DownloadFileResponse) updates) => super.copyWith((message) => updates(message as DownloadFileResponse)) as DownloadFileResponse;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static DownloadFileResponse create() => DownloadFileResponse._();
   DownloadFileResponse createEmptyInstance() => create();
@@ -454,3 +485,6 @@ class DownloadFileResponse extends $pb.GeneratedMessage {
   void clearChunkMd5() => clearField(5);
 }
 
+
+const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
+const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

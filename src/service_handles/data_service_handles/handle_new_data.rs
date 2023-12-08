@@ -1,7 +1,9 @@
 use dependencies_sync::bson::doc;
 use dependencies_sync::futures::TryFutureExt;
 use dependencies_sync::tonic::async_trait;
-use dependencies_sync::rust_i18n::{self, t};
+use validates::validate_entity_id;
+use validates::validate_name;
+
 
 use crate::ids_codes::field_ids::*;
 use crate::ids_codes::manage_ids::*;
@@ -49,6 +51,12 @@ async fn validate_view_rules(
 async fn validate_request_params(
     request: Request<NewDataRequest>,
 ) -> Result<Request<NewDataRequest>, Status> {
+    let specs_id = &request.get_ref().specs_id;
+    let name = &request.get_ref().name;
+
+    validate_entity_id(&SPECSES_MANAGE_ID, specs_id).await?;
+    validate_name(name)?;
+
     Ok(request)
 }
 
@@ -60,6 +68,7 @@ async fn handle_new_data(
     let specs_id = &request.get_ref().specs_id;
     let data_type = &request.get_ref().data_type;
     let name = &request.get_ref().name;
+    let mark = &request.get_ref().mark;
 
     let name = if name.is_some() {
         name.as_ref().unwrap()
@@ -78,6 +87,7 @@ async fn handle_new_data(
         new_entity_doc.insert(NAME_MAP_FIELD_ID.to_string(), local_name);
         new_entity_doc.insert(DATAS_DATA_TYPE_FIELD_ID.to_string(), data_type);
         new_entity_doc.insert(DATAS_SPECS_ID_FIELD_ID.to_string(), specs_id);
+        new_entity_doc.insert(DATAS_MARK_FIELD_ID.to_string(), mark);
 
         let result = data_manager
             .sink_entity(&mut new_entity_doc, &account_id, &role_group)

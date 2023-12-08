@@ -18,6 +18,9 @@ pub struct NewDataRequest {
     pub data_type: i32,
     #[prost(string, tag = "3")]
     pub specs_id: ::prost::alloc::string::String,
+    /// zh: 用于同一规格下不同数据分离标记
+    #[prost(string, tag = "4")]
+    pub mark: ::prost::alloc::string::String,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -156,12 +159,12 @@ pub struct FileInfo {
 /// 上传文件数据
 /// 第一个包块编号为0，最后一个包块编号为0, 即从0开始，到0结束
 /// 第一个包和最后一个包不包含文件数据，作为传输标记用
-/// 最终路径为：/{data_id}/{specs}/{stage}/{version}/{sub_path}/{file_name}
+/// 最终路径为：/{specs_id}/{data_id}/{stage}/{version}/{sub_path}/{file_name}
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct UploadFileRequest {
     #[prost(string, tag = "1")]
-    pub data_id: ::prost::alloc::string::String,
+    pub specs_id: ::prost::alloc::string::String,
     #[prost(uint64, tag = "2")]
     pub total_chunks: u64,
     #[prost(uint64, tag = "3")]
@@ -174,7 +177,7 @@ pub struct UploadFileRequest {
     pub file_info: ::core::option::Option<FileInfo>,
     /// 规格，如：普通款，高级款，豪华款
     #[prost(string, tag = "10")]
-    pub specs: ::prost::alloc::string::String,
+    pub data_id: ::prost::alloc::string::String,
     /// 阶段，如：开发，测试，生产
     #[prost(string, tag = "8")]
     pub stage: ::prost::alloc::string::String,
@@ -197,11 +200,10 @@ pub struct UploadFileResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DownloadFileRequest {
+    #[prost(string, tag = "6")]
+    pub specs_id: ::prost::alloc::string::String,
     #[prost(string, tag = "1")]
     pub data_id: ::prost::alloc::string::String,
-    /// 相对数据存储根目录
-    #[prost(string, tag = "6")]
-    pub specs: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
     pub stage: ::prost::alloc::string::String,
     #[prost(uint64, tag = "3")]

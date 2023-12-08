@@ -69,15 +69,15 @@ async fn handle_upload_file(
         return Err(Status::data_loss(t!("数据流错误")));
     };
 
+    let specs_id = first_request.specs_id.clone();
     let data_id = first_request.data_id.clone();
-    let specs = first_request.specs.clone();
     let stage = first_request.stage.clone();
     let version = first_request.version.clone();
     let sub_path = first_request.sub_path.clone();
     let file_info = first_request.file_info.clone().unwrap();
 
     // 检查必填项
-    if data_id.is_empty() || specs.is_empty() || stage.is_empty() || version.is_empty() {
+    if data_id.is_empty() || specs_id.is_empty() || stage.is_empty() || version.is_empty() {
         return Err(Status::invalid_argument(t!("必填项为缺失")));
     }
 
@@ -98,8 +98,8 @@ async fn handle_upload_file(
     };
 
     let (data_folder, data_file_path) = match delegator_arc.prepare_file_uploading(
+        &specs_id,
         &data_id,
-        &specs,
         &stage,
         &version,
         &sub_path,
@@ -108,6 +108,8 @@ async fn handle_upload_file(
     ) {
         Ok(r) => r,
         Err(e) => {
+            error!("{}: {}", t!("准备上传文件失败"), e.details());
+
             return Err(Status::aborted(format!(
                 "{}-{}",
                 e.details(),
@@ -122,6 +124,8 @@ async fn handle_upload_file(
     {
         Ok(f) => f,
         Err(e) => {
+            error!("{}: {}", t!("获取上传文件失败"), e.details());
+
             return Err(Status::aborted(format!(
                 "{}-{}",
                 e.details(),
@@ -132,6 +136,8 @@ async fn handle_upload_file(
 
     // 磁盘空间是否足够
     if !delegator_arc.check_disk_space_enough(file_info.size).await {
+        error!("{}: {}", t!("磁盘空间不足"), t!("无法上传文件"));
+
         return Err(Status::aborted(format!(
             "{}, {}",
             t!("磁盘空间不足"),
@@ -187,7 +193,7 @@ async fn handle_upload_file(
     };
 
     // 2. 接收线程, 等待客户端发送完成后发出关闭信号后结束退出
-    // TODO: 需要设置最大等待时长
+    // 最大等待时长从设置读取，根据情况设定
     tokio::spawn(async move {
         let file_name = file_info.file_name.clone();
         let data_id = first_request.data_id.clone();
@@ -233,7 +239,6 @@ async fn handle_upload_file(
                             info!("{}, {}", t!("数据块校验失败"), t!("重发数据块"));
 
                             // 不改变数据块编号
-
                             retry_count += 1;
                             // 重试次数超过5次则退出
                             if retry_count > 5 {

@@ -7,16 +7,16 @@ import "file_info.proto";
 // 上传文件数据
 // 第一个包块编号为0，最后一个包块编号为0, 即从0开始，到0结束
 // 第一个包和最后一个包不包含文件数据，作为传输标记用
-// 最终路径为：/{data_id}/{specs}/{stage}/{version}/{sub_path}/{file_name}
+// 最终路径为：/{specs_id}/{data_id}/{stage}/{version}/{sub_path}/{file_name}
 message UploadFileRequest {
-  string data_id = 1;
+  string specs_id = 1;
   uint64 total_chunks = 2;
   uint64 current_chunk_index = 3;
   bytes chunk = 4;
   string chunk_md5 = 6;
   FileInfo file_info = 5;
   // 规格，如：普通款，高级款，豪华款
-  string specs = 10;
+  string data_id = 10;
   // 阶段，如：开发，测试，生产
   string stage = 8;
   // 版本，如：v01
@@ -32,9 +32,8 @@ message UploadFileResponse {
 // 下载文件数据
 // 编号为0请求返回文件信息
 message DownloadFileRequest {
+  string specs_id = 6;
   string data_id = 1;
-  // 相对数据存储根目录
-  string specs = 6;
   string stage = 2;
   uint64 chunk_index = 3;
   // 如果给出版本，则下载对应版本的文件，没有则下载阶段软连接指向的文件

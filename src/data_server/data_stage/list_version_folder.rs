@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 use dependencies_sync::tokio::fs;
 
-use dependencies_sync::rust_i18n::{self, t};
+
 use cash_result::{OperationResult, operation_failed};
 
 /// 使用tokio列出目录下的文件夹和文件，并返回

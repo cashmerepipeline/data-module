@@ -7,8 +7,8 @@ use configs::ConfigTrait;
 
 
 pub fn get_version_folder(
-    data_id: &String,
     specs_id: &String,
+    data_id: &String,
     stage_id: &String,
     version: &String,
 ) -> Result<PathBuf, OperationResult> {
@@ -18,8 +18,8 @@ pub fn get_version_folder(
 
     let mut folder_pathbuf = PathBuf::new();
     folder_pathbuf.push(data_root);
-    folder_pathbuf.push(data_id);
     folder_pathbuf.push(specs_id);
+    folder_pathbuf.push(data_id);
     folder_pathbuf.push(stage_id);
     folder_pathbuf.push(version);
 

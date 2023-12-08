@@ -31,6 +31,8 @@ message NewDataRequest {
   .cashmere.Name name = 1;
   DataType data_type = 2;
   string specs_id = 3;
+  // zh: 用于同一规格下不同数据分离标记
+  string mark = 4;
 }
 message NewDataResponse {
   // 成功返回新id，失败返回错误

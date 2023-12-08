@@ -1,9 +1,10 @@
-use std::path::{Path, PathBuf};
 use cash_result::{operation_failed, Failed, OperationResult};
 use configs::ConfigTrait;
+use std::ffi::OsStr;
+use std::path::{Path, PathBuf};
 
 use dependencies_sync::bytes::{self, BufMut};
-use dependencies_sync::log::{debug, info};
+use dependencies_sync::log::{debug, info, error};
 
 use dependencies_sync::fs4;
 use dependencies_sync::rust_i18n::{self, t};
@@ -25,8 +26,8 @@ impl UploadDelegator {
     /// 成功返回 （上传文件目录，上传文件路径）
     pub fn prepare_file_uploading(
         &self,
+        specs_id: &String,
         data_id: &String,
-        specs: &String,
         stage: &String,
         version: &String,
         sub_path: &String,
@@ -37,37 +38,33 @@ impl UploadDelegator {
 
         let mut data_dir_path = PathBuf::new();
         data_dir_path.push(data_root);
+        data_dir_path.push(specs_id);
         data_dir_path.push(data_id);
-        data_dir_path.push(specs);
         data_dir_path.push(stage);
         data_dir_path.push(version);
         data_dir_path.push(sub_path);
 
-        match check_space_enough(data_dir_path.as_path(), request_size) {
-            Ok(_r) => {
-                let file_ext = Path::new(&file_info.file_name).extension().unwrap();
-                let file_name = Path::new(&file_info.file_name).file_name().unwrap();
-                let mut file_pathbuf = data_dir_path.clone();
-                file_pathbuf.push(file_name);
-                file_pathbuf.set_extension(file_ext);
+        let file_ext = match Path::new(&file_info.file_name).extension(){
+            Some(ext) => ext,
+            None => OsStr::new(""),
+        };
 
-                Ok((data_dir_path.to_path_buf(), file_pathbuf))
-            }
+        let file_name = match Path::new(&file_info.file_name).file_name(){
+            Some(name) => name,
+            None => {
+                error!("{}: {}", t!("无效文件名"), file_info.file_name);
+                return Err(operation_failed("prepare_file_uploading", t!("无效文件名")));
+            },
+        };
 
-            Err(e) => Err(OperationResult::Failed(Failed {
-                operation: "check_space_enough".to_string(),
+        let mut file_pathbuf = data_dir_path.clone();
+        file_pathbuf.push(file_name);
+        file_pathbuf.set_extension(file_ext);
 
-                details: format!(
-                    "{}, {}: {}",
-                    e,
-                    t!("存储空间不足"),
-                    data_dir_path.to_str().unwrap(),
-                ),
-            })),
-        }
+        Ok((data_dir_path.to_path_buf(), file_pathbuf))
     }
 
-    /// 取得上传目标文件
+    /// 取得上传目标文件，根据条件是否断点续传
     pub async fn get_upload_target_file(
         &self,
         data_folder: &PathBuf,
@@ -88,7 +85,7 @@ impl UploadDelegator {
 
         let resume_file_path = data_file_path.with_extension("resume");
 
-        // 如果文件已存在，则以追加的方式打开
+        // zh: 如果文件已存在，则以追加的方式打开
         if data_file_path.exists() {
             if resume_file_path.exists() {
                 debug!(
@@ -110,7 +107,7 @@ impl UploadDelegator {
                     )),
                 }
             } else {
-                // 如果文件已存在，但是没有续传点文件，则截断文件，从头开始写入
+                // zh: 如果文件已存在，但是没有续传点文件，则截断文件，从头开始写入
                 debug!(
                     "{}, {}, {}, {}: {}",
                     t!("文件已存在"),
@@ -138,7 +135,7 @@ impl UploadDelegator {
                 }
             }
         } else {
-            // 如果文件不存在，则创建文件
+            // zh: 如果文件不存在，则创建文件
             let data_file = match File::create(&data_file_path).await {
                 Ok(f) => f,
                 Err(_e) => {

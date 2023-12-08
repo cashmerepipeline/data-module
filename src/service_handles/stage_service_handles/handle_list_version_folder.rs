@@ -70,7 +70,7 @@ async fn handle_list_version_folder(
     let majordomo_arc = get_majordomo();
     let stage_manager = majordomo_arc.get_manager_by_id(STAGES_MANAGE_ID).unwrap();
     let specses_manager = majordomo_arc.get_manager_by_id(SPECSES_MANAGE_ID).unwrap();
-    let datas_manager = majordomo_arc.get_manager_by_id(DATAS_MANAGE_ID).unwrap();
+    let _datas_manager = majordomo_arc.get_manager_by_id(DATAS_MANAGE_ID).unwrap();
 
     let stage_entity = match stage_manager.get_entity_by_id(stage_id, &vec![]).await {
         Ok(r) => r,
@@ -87,7 +87,7 @@ async fn handle_list_version_folder(
         .get_str(STAGES_DATA_ID_FIELD_ID.to_string())
         .unwrap()
         .to_string();
-    let specs_entity = match specses_manager.get_entity_by_id(&specs_id, &vec![]).await {
+    let _specs_entity = match specses_manager.get_entity_by_id(&specs_id, &vec![]).await {
         Ok(r) => r,
         Err(_e) => {
             return Err(Status::not_found(format!(
