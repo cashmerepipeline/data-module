@@ -1,3 +1,276 @@
+#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
+#[repr(i32)]
+pub enum DataType {
+    /// 单个文件
+    FileData = 0,
+    /// 序列文件
+    SequenceData = 1,
+    /// 多类型文件集合
+    FileSetData = 2,
+    /// 类json格式数据
+    DocumentData = 3,
+    /// 图片
+    ImageData = 4,
+    /// 视频
+    VideoData = 5,
+}
+impl DataType {
+    /// String value of the enum field names used in the ProtoBuf definition.
+    ///
+    /// The values are not transformed in any way and thus are considered stable
+    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
+    pub fn as_str_name(&self) -> &'static str {
+        match self {
+            DataType::FileData => "FileData",
+            DataType::SequenceData => "SequenceData",
+            DataType::FileSetData => "FileSetData",
+            DataType::DocumentData => "DocumentData",
+            DataType::ImageData => "ImageData",
+            DataType::VideoData => "VideoData",
+        }
+    }
+    /// Creates an enum from field names used in the ProtoBuf definition.
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
+        match value {
+            "FileData" => Some(Self::FileData),
+            "SequenceData" => Some(Self::SequenceData),
+            "FileSetData" => Some(Self::FileSetData),
+            "DocumentData" => Some(Self::DocumentData),
+            "ImageData" => Some(Self::ImageData),
+            "VideoData" => Some(Self::VideoData),
+            _ => None,
+        }
+    }
+}
+/// 文件信息
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct FileInfo {
+    #[prost(string, tag = "1")]
+    pub file_name: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub md5: ::prost::alloc::string::String,
+    #[prost(uint64, tag = "3")]
+    pub size: u64,
+    #[prost(int64, tag = "4")]
+    pub last_modified_time: i64,
+}
+/// 文件容器，用于文件管理引导
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DataPath {
+    /// 单文件时不使用起始路径
+    /// 文件集合时为文件集合名，也是集合目录名
+    /// 序列时为文件的base_name，也是序列所在目录名，不包含扩展名
+    #[prost(string, tag = "2")]
+    pub start_path: ::prost::alloc::string::String,
+    /// 文件路径相对起始路径
+    /// {"path_str":file_info}
+    #[prost(map = "string, message", tag = "4")]
+    pub files: ::std::collections::HashMap<::prost::alloc::string::String, FileInfo>,
+    /// 如果数据是序列，则有以下字段
+    #[prost(uint32, tag = "5")]
+    pub padding: u32,
+    #[prost(uint32, tag = "6")]
+    pub start: u32,
+    #[prost(uint32, tag = "7")]
+    pub end: u32,
+    #[prost(string, tag = "8")]
+    pub ext: ::prost::alloc::string::String,
+}
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DataServerConfigs {
+    #[prost(string, tag = "1")]
+    pub root_dir_path: ::prost::alloc::string::String,
+    /// 文件最大大小, 16MB
+    #[prost(uint64, tag = "2")]
+    pub max_file_size: u64,
+    /// 文件集最大数量, 1000
+    #[prost(uint32, tag = "3")]
+    pub max_set_size: u32,
+    /// 文件序列最大数量
+    #[prost(uint64, tag = "4")]
+    pub max_sequence_length: u64,
+    /// 最大文件上传连接
+    #[prost(uint32, tag = "5")]
+    pub max_file_upload_number: u32,
+    /// 最大文件下载连接
+    #[prost(uint32, tag = "6")]
+    pub max_file_download_number: u32,
+    /// 块最大大小，1024*128=128KB
+    #[prost(uint32, tag = "7")]
+    pub transfer_chunk_size: u32,
+    /// 内部文件路径，不需要通过服务器上传文件, 可将文件直接存储到目标位置
+    /// {"windows"="X:/data_root/dir", "linux"="/mnt/data_root/dir", "macos" = "/mnt/data_root/dir"}
+    #[prost(map = "string, string", tag = "8")]
+    pub internal_root_dir_map: ::std::collections::HashMap<
+        ::prost::alloc::string::String,
+        ::prost::alloc::string::String,
+    >,
+}
+/// 取得数据服务设置
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GetDataServerConfigsRequest {}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GetDataServerConfigsResponse {
+    #[prost(message, optional, tag = "1")]
+    pub configs: ::core::option::Option<DataServerConfigs>,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct NewSpecsRequest {
+    #[prost(int32, tag = "1")]
+    pub manage_id: i32,
+    #[prost(string, tag = "2")]
+    pub entity_id: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "3")]
+    pub name: ::core::option::Option<::manage_define::cashmere::Name>,
+    #[prost(string, tag = "4")]
+    pub description: ::prost::alloc::string::String,
+    /// bson document
+    #[prost(bytes = "vec", tag = "5")]
+    pub targets: ::prost::alloc::vec::Vec<u8>,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct NewSpecsResponse {
+    /// 成功反回id，失败返回错误信息
+    #[prost(string, tag = "1")]
+    pub result: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListSpecsRequest {
+    #[prost(int32, tag = "1")]
+    pub manage_id: i32,
+    #[prost(string, tag = "2")]
+    pub entity_id: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListSpecsResponse {
+    #[prost(bytes = "vec", repeated, tag = "1")]
+    pub specses: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
+}
+/// 列出规格的数据
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListSpecsDataRequest {
+    #[prost(string, tag = "1")]
+    pub specs_id: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListSpecsDataResponse {
+    /// bson 列表
+    #[prost(bytes = "vec", repeated, tag = "1")]
+    pub data: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
+}
+/// 列出规格的预制件
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListSpecsPrefabsRequest {
+    #[prost(string, tag = "1")]
+    pub specs_id: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListSpecsPrefabsResponse {
+    /// bson 列表
+    #[prost(bytes = "vec", repeated, tag = "1")]
+    pub prefabs: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct NewSpecsAttributeRequest {
+    #[prost(int32, tag = "1")]
+    pub manage_id: i32,
+    #[prost(message, optional, tag = "2")]
+    pub name: ::core::option::Option<::manage_define::cashmere::Name>,
+    #[prost(enumeration = "::manage_define::cashmere::FieldDataType", tag = "3")]
+    pub data_type: i32,
+    #[prost(string, tag = "4")]
+    pub description: ::prost::alloc::string::String,
+    #[prost(bytes = "vec", tag = "5")]
+    pub default_value: ::prost::alloc::vec::Vec<u8>,
+    #[prost(int32, tag = "6")]
+    pub index: i32,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct NewSpecsAttributeResponse {
+    #[prost(string, tag = "1")]
+    pub result: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DeleteSpecsAttributeRequest {
+    #[prost(int32, tag = "1")]
+    pub manage_id: i32,
+    #[prost(uint32, tag = "2")]
+    pub index: u32,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct DeleteSpecsAttributeResponse {
+    #[prost(string, tag = "1")]
+    pub result: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GetSpecsAttributesRequest {
+    #[prost(int32, tag = "1")]
+    pub manage_id: i32,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct GetSpecsAttributesResponse {
+    #[prost(bytes = "vec", repeated, tag = "1")]
+    pub attributes: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct NewPrefabRequest {
+    #[prost(string, tag = "1")]
+    pub specs_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub stage_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub version: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "4")]
+    pub name: ::core::option::Option<::manage_define::cashmere::Name>,
+    /// 使用bson格式存储修改信息
+    #[prost(bytes = "vec", tag = "5")]
+    pub modifies: ::prost::alloc::vec::Vec<u8>,
+    #[prost(string, tag = "6")]
+    pub description: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct NewPrefabResponse {
+    #[prost(string, tag = "1")]
+    pub result: ::prost::alloc::string::String,
+}
+/// 列出预制件
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListPrefabRequest {
+    #[prost(string, tag = "1")]
+    pub specs_id: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListPrefabResponse {
+    #[prost(bytes = "vec", repeated, tag = "1")]
+    pub prefabs: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
+}
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DataInfo {
@@ -55,116 +328,31 @@ pub struct MarkDataRemovedResponse {
     #[prost(string, tag = "1")]
     pub result: ::prost::alloc::string::String,
 }
-#[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash, PartialOrd, Ord, ::prost::Enumeration)]
-#[repr(i32)]
-pub enum DataType {
-    /// 单个文件
-    FileData = 0,
-    /// 序列文件
-    SequenceData = 1,
-    /// 多类型文件集合
-    FileSetData = 2,
-    /// 类json格式数据
-    DocumentData = 3,
-    /// 图片
-    ImageData = 4,
-    /// 视频
-    VideoData = 5,
-}
-impl DataType {
-    /// String value of the enum field names used in the ProtoBuf definition.
-    ///
-    /// The values are not transformed in any way and thus are considered stable
-    /// (if the ProtoBuf definition does not change) and safe for programmatic use.
-    pub fn as_str_name(&self) -> &'static str {
-        match self {
-            DataType::FileData => "FileData",
-            DataType::SequenceData => "SequenceData",
-            DataType::FileSetData => "FileSetData",
-            DataType::DocumentData => "DocumentData",
-            DataType::ImageData => "ImageData",
-            DataType::VideoData => "VideoData",
-        }
-    }
-    /// Creates an enum from field names used in the ProtoBuf definition.
-    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
-        match value {
-            "FileData" => Some(Self::FileData),
-            "SequenceData" => Some(Self::SequenceData),
-            "FileSetData" => Some(Self::FileSetData),
-            "DocumentData" => Some(Self::DocumentData),
-            "ImageData" => Some(Self::ImageData),
-            "VideoData" => Some(Self::VideoData),
-            _ => None,
-        }
-    }
-}
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DataServerConfigs {
-    #[prost(string, tag = "1")]
-    pub root_dir_path: ::prost::alloc::string::String,
-    /// 文件最大大小, 16MB
-    #[prost(uint64, tag = "2")]
-    pub max_file_size: u64,
-    /// 文件集最大数量, 1000
-    #[prost(uint32, tag = "3")]
-    pub max_set_size: u32,
-    /// 文件序列最大数量
-    #[prost(uint64, tag = "4")]
-    pub max_sequence_length: u64,
-    /// 最大文件上传连接
-    #[prost(uint32, tag = "5")]
-    pub max_file_upload_number: u32,
-    /// 最大文件下载连接
-    #[prost(uint32, tag = "6")]
-    pub max_file_download_number: u32,
-    /// 块最大大小，1024*128=128KB
-    #[prost(uint32, tag = "7")]
-    pub transfer_chunk_size: u32,
-    /// 内部文件路径，不需要通过服务器上传文件, 可将文件直接存储到目标位置
-    /// {"windows"="X:/data_root/dir", "linux"="/mnt/data_root/dir", "macos" = "/mnt/data_root/dir"}
-    #[prost(map = "string, string", tag = "8")]
-    pub internal_root_dir_map: ::std::collections::HashMap<
-        ::prost::alloc::string::String,
-        ::prost::alloc::string::String,
-    >,
-}
-/// 取得数据服务设置
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct GetDataServerConfigsRequest {}
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct GetDataServerConfigsResponse {
-    #[prost(message, optional, tag = "1")]
-    pub configs: ::core::option::Option<DataServerConfigs>,
-}
-/// 文件信息
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct FileInfo {
-    #[prost(string, tag = "1")]
-    pub file_name: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub md5: ::prost::alloc::string::String,
-    #[prost(uint64, tag = "3")]
-    pub size: u64,
-    #[prost(int64, tag = "4")]
-    pub last_modified_time: i64,
-}
 /// 上传文件数据
-/// 第一个包块编号为0，最后一个包块编号为0, 即从0开始，到0结束
-/// 第一个包和最后一个包不包含文件数据，作为传输标记用
+/// 第一个包编号为0，包含文件信息等信息，最后一个包块编号为0, 即从0开始，到0结束
+/// 第一个包和最后一个包不包含文件数据，作为传输标记用，用于建立连接等操作
+/// 传输包不包含文件信息等信息，只包含数据块的必要信息
 /// 最终路径为：/{specs_id}/{data_id}/{stage}/{version}/{sub_path}/{file_name}
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct UploadFileRequest {
+pub struct UploadFileToVersionRequest {
     #[prost(string, tag = "1")]
     pub specs_id: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "5")]
+    pub file_info: ::core::option::Option<FileInfo>,
+    /// 规格，如：普通款，高级款，豪华款
+    #[prost(string, tag = "10")]
+    pub data_id: ::prost::alloc::string::String,
+    #[prost(enumeration = "DataType", tag = "11")]
+    pub data_type: i32,
+    #[prost(string, tag = "12")]
+    pub sub_path: ::prost::alloc::string::String,
+    /// 阶段，如：开发，测试，生产
+    #[prost(string, tag = "8")]
+    pub stage: ::prost::alloc::string::String,
+    /// 版本，如：v01
+    #[prost(string, tag = "9")]
+    pub version: ::prost::alloc::string::String,
     #[prost(uint64, tag = "2")]
     pub total_chunks: u64,
     #[prost(uint64, tag = "3")]
@@ -173,25 +361,11 @@ pub struct UploadFileRequest {
     pub chunk: ::prost::alloc::vec::Vec<u8>,
     #[prost(string, tag = "6")]
     pub chunk_md5: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "5")]
-    pub file_info: ::core::option::Option<FileInfo>,
-    /// 规格，如：普通款，高级款，豪华款
-    #[prost(string, tag = "10")]
-    pub data_id: ::prost::alloc::string::String,
-    /// 阶段，如：开发，测试，生产
-    #[prost(string, tag = "8")]
-    pub stage: ::prost::alloc::string::String,
-    /// 版本，如：v01
-    #[prost(string, tag = "9")]
-    pub version: ::prost::alloc::string::String,
-    /// 相对于版本目录的子路径，用于保持文件集的相对良好组织，如：v01/a/b/c
-    #[prost(string, tag = "11")]
-    pub sub_path: ::prost::alloc::string::String,
 }
 /// 下一个包块编号
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct UploadFileResponse {
+pub struct UploadFileToVersionResponse {
     #[prost(uint64, tag = "1")]
     pub next_chunk_index: u64,
 }
@@ -230,42 +404,6 @@ pub struct DownloadFileResponse {
     pub chunk: ::prost::alloc::vec::Vec<u8>,
     #[prost(string, tag = "5")]
     pub chunk_md5: ::prost::alloc::string::String,
-}
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct NewPrefabRequest {
-    #[prost(string, tag = "1")]
-    pub specs_id: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub stage_id: ::prost::alloc::string::String,
-    #[prost(string, tag = "3")]
-    pub version: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "4")]
-    pub name: ::core::option::Option<::manage_define::cashmere::Name>,
-    /// 使用bson格式存储修改信息
-    #[prost(bytes = "vec", tag = "5")]
-    pub modifies: ::prost::alloc::vec::Vec<u8>,
-    #[prost(string, tag = "6")]
-    pub description: ::prost::alloc::string::String,
-}
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct NewPrefabResponse {
-    #[prost(string, tag = "1")]
-    pub result: ::prost::alloc::string::String,
-}
-/// 列出预制件
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ListPrefabRequest {
-    #[prost(string, tag = "1")]
-    pub specs_id: ::prost::alloc::string::String,
-}
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ListPrefabResponse {
-    #[prost(bytes = "vec", repeated, tag = "1")]
-    pub prefabs: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
 }
 /// 序列数据信息
 /// 文件名格式：prefix_name.pattern.type_suffix
@@ -434,118 +572,6 @@ pub struct SetDataDownloadSetResponse {
     #[prost(bytes = "vec", tag = "7")]
     pub chunck: ::prost::alloc::vec::Vec<u8>,
 }
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct NewSpecsRequest {
-    #[prost(int32, tag = "1")]
-    pub manage_id: i32,
-    #[prost(string, tag = "2")]
-    pub entity_id: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "3")]
-    pub name: ::core::option::Option<::manage_define::cashmere::Name>,
-    #[prost(string, tag = "4")]
-    pub description: ::prost::alloc::string::String,
-    /// bson document
-    #[prost(bytes = "vec", tag = "5")]
-    pub targets: ::prost::alloc::vec::Vec<u8>,
-}
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct NewSpecsResponse {
-    /// 成功反回id，失败返回错误信息
-    #[prost(string, tag = "1")]
-    pub result: ::prost::alloc::string::String,
-}
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ListSpecsRequest {
-    #[prost(int32, tag = "1")]
-    pub manage_id: i32,
-    #[prost(string, tag = "2")]
-    pub entity_id: ::prost::alloc::string::String,
-}
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ListSpecsResponse {
-    #[prost(bytes = "vec", repeated, tag = "1")]
-    pub specses: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
-}
-/// 列出规格的数据
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ListSpecsDataRequest {
-    #[prost(string, tag = "1")]
-    pub specs_id: ::prost::alloc::string::String,
-}
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ListSpecsDataResponse {
-    /// bson 列表
-    #[prost(bytes = "vec", repeated, tag = "1")]
-    pub data: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
-}
-/// 列出规格的预制件
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ListSpecsPrefabsRequest {
-    #[prost(string, tag = "1")]
-    pub specs_id: ::prost::alloc::string::String,
-}
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ListSpecsPrefabsResponse {
-    /// bson 列表
-    #[prost(bytes = "vec", repeated, tag = "1")]
-    pub prefabs: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
-}
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct NewSpecsAttributeRequest {
-    #[prost(int32, tag = "1")]
-    pub manage_id: i32,
-    #[prost(message, optional, tag = "2")]
-    pub name: ::core::option::Option<::manage_define::cashmere::Name>,
-    #[prost(enumeration = "::manage_define::cashmere::FieldDataType", tag = "3")]
-    pub data_type: i32,
-    #[prost(string, tag = "4")]
-    pub description: ::prost::alloc::string::String,
-    #[prost(bytes = "vec", tag = "5")]
-    pub default_value: ::prost::alloc::vec::Vec<u8>,
-    #[prost(int32, tag = "6")]
-    pub index: i32,
-}
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct NewSpecsAttributeResponse {
-    #[prost(string, tag = "1")]
-    pub result: ::prost::alloc::string::String,
-}
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DeleteSpecsAttributeRequest {
-    #[prost(int32, tag = "1")]
-    pub manage_id: i32,
-    #[prost(uint32, tag = "2")]
-    pub index: u32,
-}
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DeleteSpecsAttributeResponse {
-    #[prost(string, tag = "1")]
-    pub result: ::prost::alloc::string::String,
-}
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct GetSpecsAttributesRequest {
-    #[prost(int32, tag = "1")]
-    pub manage_id: i32,
-}
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct GetSpecsAttributesResponse {
-    #[prost(bytes = "vec", repeated, tag = "1")]
-    pub attributes: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
-}
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -569,7 +595,7 @@ pub struct Version {
 pub struct AddStageVersionRequest {
     #[prost(string, tag = "1")]
     pub stage_id: ::prost::alloc::string::String,
-    /// 版本一般有具体的含义，不只是一个数字，比如"v001", 数据的名应该与版本一致
+    /// 版本一般有具体的含义，不只是一个数字，比如"v001"
     #[prost(string, tag = "3")]
     pub version: ::prost::alloc::string::String,
 }
@@ -590,8 +616,8 @@ pub struct ListStageVersionsRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListStageVersionsResponse {
-    #[prost(message, repeated, tag = "1")]
-    pub versions: ::prost::alloc::vec::Vec<Version>,
+    #[prost(bytes = "vec", repeated, tag = "1")]
+    pub versions: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
 }
 /// 改变阶段文件连接
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -625,22 +651,25 @@ pub struct RemoveStageVersionResponse {
     #[prost(string, tag = "1")]
     pub result: ::prost::alloc::string::String,
 }
-/// 添加文件到数据阶段，文件路径以版本路径为根，<version_root>/\["sub_dir", ..., "file_name"\]
-/// 路径在使用时再拼接
+/// 添加文件到数据阶段
+/// 文件路径以版本路径为根，<version_root>/\["sub_dir"， “sub_dir", ..., "file_name"\]
+/// 使用列表表示路径，路径在使用时拼接
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct AddFileToVersionRequest {
+pub struct AddDataPathToVersionRequest {
     #[prost(string, tag = "1")]
-    pub stage_id: ::prost::alloc::string::String,
+    pub specs_id: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
+    pub data_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
     pub version: ::prost::alloc::string::String,
-    #[prost(string, repeated, tag = "3")]
-    pub file_path: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    #[prost(message, optional, tag = "4")]
+    pub data_path: ::core::option::Option<DataPath>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct AddFileToVersionResponse {
-    /// 成功返回 "ok"
+pub struct AddDataPathToVersionResponse {
+    /// 成功返回"ok"
     #[prost(string, tag = "1")]
     pub result: ::prost::alloc::string::String,
 }
@@ -654,8 +683,8 @@ pub struct AddFileSetToVersionRequest {
     #[prost(string, tag = "2")]
     pub version: ::prost::alloc::string::String,
     /// 因为不支持嵌套repeated，所以使用“,”分隔的字符串, 形式为\["sub_dir, ...,file_name"\]
-    #[prost(string, repeated, tag = "3")]
-    pub file_pathes: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    #[prost(message, repeated, tag = "3")]
+    pub data_pathes: ::prost::alloc::vec::Vec<DataPath>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -673,18 +702,10 @@ pub struct AddFileSetToVersionResponse {
 pub struct AddFileSequenceToVersionRequest {
     #[prost(string, tag = "1")]
     pub stage_id: ::prost::alloc::string::String,
-    #[prost(string, tag = "3")]
+    #[prost(string, tag = "2")]
     pub version: ::prost::alloc::string::String,
-    #[prost(string, tag = "7")]
-    pub base_name: ::prost::alloc::string::String,
-    #[prost(int32, tag = "5")]
-    pub start: i32,
-    #[prost(int32, tag = "6")]
-    pub end: i32,
-    #[prost(int32, tag = "2")]
-    pub padding: i32,
-    #[prost(string, tag = "8")]
-    pub extension: ::prost::alloc::string::String,
+    #[prost(message, optional, tag = "3")]
+    pub data_file_path: ::core::option::Option<DataPath>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

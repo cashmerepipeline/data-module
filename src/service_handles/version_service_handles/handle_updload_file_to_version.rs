@@ -1,38 +1,47 @@
-use dependencies_sync::tonic::{async_trait};
+use configs::ConfigTrait;
+use dependencies_sync::bson::doc;
 use dependencies_sync::futures::TryFutureExt;
-use dependencies_sync::tokio_stream::{wrappers::ReceiverStream, StreamExt};
-use dependencies_sync::tonic::{Response, Status};
 use dependencies_sync::rust_i18n::{self, t};
+use dependencies_sync::tokio_stream::{wrappers::ReceiverStream, StreamExt};
+use dependencies_sync::tonic::async_trait;
+use dependencies_sync::tonic::{Response, Status};
 use dependencies_sync::{tokio, tokio::sync::mpsc};
 
 use data_server::file_utils::check_chunk_md5;
 use data_server::ResumePoint;
 use dependencies_sync::log::{debug, error, info};
+use manage_define::general_field_ids::ID_FIELD_ID;
+use managers::ManagerTrait;
+use validates::validate_entity_id;
 
+use crate::data_server_configs::DataServerConfigs;
+use crate::data_server::version::add_file_to_data_path;
+use crate::ids_codes::field_ids::{STAGES_DATA_ID_FIELD_ID, VERSIONS_STAGE_ID_FIELD_ID};
+use crate::ids_codes::manage_ids::{DATAS_MANAGE_ID, SPECSES_MANAGE_ID, STAGES_MANAGE_ID, VERSIONS_MANAGE_ID};
 use crate::protocols::*;
+use crate::validates::validate_subpath;
 
-use request_utils::request_account_context;
 use crate::data_server;
-
+use request_utils::request_account_context;
 
 use service_utils::types::{RequestStream, ResponseStream, StreamResponseResult};
 
 #[async_trait]
-pub trait HandleUploadFile {
-    async fn handle_upload_file(
+pub trait HandleUploadFileToVersion {
+    async fn handle_upload_file_to_data_path(
         &self,
-        request: RequestStream<UploadFileRequest>,
-    ) -> StreamResponseResult<UploadFileResponse> {
+        request: RequestStream<UploadFileToVersionRequest>,
+    ) -> StreamResponseResult<UploadFileToVersionResponse> {
         validate_view_rules(request)
             .and_then(validate_request_params)
-            .and_then(handle_upload_file)
+            .and_then(handle_upload_file_to_data_path)
             .await
     }
 }
 
 async fn validate_view_rules(
-    request: RequestStream<UploadFileRequest>,
-) -> Result<RequestStream<UploadFileRequest>, Status> {
+    request: RequestStream<UploadFileToVersionRequest>,
+) -> Result<RequestStream<UploadFileToVersionRequest>, Status> {
     #[cfg(feature = "view_rules_validate")]
     {
         let manage_id = DATAS_MANAGE_ID;
@@ -48,15 +57,15 @@ async fn validate_view_rules(
 }
 
 async fn validate_request_params(
-    request: RequestStream<UploadFileRequest>,
-) -> Result<RequestStream<UploadFileRequest>, Status> {
+    request: RequestStream<UploadFileToVersionRequest>,
+) -> Result<RequestStream<UploadFileToVersionRequest>, Status> {
     Ok(request)
 }
 
-async fn handle_upload_file(
-    request: RequestStream<UploadFileRequest>,
-) -> StreamResponseResult<UploadFileResponse> {
-    let (_account_id, _groups, _role_group) = request_account_context(request.metadata())?;
+async fn handle_upload_file_to_data_path(
+    request: RequestStream<UploadFileToVersionRequest>,
+) -> StreamResponseResult<UploadFileToVersionResponse> {
+    let (account_id, _groups, _role_group) = request_account_context(request.metadata())?;
 
     let mut in_stream = request.into_inner();
     let first_request = if let Some(in_data) = in_stream.next().await {
@@ -76,10 +85,30 @@ async fn handle_upload_file(
     let sub_path = first_request.sub_path.clone();
     let file_info = first_request.file_info.clone().unwrap();
 
-    // 检查必填项
-    if data_id.is_empty() || specs_id.is_empty() || stage.is_empty() || version.is_empty() {
-        return Err(Status::invalid_argument(t!("必填项为缺失")));
-    }
+    validate_entity_id(&SPECSES_MANAGE_ID, &specs_id).await?;
+    validate_entity_id(&DATAS_MANAGE_ID, &data_id).await?;
+
+    let majordomo_arc = majordomo::get_majordomo();
+    let stage_manager = majordomo_arc.get_manager_by_id(STAGES_MANAGE_ID).unwrap();
+    let versino_manager = majordomo_arc.get_manager_by_id(VERSIONS_MANAGE_ID).unwrap();
+
+    let query_doc = doc! {
+    STAGES_DATA_ID_FIELD_ID.to_string(): data_id.clone(),
+        ID_FIELD_ID.to_string(): stage.clone()
+    };
+    if stage_manager.entity_exists(&query_doc).await.is_none(){
+        return Err(Status::not_found(format!("{}: {}", t!("不存在"), stage)));
+    };
+    
+    let query_doc = doc! {
+        VERSIONS_STAGE_ID_FIELD_ID.to_string(): stage.clone(),
+        ID_FIELD_ID.to_string(): version.clone()
+    };
+    if versino_manager.entity_exists(&query_doc).await.is_none(){
+        return Err(Status::not_found(format!("{}: {}", t!("不存在"), version)));
+    };
+
+    validate_subpath(&sub_path)?;
 
     // 请求上传文件代理
     let data_server_arc = data_server::get_data_server();
@@ -182,7 +211,7 @@ async fn handle_upload_file(
     );
 
     if let Ok(_r) = resp_tx
-        .send(Ok(UploadFileResponse {
+        .send(Ok(UploadFileToVersionResponse {
             next_chunk_index: next_chunk_index as u64,
         }))
         .await
@@ -197,13 +226,15 @@ async fn handle_upload_file(
     tokio::spawn(async move {
         let file_name = file_info.file_name.clone();
         let data_id = first_request.data_id.clone();
+        let max_file_size = DataServerConfigs::get().max_file_size;
         let mut retry_count = 0u16;
+        let mut total_transfered = 0u64;
 
         // 发送到文件写入流
         while let Some(result) = in_stream.next().await {
             match result {
                 Ok(v) => {
-                    info!(
+                    debug!(
                         "{}: {}-{}-{}-{}",
                         t!("接收到数据块"),
                         v.data_id,
@@ -211,6 +242,20 @@ async fn handle_upload_file(
                         v.current_chunk_index,
                         v.chunk.len()
                     );
+
+                    // 文件最大限制坚持
+                    total_transfered += v.chunk.len() as u64;
+                    if total_transfered > max_file_size {
+                        error!(
+                            "{}: {}-{}-{}-{}",
+                            t!("文件大小超过限制"),
+                            v.data_id,
+                            file_name,
+                            v.current_chunk_index,
+                            v.chunk.len()
+                        );
+                        return Err(Status::aborted(t!("文件超出最大限制")));
+                    }
 
                     if v.current_chunk_index == 0 {
                         info!("{}, {}", t!("文件传输完"), t!("开始校验文件"));
@@ -269,7 +314,7 @@ async fn handle_upload_file(
                         }
 
                         if resp_tx
-                            .send(Ok(UploadFileResponse {
+                            .send(Ok(UploadFileToVersionResponse {
                                 next_chunk_index: next_chunk_index as u64,
                             }))
                             .await
@@ -322,12 +367,15 @@ async fn handle_upload_file(
             info!("{}: {}--{}。", t!("传输文件结束"), data_id, file_name);
         }
         data_server_arc.return_back_upload_delegator(delegator_arc);
+
+        // 将文件添加到版本的文件表
+        add_file_to_data_path(&stage, &version, &data_file_path.to_str().unwrap(), &file_info, &account_id).await;
         Ok(())
     });
 
     let resp_stream = ReceiverStream::new(resp_rx);
 
     Ok(Response::new(
-        Box::pin(resp_stream) as ResponseStream<UploadFileResponse>
+        Box::pin(resp_stream) as ResponseStream<UploadFileToVersionResponse>
     ))
 }

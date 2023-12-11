@@ -1,0 +1,23 @@
+syntax = "proto3";
+package data.cashmere;
+
+import "data_type.proto";
+import "file_info.proto";
+
+// 文件容器，用于文件管理引导
+message DataPath{
+  // 单文件时不使用起始路径
+  // 文件集合时为文件集合名，也是集合目录名
+  // 序列时为文件的base_name，也是序列所在目录名，不包含扩展名
+  string start_path = 2;
+  
+  // 文件路径相对起始路径
+  // {"path_str":file_info}
+  map<string, FileInfo> files = 4;
+
+  // 如果数据是序列，则有以下字段
+  uint32 padding = 5;
+  uint32 start = 6;
+  uint32 end = 7;
+  string ext = 8;
+}

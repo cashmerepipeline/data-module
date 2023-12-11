@@ -1,6 +1,9 @@
 syntax = "proto3";
 package data.cashmere;
 
+import "data.proto";
+import "data_path.proto";
+
 message Version{
     string name = 1;
     // protobuf不支持嵌套repeated，所以使用 “,” 分隔的字符串, 形式为["sub_dir, ...,file_name"]
@@ -13,10 +16,12 @@ message Version{
     bool removed = 3;
   }
 
+
+
 // 添加数据版本到阶段
 message AddStageVersionRequest {
   string stage_id = 1;
-  // 版本一般有具体的含义，不只是一个数字，比如"v001", 数据的名应该与版本一致
+  // 版本一般有具体的含义，不只是一个数字，比如"v001"
   string version = 3;
 }
 message AddStageVersionResponse {
@@ -29,7 +34,7 @@ message ListStageVersionsRequest {
   string stage_id = 1;
 }
 message ListStageVersionsResponse {
-  repeated Version versions = 1;
+  repeated bytes versions = 1;
 }
 
 // 改变阶段文件连接
@@ -52,15 +57,17 @@ message RemoveStageVersionResponse {
   string result = 1;
 }
 
-// 添加文件到数据阶段，文件路径以版本路径为根，<version_root>/["sub_dir", ..., "file_name"]
-// 路径在使用时再拼接
-message AddFileToVersionRequest {
-  string stage_id = 1;
-  string version = 2;
-  repeated string file_path = 3;
+// 添加文件到数据阶段
+// 文件路径以版本路径为根，<version_root>/["sub_dir"， “sub_dir", ..., "file_name"]
+// 使用列表表示路径，路径在使用时拼接
+message AddDataPathToVersionRequest {
+  string specs_id = 1;
+  string data_id = 2;
+  string version = 3;
+  DataPath data_path = 4;
 } 
-message AddFileToVersionResponse {
-  // 成功返回 "ok"
+message AddDataPathToVersionResponse {
+  // 成功返回"ok"
   string result = 1;
 }
 
@@ -70,7 +77,7 @@ message AddFileSetToVersionRequest {
   string stage_id = 1;
   string version = 2;
   // 因为不支持嵌套repeated，所以使用“,”分隔的字符串, 形式为["sub_dir, ...,file_name"]
-  repeated string file_pathes = 3;
+  repeated DataPath data_pathes = 3;
 }
 message AddFileSetToVersionResponse {
   // 成功返回 "ok"
@@ -83,12 +90,8 @@ message AddFileSetToVersionResponse {
 // 文件、文件集、序列存储形式上一致，易于mongodb文件查询
 message AddFileSequenceToVersionRequest {
   string stage_id = 1;
-  string version = 3;
-  string base_name = 7;
-  int32 start = 5;
-  int32 end = 6;
-  int32 padding=2;
-  string extension = 8;
+  string version = 2;
+  DataPath data_file_path = 3;
 }
 message AddFileSequenceToVersionResponse {
   // 成功返回 "ok"

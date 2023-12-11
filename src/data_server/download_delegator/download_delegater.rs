@@ -131,14 +131,13 @@ impl DownloadDelegator {
                     //     }
                     // });
                     while let Some(chunk) = buffer.chunks(chunk_size).next() {
-                        match ftx.send(chunk.to_vec()).await {
-                            Err(e) => error!(
-                                "{}: {}, {}",
-                                t!("发送数据块失败"),
-                                file_path_str,
-                                e.to_string()
-                            ),
-                            _ => (),
+                        if let Err(e) = ftx.send(chunk.to_vec()).await {
+                            error!(
+                            "{}: {}, {}",
+                            t!("发送数据块失败"),
+                            file_path_str,
+                            e.to_string()
+                        )
                         }
                     }
 
@@ -156,14 +155,13 @@ impl DownloadDelegator {
                     if !buffer.is_empty() {
                         // send_buffer(&buffer).await;
                         for chunk in buffer.chunks(chunk_size).by_ref() {
-                            match ftx.send(chunk.to_vec()).await {
-                                Err(e) => error!(
-                                    "{}: {}, {}",
-                                    t!("变送数据失败"),
-                                    file_path_str,
-                                    e.to_string()
-                                ),
-                                _ => (),
+                            if let Err(e) = ftx.send(chunk.to_vec()).await {
+                                error!(
+                                "{}: {}, {}",
+                                t!("变送数据失败"),
+                                file_path_str,
+                                e.to_string()
+                            )
                             }
                         }
                     }

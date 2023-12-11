@@ -2,7 +2,7 @@
 
 use dependencies_sync::bson::{self, doc, Document};
 use dependencies_sync::futures::TryFutureExt;
-use dependencies_sync::log;
+
 use dependencies_sync::rust_i18n::{self, t};
 use dependencies_sync::tonic::async_trait;
 

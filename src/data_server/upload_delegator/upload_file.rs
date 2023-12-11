@@ -1,4 +1,4 @@
-use cash_result::{operation_failed, Failed, OperationResult};
+use cash_result::{operation_failed, OperationResult};
 use configs::ConfigTrait;
 use std::ffi::OsStr;
 use std::path::{Path, PathBuf};
@@ -15,7 +15,7 @@ use dependencies_sync::tokio::io::{AsyncWriteExt, BufWriter};
 use dependencies_sync::tokio::sync::mpsc;
 use dependencies_sync::tokio::sync::mpsc::Sender;
 
-use crate::data_server::file_utils::check_space_enough;
+
 use crate::protocols::FileInfo;
 use crate::DataServerConfigs;
 
@@ -32,7 +32,7 @@ impl UploadDelegator {
         version: &String,
         sub_path: &String,
         file_info: &FileInfo,
-        request_size: u64,
+        _request_size: u64,
     ) -> Result<(PathBuf, PathBuf), OperationResult> {
         let data_root = &DataServerConfigs::get().root_dir_path;
 

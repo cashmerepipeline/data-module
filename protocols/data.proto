@@ -10,15 +10,7 @@ syntax = "proto3";
 package data.cashmere;
 
 import "name.proto";
-
-enum DataType{
-  FileData = 0; // 单个文件
-  SequenceData = 1; // 序列文件
-  FileSetData = 2; // 多类型文件集合
-  DocumentData = 3; // 类json格式数据
-  ImageData = 4; // 图片
-  VideoData = 5; // 视频
-}
+import "data_type.proto";
 
 message DataInfo {
   DataType data_type = 1;

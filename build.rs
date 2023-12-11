@@ -16,6 +16,7 @@ fn main() {
             "#[derive(serde::Serialize, serde::Deserialize)]",
         )
         .type_attribute("Version", "#[derive(serde::Serialize, serde::Deserialize)]")
+        .type_attribute("DataPath", "#[derive(serde::Serialize, serde::Deserialize)]")
         .type_attribute(
             "DataType",
             "#[derive(serde::Serialize, serde::Deserialize)]",

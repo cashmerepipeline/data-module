@@ -1,15 +1,23 @@
 syntax = "proto3";
 package data.cashmere;
 
-import "data.proto";
+import "data_type.proto";
+import "data_path.proto";
+
 import "data_server.proto";
+
+import "specs.proto";
+import "specs_attribute.proto";
+import "prefab.proto";
+
+import "data.proto";
+
 import "file_info.proto";
 import "file_transfer.proto";
-import "prefab.proto";
+
 import "sequence_data.proto";
 import "set_data.proto";
 import "set_data_info.proto";
-import "specs.proto";
-import "specs_attribute.proto";
+
 import "stage.proto";
 import "version.proto";

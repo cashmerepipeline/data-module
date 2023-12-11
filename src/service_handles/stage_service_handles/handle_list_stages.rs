@@ -4,6 +4,7 @@ use dependencies_sync::tonic::{Request, Response, Status};
 use dependencies_sync::futures::TryFutureExt;
 
 use majordomo::{self, get_majordomo};
+use validates::validate_entity_id;
 use crate::protocols::*;
 use crate::ids_codes::field_ids::*;
 
@@ -47,6 +48,10 @@ async fn validate_view_rules(
 async fn validate_request_params(
     request: Request<ListStagesRequest>,
 ) -> Result<Request<ListStagesRequest>, Status> {
+    let data_id = &request.get_ref().data_id;
+
+    validate_entity_id(&DATAS_MANAGE_ID, data_id).await?;
+
     Ok(request)
 }
 
@@ -56,8 +61,6 @@ async fn handle_list_stages(
     let (_account_id, _groups, _role_group) = request_account_context(request.metadata())?;
 
     let data_id = &request.get_ref().data_id;
-
-    
 
     let majordomo_arc = get_majordomo();
     let manager = majordomo_arc

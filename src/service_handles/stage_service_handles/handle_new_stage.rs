@@ -1,3 +1,4 @@
+use dependencies_sync::bson;
 use dependencies_sync::futures::TryFutureExt;
 use dependencies_sync::tonic::async_trait;
 use dependencies_sync::rust_i18n::{self, t};
@@ -66,7 +67,7 @@ async fn handle_new_stage(
     let name = &request.get_ref().stage_name;
     let description = &request.get_ref().description;
 
-    let _name = name.as_ref().unwrap();
+    let name = name.as_ref().unwrap();
 
     let majordomo_arc = get_majordomo();
     let manager = majordomo_arc.get_manager_by_id(STAGES_MANAGE_ID).unwrap();
@@ -82,6 +83,7 @@ async fn handle_new_stage(
         )));
     };
 
+    new_entity_doc.insert(NAME_MAP_FIELD_ID.to_string(), bson::to_document(name).unwrap());
     new_entity_doc.insert(STAGES_DATA_ID_FIELD_ID.to_string(), data_id.clone());
     new_entity_doc.insert(DESCRIPTION_FIELD_ID.to_string(), description.clone());
 

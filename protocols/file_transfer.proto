@@ -2,30 +2,34 @@ syntax = "proto3";
 package data.cashmere;
 
 import "file_info.proto";
+import "data_path.proto";
+import "data_type.proto";
 
 
 // 上传文件数据
-// 第一个包块编号为0，最后一个包块编号为0, 即从0开始，到0结束
-// 第一个包和最后一个包不包含文件数据，作为传输标记用
+// 第一个包编号为0，包含文件信息等信息，最后一个包块编号为0, 即从0开始，到0结束
+// 第一个包和最后一个包不包含文件数据，作为传输标记用，用于建立连接等操作
+// 传输包不包含文件信息等信息，只包含数据块的必要信息
 // 最终路径为：/{specs_id}/{data_id}/{stage}/{version}/{sub_path}/{file_name}
-message UploadFileRequest {
+message UploadFileToVersionRequest {
   string specs_id = 1;
-  uint64 total_chunks = 2;
-  uint64 current_chunk_index = 3;
-  bytes chunk = 4;
-  string chunk_md5 = 6;
   FileInfo file_info = 5;
   // 规格，如：普通款，高级款，豪华款
   string data_id = 10;
+  DataType data_type = 11;
+  string sub_path = 12;
   // 阶段，如：开发，测试，生产
   string stage = 8;
   // 版本，如：v01
   string version = 9;
-  // 相对于版本目录的子路径，用于保持文件集的相对良好组织，如：v01/a/b/c
-  string sub_path = 11;
+
+  uint64 total_chunks = 2;
+  uint64 current_chunk_index = 3;
+  bytes chunk = 4;
+  string chunk_md5 = 6;
 }
 // 下一个包块编号
-message UploadFileResponse {
+message UploadFileToVersionResponse {
   uint64 next_chunk_index = 1;
 }
 
