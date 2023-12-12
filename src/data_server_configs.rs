@@ -2,10 +2,10 @@ use std::{collections::HashMap, sync::OnceLock};
 
 use dependencies_sync::rust_i18n::{self, t};
 
-use configs::{ConfigTrait, get_config};
-use serde_derive::{Serialize, Deserialize};
+use configs::{get_config, ConfigTrait};
+use serde_derive::{Deserialize, Serialize};
 
-pub const DATA_SERVER_CONFIGS_NAME : &str = "data_server";
+pub const DATA_SERVER_CONFIGS_NAME: &str = "data_server";
 static DATA_SERVER_CONFIGS: OnceLock<DataServerConfigs> = OnceLock::new();
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -27,7 +27,9 @@ pub struct DataServerConfigs {
     // 最大文件下载连接
     pub max_file_download_number: u16,
     // 内部网络访问路径，window需要设置共享盘符，posix需要设置挂载路径
-    pub internal_root_dir_map: HashMap<String, String>
+    pub internal_root_dir_map: HashMap<String, String>,
+    // zh: 文件路径形式，默认为: {"manage": "manage_id", "specs": "specs_id", "data": "data_id", "stage":"stage", "version": "version"}
+    pub file_path_format: HashMap<String, String>,
 }
 
 impl ConfigTrait for DataServerConfigs {
@@ -54,6 +56,12 @@ impl Default for DataServerConfigs {
         internal_root_dir_map.insert("linux".to_string(), "/mnt/data_root".to_string());
         internal_root_dir_map.insert("macos".to_string(), "/mnt/data_root".to_string());
 
+        let mut file_path_format = HashMap::new();
+        file_path_format.insert("specs".to_string(), "specs_id".to_string());
+        file_path_format.insert("data".to_string(), "data_id".to_string());
+        file_path_format.insert("stage".to_string(), "stage".to_string());
+        file_path_format.insert("version".to_string(), "version".to_string());
+
         DataServerConfigs {
             root_dir_path: "data_root".to_string(),
             max_file_size: 16_777_216,
@@ -63,8 +71,8 @@ impl Default for DataServerConfigs {
             transfer_timeout: 0,
             max_file_upload_number: 256,
             max_file_download_number: 256,
-            internal_root_dir_map
+            internal_root_dir_map,
+            file_path_format,
         }
     }
-    
 }

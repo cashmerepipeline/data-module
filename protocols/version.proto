@@ -1,9 +1,6 @@
 syntax = "proto3";
 package data.cashmere;
 
-import "data.proto";
-import "data_path.proto";
-
 message Version{
     string name = 1;
     // protobuf不支持嵌套repeated，所以使用 “,” 分隔的字符串, 形式为["sub_dir, ...,file_name"]
@@ -22,6 +19,8 @@ message Version{
 message AddStageVersionRequest {
   string stage_id = 1;
   // 版本一般有具体的含义，不只是一个数字，比如"v001"
+  // 将作为实体的id，还将作为阶段的路径使用，不能重复
+  // 阶段的字符集需要注意软件支持的字符集，比如Maya对中文支持友好
   string version = 3;
 }
 message AddStageVersionResponse {
@@ -57,27 +56,13 @@ message RemoveStageVersionResponse {
   string result = 1;
 }
 
-// 添加文件到数据阶段
-// 文件路径以版本路径为根，<version_root>/["sub_dir"， “sub_dir", ..., "file_name"]
-// 使用列表表示路径，路径在使用时拼接
-message AddDataPathToVersionRequest {
-  string specs_id = 1;
-  string data_id = 2;
-  string version = 3;
-  DataPath data_path = 4;
-} 
-message AddDataPathToVersionResponse {
-  // 成功返回"ok"
-  string result = 1;
-}
-
 // 添加文件到数据阶段，文件路径以版本路径为根，<version_root>/["sub_dir", ..., "file_name"]
 // 路径在使用时再拼接
 message AddFileSetToVersionRequest {
   string stage_id = 1;
   string version = 2;
   // 因为不支持嵌套repeated，所以使用“,”分隔的字符串, 形式为["sub_dir, ...,file_name"]
-  repeated DataPath data_pathes = 3;
+  string data_path = 3;
 }
 message AddFileSetToVersionResponse {
   // 成功返回 "ok"
@@ -91,7 +76,7 @@ message AddFileSetToVersionResponse {
 message AddFileSequenceToVersionRequest {
   string stage_id = 1;
   string version = 2;
-  DataPath data_file_path = 3;
+  string data_path = 3;
 }
 message AddFileSequenceToVersionResponse {
   // 成功返回 "ok"
@@ -124,9 +109,8 @@ message ListVersionFolderResponse {
 // 删除版本目录下的文件或文件夹，若文件或文件夹在版本文件列表中，否则返回，不做任何操作
 // 注意路径表示规则
 message DeleteVersionFolderEntriesRequest {
-  string stage_id = 1;
-  string version = 2;
-  repeated string file_pathes = 3;
+  string version_id = 1;
+  repeated string file_pathes = 2;
 }
 message DeleteVersionFolderEntriesResponse {
   // 成功返回被删除的文件路径

@@ -1,9 +1,13 @@
-///
+//
 //  Generated code. Do not modify.
 //  source: data_server.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
+
+// ignore_for_file: annotate_overrides, camel_case_types, comment_references
+// ignore_for_file: constant_identifier_names, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_final_fields
+// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
 
 import 'dart:core' as $core;
 
@@ -11,19 +15,6 @@ import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class DataServerConfigs extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DataServerConfigs', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rootDirPath')
-    ..a<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'maxFileSize', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'maxSetSize', $pb.PbFieldType.OU3)
-    ..a<$fixnum.Int64>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'maxSequenceLength', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'maxFileUploadNumber', $pb.PbFieldType.OU3)
-    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'maxFileDownloadNumber', $pb.PbFieldType.OU3)
-    ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'transferChunkSize', $pb.PbFieldType.OU3)
-    ..m<$core.String, $core.String>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'internalRootDirMap', entryClassName: 'DataServerConfigs.InternalRootDirMapEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('data.cashmere'))
-    ..hasRequiredFields = false
-  ;
-
-  DataServerConfigs._() : super();
   factory DataServerConfigs({
     $core.String? rootDirPath,
     $fixnum.Int64? maxFileSize,
@@ -34,35 +25,49 @@ class DataServerConfigs extends $pb.GeneratedMessage {
     $core.int? transferChunkSize,
     $core.Map<$core.String, $core.String>? internalRootDirMap,
   }) {
-    final _result = create();
+    final $result = create();
     if (rootDirPath != null) {
-      _result.rootDirPath = rootDirPath;
+      $result.rootDirPath = rootDirPath;
     }
     if (maxFileSize != null) {
-      _result.maxFileSize = maxFileSize;
+      $result.maxFileSize = maxFileSize;
     }
     if (maxSetSize != null) {
-      _result.maxSetSize = maxSetSize;
+      $result.maxSetSize = maxSetSize;
     }
     if (maxSequenceLength != null) {
-      _result.maxSequenceLength = maxSequenceLength;
+      $result.maxSequenceLength = maxSequenceLength;
     }
     if (maxFileUploadNumber != null) {
-      _result.maxFileUploadNumber = maxFileUploadNumber;
+      $result.maxFileUploadNumber = maxFileUploadNumber;
     }
     if (maxFileDownloadNumber != null) {
-      _result.maxFileDownloadNumber = maxFileDownloadNumber;
+      $result.maxFileDownloadNumber = maxFileDownloadNumber;
     }
     if (transferChunkSize != null) {
-      _result.transferChunkSize = transferChunkSize;
+      $result.transferChunkSize = transferChunkSize;
     }
     if (internalRootDirMap != null) {
-      _result.internalRootDirMap.addAll(internalRootDirMap);
+      $result.internalRootDirMap.addAll(internalRootDirMap);
     }
-    return _result;
+    return $result;
   }
+  DataServerConfigs._() : super();
   factory DataServerConfigs.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory DataServerConfigs.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DataServerConfigs', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'rootDirPath')
+    ..a<$fixnum.Int64>(2, _omitFieldNames ? '' : 'maxFileSize', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'maxSetSize', $pb.PbFieldType.OU3)
+    ..a<$fixnum.Int64>(4, _omitFieldNames ? '' : 'maxSequenceLength', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$core.int>(5, _omitFieldNames ? '' : 'maxFileUploadNumber', $pb.PbFieldType.OU3)
+    ..a<$core.int>(6, _omitFieldNames ? '' : 'maxFileDownloadNumber', $pb.PbFieldType.OU3)
+    ..a<$core.int>(7, _omitFieldNames ? '' : 'transferChunkSize', $pb.PbFieldType.OU3)
+    ..m<$core.String, $core.String>(8, _omitFieldNames ? '' : 'internalRootDirMap', entryClassName: 'DataServerConfigs.InternalRootDirMapEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('data.cashmere'))
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -72,8 +77,10 @@ class DataServerConfigs extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  DataServerConfigs copyWith(void Function(DataServerConfigs) updates) => super.copyWith((message) => updates(message as DataServerConfigs)) as DataServerConfigs; // ignore: deprecated_member_use
+  DataServerConfigs copyWith(void Function(DataServerConfigs) updates) => super.copyWith((message) => updates(message as DataServerConfigs)) as DataServerConfigs;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static DataServerConfigs create() => DataServerConfigs._();
   DataServerConfigs createEmptyInstance() => create();
@@ -91,6 +98,7 @@ class DataServerConfigs extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearRootDirPath() => clearField(1);
 
+  /// 文件最大大小, 16MB
   @$pb.TagNumber(2)
   $fixnum.Int64 get maxFileSize => $_getI64(1);
   @$pb.TagNumber(2)
@@ -100,6 +108,7 @@ class DataServerConfigs extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearMaxFileSize() => clearField(2);
 
+  /// 文件集最大数量, 1000
   @$pb.TagNumber(3)
   $core.int get maxSetSize => $_getIZ(2);
   @$pb.TagNumber(3)
@@ -109,6 +118,7 @@ class DataServerConfigs extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   void clearMaxSetSize() => clearField(3);
 
+  /// 文件序列最大数量
   @$pb.TagNumber(4)
   $fixnum.Int64 get maxSequenceLength => $_getI64(3);
   @$pb.TagNumber(4)
@@ -118,6 +128,7 @@ class DataServerConfigs extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   void clearMaxSequenceLength() => clearField(4);
 
+  /// 最大文件上传连接
   @$pb.TagNumber(5)
   $core.int get maxFileUploadNumber => $_getIZ(4);
   @$pb.TagNumber(5)
@@ -127,6 +138,7 @@ class DataServerConfigs extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   void clearMaxFileUploadNumber() => clearField(5);
 
+  /// 最大文件下载连接
   @$pb.TagNumber(6)
   $core.int get maxFileDownloadNumber => $_getIZ(5);
   @$pb.TagNumber(6)
@@ -136,6 +148,7 @@ class DataServerConfigs extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   void clearMaxFileDownloadNumber() => clearField(6);
 
+  /// 块最大大小，1024*128=128KB
   @$pb.TagNumber(7)
   $core.int get transferChunkSize => $_getIZ(6);
   @$pb.TagNumber(7)
@@ -145,19 +158,23 @@ class DataServerConfigs extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   void clearTransferChunkSize() => clearField(7);
 
+  /// 内部文件路径，不需要通过服务器上传文件, 可将文件直接存储到目标位置
+  /// {"windows"="X:/data_root/dir", "linux"="/mnt/data_root/dir", "macos" = "/mnt/data_root/dir"}
   @$pb.TagNumber(8)
   $core.Map<$core.String, $core.String> get internalRootDirMap => $_getMap(7);
 }
 
+/// 取得数据服务设置
 class GetDataServerConfigsRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetDataServerConfigsRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
+  factory GetDataServerConfigsRequest() => create();
+  GetDataServerConfigsRequest._() : super();
+  factory GetDataServerConfigsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetDataServerConfigsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetDataServerConfigsRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
-  GetDataServerConfigsRequest._() : super();
-  factory GetDataServerConfigsRequest() => create();
-  factory GetDataServerConfigsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GetDataServerConfigsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -167,8 +184,10 @@ class GetDataServerConfigsRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GetDataServerConfigsRequest copyWith(void Function(GetDataServerConfigsRequest) updates) => super.copyWith((message) => updates(message as GetDataServerConfigsRequest)) as GetDataServerConfigsRequest; // ignore: deprecated_member_use
+  GetDataServerConfigsRequest copyWith(void Function(GetDataServerConfigsRequest) updates) => super.copyWith((message) => updates(message as GetDataServerConfigsRequest)) as GetDataServerConfigsRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static GetDataServerConfigsRequest create() => GetDataServerConfigsRequest._();
   GetDataServerConfigsRequest createEmptyInstance() => create();
@@ -179,23 +198,24 @@ class GetDataServerConfigsRequest extends $pb.GeneratedMessage {
 }
 
 class GetDataServerConfigsResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetDataServerConfigsResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOM<DataServerConfigs>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'configs', subBuilder: DataServerConfigs.create)
-    ..hasRequiredFields = false
-  ;
-
-  GetDataServerConfigsResponse._() : super();
   factory GetDataServerConfigsResponse({
     DataServerConfigs? configs,
   }) {
-    final _result = create();
+    final $result = create();
     if (configs != null) {
-      _result.configs = configs;
+      $result.configs = configs;
     }
-    return _result;
+    return $result;
   }
+  GetDataServerConfigsResponse._() : super();
   factory GetDataServerConfigsResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory GetDataServerConfigsResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetDataServerConfigsResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOM<DataServerConfigs>(1, _omitFieldNames ? '' : 'configs', subBuilder: DataServerConfigs.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -205,8 +225,10 @@ class GetDataServerConfigsResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GetDataServerConfigsResponse copyWith(void Function(GetDataServerConfigsResponse) updates) => super.copyWith((message) => updates(message as GetDataServerConfigsResponse)) as GetDataServerConfigsResponse; // ignore: deprecated_member_use
+  GetDataServerConfigsResponse copyWith(void Function(GetDataServerConfigsResponse) updates) => super.copyWith((message) => updates(message as GetDataServerConfigsResponse)) as GetDataServerConfigsResponse;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static GetDataServerConfigsResponse create() => GetDataServerConfigsResponse._();
   GetDataServerConfigsResponse createEmptyInstance() => create();
@@ -227,3 +249,6 @@ class GetDataServerConfigsResponse extends $pb.GeneratedMessage {
   DataServerConfigs ensureConfigs() => $_ensure(0);
 }
 
+
+const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
+const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

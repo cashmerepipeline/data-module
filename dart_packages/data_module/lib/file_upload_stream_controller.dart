@@ -17,8 +17,8 @@ class UploadFileStreamController {
   final String stage;
   final String version;
 
-  late StreamController<UploadFileRequest> uploadStreamController;
-  late UploadFileRequest firstRequest;
+  late StreamController<UploadFileToVersionRequest> uploadStreamController;
+  late UploadFileToVersionRequest firstRequest;
   late FileInfo fileInfo;
   late Uint8List bytes;
   late int totalChuncks;
@@ -32,7 +32,7 @@ class UploadFileStreamController {
     this.stage,
     this.version,
   ) {
-    uploadStreamController = StreamController<UploadFileRequest>();
+    uploadStreamController = StreamController<UploadFileToVersionRequest>();
 
     final file = File(filePath);
     bytes = file.readAsBytesSync();
@@ -48,14 +48,14 @@ class UploadFileStreamController {
       lastModifiedTime: Int64(modifyTime.microsecondsSinceEpoch),
     );
 
-    firstRequest = UploadFileRequest(
+    firstRequest = UploadFileToVersionRequest(
       specsId: specsId,
       dataId: dataId,
-      chunk: [0, 0, 0],
+      chunk: [0],
       currentChunkIndex: Int64(0),
       totalChunks: Int64(totalChuncks),
       fileInfo: fileInfo,
-      chunkMd5: "no_md",
+      chunkMd5: "",
       stage: stage,
       version: version,
     );
@@ -80,15 +80,10 @@ class UploadFileStreamController {
     final chunk = bytes.sublist(start, end);
     debugPrint("chunk ${i}: transferIndex: $transferIndex, ${chunk.length}/${totalChuncks}");
 
-    uploadStreamController.add(UploadFileRequest(
-      specsId: specsId,
-      dataId: dataId,
+    uploadStreamController.add(UploadFileToVersionRequest(
       chunk: chunk,
       currentChunkIndex: transferIndex,
       totalChunks: Int64(totalChuncks),
-      fileInfo: fileInfo,
-      stage: stage,
-      version: version,
       chunkMd5: md5.convert(chunk).toString(),
     ));
   }

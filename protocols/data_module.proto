@@ -2,7 +2,6 @@ syntax = "proto3";
 package data.cashmere;
 
 import "data_type.proto";
-import "data_path.proto";
 
 import "data_server.proto";
 

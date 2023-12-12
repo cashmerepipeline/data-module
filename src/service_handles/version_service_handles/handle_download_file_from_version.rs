@@ -5,11 +5,15 @@ use dependencies_sync::tokio_stream::{wrappers::ReceiverStream, StreamExt};
 use dependencies_sync::tonic::{Response, Status};
 use dependencies_sync::rust_i18n::{self, t};
 
-use dependencies_sync::log::info;
+use dependencies_sync::log::{info, error};
 use dependencies_sync::tonic::async_trait;
 
 use data_server::file_utils::get_chunk_md5;
+use validates::validate_entity_id;
+use crate::data_server::version::resolve_data_dir_path;
+use crate::ids_codes::manage_ids::{SPECSES_MANAGE_ID, DATAS_MANAGE_ID};
 use crate::protocols::*;
+use crate::validates::{validate_version, validate_subpath, validate_stage};
 
 use request_utils::request_account_context;
 
@@ -19,21 +23,21 @@ use service_utils::types::{RequestStream, ResponseStream, StreamResponseResult};
 use crate::data_server;
 
 #[async_trait]
-pub trait HandleDownloadFile {
-    async fn handle_download_file(
+pub trait HandleDownloadFileFromVersion {
+    async fn handle_download_file_from_version(
         &self,
-        request: RequestStream<DownloadFileRequest>,
-    ) -> StreamResponseResult<DownloadFileResponse> {
+        request: RequestStream<DownloadFileFromVersionRequest>,
+    ) -> StreamResponseResult<DownloadFileFromVersionResponse> {
         validate_view_rules(request)
             .and_then(validate_request_params)
-            .and_then(handle_download_file)
+            .and_then(handle_download_file_from_version)
             .await
     }
 }
 
 async fn validate_view_rules(
-    request: RequestStream<DownloadFileRequest>,
-) -> Result<RequestStream<DownloadFileRequest>, Status> {
+    request: RequestStream<DownloadFileFromVersionRequest>,
+) -> Result<RequestStream<DownloadFileFromVersionRequest>, Status> {
     #[cfg(feature = "view_rules_validate")]
     {
         let manage_id = DATAS_MANAGE_ID;
@@ -49,15 +53,14 @@ async fn validate_view_rules(
 }
 
 async fn validate_request_params(
-    request: RequestStream<DownloadFileRequest>,
-) -> Result<RequestStream<DownloadFileRequest>, Status> {
-    // TODO: 需要确定metadata是否每个访问都是独立的，因为不能读取第一个包的数据，所以可能需要把一些请求参数数据放到metadata中
+    request: RequestStream<DownloadFileFromVersionRequest>,
+) -> Result<RequestStream<DownloadFileFromVersionRequest>, Status> {
     Ok(request)
 }
 
-async fn handle_download_file(
-    request: RequestStream<DownloadFileRequest>,
-) -> StreamResponseResult<DownloadFileResponse> {
+async fn handle_download_file_from_version(
+    request: RequestStream<DownloadFileFromVersionRequest>,
+) -> StreamResponseResult<DownloadFileFromVersionResponse> {
     let (_account_id, _groups, _role_group) = request_account_context(request.metadata())?;
 
     let mut in_stream = request.into_inner();
@@ -79,10 +82,19 @@ async fn handle_download_file(
     let file_name = first_request.file_name.clone();
     let chunk_index = first_request.chunk_index;
 
-    // 检查必填项
-    if data_id.is_empty() || stage.is_empty() || version.is_empty() {
-        return Err(Status::invalid_argument(t!("必填项缺失")));
-    }
+    validate_entity_id(&SPECSES_MANAGE_ID, &specs_id).await?;
+    validate_entity_id(&DATAS_MANAGE_ID, &data_id).await?;
+    let stage_id = validate_stage(&data_id, &stage).await?;
+    validate_version(&stage_id, &version).await?;
+    validate_subpath(&sub_path)?;
+
+    let data_dir_path = match resolve_data_dir_path(&specs_id, &data_id, &stage, &version).await {
+        Ok(p) => p,
+        Err(e) => {
+            error!("{}: {}", t!("获取数据路径失败"), e.details());
+            return Err(Status::aborted(format!("{}", t!("获取数据路径失败"),)));
+        }
+    };
 
     // 交互流
     let (resp_tx, resp_rx) = mpsc::channel(5);
@@ -99,7 +111,7 @@ async fn handle_download_file(
     };
 
     let file_path = match delegator
-        .check_request_file_exists(&specs_id, &data_id, &stage, &version, &sub_path, &file_name)
+        .check_request_file_exists(&data_dir_path, &sub_path, &file_name)
         .await
     {
         Ok(r) => r,
@@ -145,7 +157,7 @@ async fn handle_download_file(
 
         // TODO: 添加文件信息
         // 第一个包只包含文件信息，不包含数据
-        let first_resp = DownloadFileResponse {
+        let first_resp = DownloadFileFromVersionResponse {
             data_id: data_id.clone(),
             chunk_index: 0,
             chunk_md5: get_chunk_md5(&current_chunk),
@@ -192,7 +204,7 @@ async fn handle_download_file(
                         }
                     }
 
-                    let current_resp = DownloadFileResponse {
+                    let current_resp = DownloadFileFromVersionResponse {
                         data_id: data_id.clone(),
                         chunk_index: current_chunk_index,
                         chunk_md5: get_chunk_md5(&current_chunk),
@@ -226,6 +238,6 @@ async fn handle_download_file(
     let resp_stream = ReceiverStream::new(resp_rx);
 
     Ok(Response::new(
-        Box::pin(resp_stream) as ResponseStream<DownloadFileResponse>
+        Box::pin(resp_stream) as ResponseStream<DownloadFileFromVersionResponse>
     ))
 }

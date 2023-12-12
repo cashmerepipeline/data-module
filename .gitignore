@@ -2,3 +2,5 @@
 /Cargo.lock
 dart_packages/data_module/.flutter-plugins
 dart_packages/data_module/.flutter-plugins-dependencies
+/.idea
+/.vscode

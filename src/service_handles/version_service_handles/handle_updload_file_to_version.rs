@@ -14,12 +14,12 @@ use manage_define::general_field_ids::ID_FIELD_ID;
 use managers::ManagerTrait;
 use validates::validate_entity_id;
 
+use crate::data_server::version::{add_file_to_data_path, resolve_data_dir_path};
 use crate::data_server_configs::DataServerConfigs;
-use crate::data_server::version::add_file_to_data_path;
-use crate::ids_codes::field_ids::{STAGES_DATA_ID_FIELD_ID, VERSIONS_STAGE_ID_FIELD_ID};
-use crate::ids_codes::manage_ids::{DATAS_MANAGE_ID, SPECSES_MANAGE_ID, STAGES_MANAGE_ID, VERSIONS_MANAGE_ID};
+use crate::ids_codes::field_ids::*;
+use crate::ids_codes::manage_ids::*;
 use crate::protocols::*;
-use crate::validates::validate_subpath;
+use crate::validates::{validate_stage, validate_subpath, validate_version};
 
 use crate::data_server;
 use request_utils::request_account_context;
@@ -28,13 +28,13 @@ use service_utils::types::{RequestStream, ResponseStream, StreamResponseResult};
 
 #[async_trait]
 pub trait HandleUploadFileToVersion {
-    async fn handle_upload_file_to_data_path(
+    async fn handle_upload_file_to_version(
         &self,
         request: RequestStream<UploadFileToVersionRequest>,
     ) -> StreamResponseResult<UploadFileToVersionResponse> {
         validate_view_rules(request)
             .and_then(validate_request_params)
-            .and_then(handle_upload_file_to_data_path)
+            .and_then(handle_upload_file_to_version)
             .await
     }
 }
@@ -62,7 +62,7 @@ async fn validate_request_params(
     Ok(request)
 }
 
-async fn handle_upload_file_to_data_path(
+async fn handle_upload_file_to_version(
     request: RequestStream<UploadFileToVersionRequest>,
 ) -> StreamResponseResult<UploadFileToVersionResponse> {
     let (account_id, _groups, _role_group) = request_account_context(request.metadata())?;
@@ -87,27 +87,8 @@ async fn handle_upload_file_to_data_path(
 
     validate_entity_id(&SPECSES_MANAGE_ID, &specs_id).await?;
     validate_entity_id(&DATAS_MANAGE_ID, &data_id).await?;
-
-    let majordomo_arc = majordomo::get_majordomo();
-    let stage_manager = majordomo_arc.get_manager_by_id(STAGES_MANAGE_ID).unwrap();
-    let versino_manager = majordomo_arc.get_manager_by_id(VERSIONS_MANAGE_ID).unwrap();
-
-    let query_doc = doc! {
-    STAGES_DATA_ID_FIELD_ID.to_string(): data_id.clone(),
-        ID_FIELD_ID.to_string(): stage.clone()
-    };
-    if stage_manager.entity_exists(&query_doc).await.is_none(){
-        return Err(Status::not_found(format!("{}: {}", t!("不存在"), stage)));
-    };
-    
-    let query_doc = doc! {
-        VERSIONS_STAGE_ID_FIELD_ID.to_string(): stage.clone(),
-        ID_FIELD_ID.to_string(): version.clone()
-    };
-    if versino_manager.entity_exists(&query_doc).await.is_none(){
-        return Err(Status::not_found(format!("{}: {}", t!("不存在"), version)));
-    };
-
+    let stage_id = validate_stage(&data_id, &stage).await?;
+    validate_version(&stage_id, &version).await?;
     validate_subpath(&sub_path)?;
 
     // 请求上传文件代理
@@ -115,6 +96,14 @@ async fn handle_upload_file_to_data_path(
 
     // TODO: 查询目标文件md5，如果相等，直接返回成功
     // 对于大文件生成md5比较耗时，所以客户端可以根据需要优化md5的生成, 一般不需要全文件md5
+
+    let data_dir_path = match resolve_data_dir_path(&specs_id, &data_id, &stage, &version).await {
+        Ok(p) => p,
+        Err(e) => {
+            error!("{}: {}", t!("获取数据路径失败"), e.details());
+            return Err(Status::aborted(format!("{}", t!("获取数据路径失败"),)));
+        }
+    };
 
     let delegator_arc = if let Some(d) = data_server_arc.get_upload_delegator() {
         d
@@ -127,10 +116,7 @@ async fn handle_upload_file_to_data_path(
     };
 
     let (data_folder, data_file_path) = match delegator_arc.prepare_file_uploading(
-        &specs_id,
-        &data_id,
-        &stage,
-        &version,
+        &data_dir_path,
         &sub_path,
         &file_info,
         file_info.size,
@@ -139,21 +125,7 @@ async fn handle_upload_file_to_data_path(
         Err(e) => {
             error!("{}: {}", t!("准备上传文件失败"), e.details());
 
-            return Err(Status::aborted(format!(
-                "{}-{}",
-                e.details(),
-                e.operation()
-            )));
-        }
-    };
-
-    let data_file = match delegator_arc
-        .get_upload_target_file(&data_folder, &data_file_path)
-        .await
-    {
-        Ok(f) => f,
-        Err(e) => {
-            error!("{}: {}", t!("获取上传文件失败"), e.details());
+            data_server_arc.return_back_upload_delegator(delegator_arc);
 
             return Err(Status::aborted(format!(
                 "{}-{}",
@@ -167,6 +139,8 @@ async fn handle_upload_file_to_data_path(
     if !delegator_arc.check_disk_space_enough(file_info.size).await {
         error!("{}: {}", t!("磁盘空间不足"), t!("无法上传文件"));
 
+        data_server_arc.return_back_upload_delegator(delegator_arc);
+
         return Err(Status::aborted(format!(
             "{}, {}",
             t!("磁盘空间不足"),
@@ -174,15 +148,33 @@ async fn handle_upload_file_to_data_path(
         )));
     };
 
-    // 交互流
-    let (resp_tx, resp_rx) = mpsc::channel(5);
+    // 创建文件夹和文件
+    let data_file = match delegator_arc
+        .get_upload_target_file(&data_folder, &data_file_path)
+        .await
+    {
+        Ok(f) => f,
+        Err(e) => {
+            error!("{}: {}", t!("获取上传文件失败"), e.details());
 
+            data_server_arc.return_back_upload_delegator(delegator_arc);
+
+            return Err(Status::aborted(format!(
+                "{}-{}",
+                e.details(),
+                e.operation()
+            )));
+        }
+    };
+
+    // zh: 接收文件流
     let ftx = match delegator_arc
         .get_receive_file_stream_sender(data_file, data_file_path.to_str().unwrap().to_string())
         .await
     {
         Ok(s) => s,
         Err(e) => {
+            data_server_arc.return_back_upload_delegator(delegator_arc);
             return Err(Status::aborted(format!(
                 "{}-{}",
                 e.operation(),
@@ -191,7 +183,7 @@ async fn handle_upload_file_to_data_path(
         }
     };
 
-    //  起始数据块编号
+    //  zh: 续传起始数据块编号，如果没有续传从1开始
     let resume_point = delegator_arc
         .check_and_read_resume_point(&data_file_path)
         .await;
@@ -210,6 +202,9 @@ async fn handle_upload_file_to_data_path(
         &file_info.file_name
     );
 
+    // 交互流
+    let (resp_tx, resp_rx) = mpsc::channel(5);
+
     if let Ok(_r) = resp_tx
         .send(Ok(UploadFileToVersionResponse {
             next_chunk_index: next_chunk_index as u64,
@@ -218,6 +213,7 @@ async fn handle_upload_file_to_data_path(
     {
         info!("{}: {}", t!("返回起始包编号"), &next_chunk_index);
     } else {
+        data_server_arc.return_back_upload_delegator(delegator_arc);
         return Err(Status::aborted("返回起始包编号失败。"));
     };
 
@@ -352,24 +348,36 @@ async fn handle_upload_file_to_data_path(
             }
         }
 
-        // 文件上传结束后必须返还代理，否则代理将丢失
-        if let Err(e) = delegator_arc
+        // zh: 文件上传成功结束
+        match delegator_arc
             .delete_resume_point_file(&data_file_path)
             .await
         {
-            error!("{}: {}", t!("删除续件文件失败"), e.details());
-            error!(
-                "{}: {}",
-                t!("需要手动删除续传文件"),
-                &data_file_path.clone().set_extension("resume")
-            );
-        } else {
-            info!("{}: {}--{}。", t!("传输文件结束"), data_id, file_name);
+            Err(e) => {
+                error!("{}: {}", t!("删除续件文件失败"), e.details());
+                error!(
+                    "{}: {}",
+                    t!("需要手动删除续传文件"),
+                    &data_file_path.clone().set_extension("resume")
+                );
+            }
+            Ok(_) => {
+                info!("{}: {}--{}。", t!("传输文件结束"), data_id, file_name);
+            }
         }
+
+        // zh: 必须返还代理，否则代理将丢失
         data_server_arc.return_back_upload_delegator(delegator_arc);
 
         // 将文件添加到版本的文件表
-        add_file_to_data_path(&stage, &version, &data_file_path.to_str().unwrap(), &file_info, &account_id).await;
+        add_file_to_data_path(
+            &stage,
+            &version,
+            &data_file_path.to_str().unwrap(),
+            &file_info,
+            &account_id,
+        )
+        .await;
         Ok(())
     });
 

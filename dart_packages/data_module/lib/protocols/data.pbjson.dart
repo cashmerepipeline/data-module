@@ -13,24 +13,6 @@ import 'dart:convert' as $convert;
 import 'dart:core' as $core;
 import 'dart:typed_data' as $typed_data;
 
-@$core.Deprecated('Use dataTypeDescriptor instead')
-const DataType$json = {
-  '1': 'DataType',
-  '2': [
-    {'1': 'FileData', '2': 0},
-    {'1': 'SequenceData', '2': 1},
-    {'1': 'FileSetData', '2': 2},
-    {'1': 'DocumentData', '2': 3},
-    {'1': 'ImageData', '2': 4},
-    {'1': 'VideoData', '2': 5},
-  ],
-};
-
-/// Descriptor for `DataType`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List dataTypeDescriptor = $convert.base64Decode(
-    'CghEYXRhVHlwZRIMCghGaWxlRGF0YRAAEhAKDFNlcXVlbmNlRGF0YRABEg8KC0ZpbGVTZXREYX'
-    'RhEAISEAoMRG9jdW1lbnREYXRhEAMSDQoJSW1hZ2VEYXRhEAQSDQoJVmlkZW9EYXRhEAU=');
-
 @$core.Deprecated('Use dataInfoDescriptor instead')
 const DataInfo$json = {
   '1': 'DataInfo',

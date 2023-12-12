@@ -2,12 +2,11 @@ syntax = "proto3";
 package data.cashmere;
 
 import "name.proto";
-import "field_data_type.proto";
 
 message NewSpecsAttributeRequest{
     int32 manage_id = 1;
     .cashmere.Name name = 2;
-    .cashmere.FieldDataType data_type = 3;
+    string data_type = 3;
     string description = 4;
     bytes default_value = 5;
     int32 index = 6;

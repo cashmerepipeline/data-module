@@ -4,6 +4,7 @@ use dependencies_sync::tonic::async_trait;
 
 use dependencies_sync::tonic::{Request, Response, Status};
 use majordomo::{self, get_majordomo};
+use validates::validate_entity_id;
 use crate::protocols::*;
 use crate::ids_codes::field_ids::*;
 use manage_define::general_field_ids::*;
@@ -47,6 +48,12 @@ async fn validate_view_rules(
 async fn validate_request_params(
     request: Request<SetStageCurrentVersionRequest>,
 ) -> Result<Request<SetStageCurrentVersionRequest>, Status> {
+    let stage_id = &request.get_ref().stage_id;
+    let target_version = &request.get_ref().target_version;
+
+    validate_entity_id(&STAGES_MANAGE_ID, stage_id).await?;
+    validate_entity_id(&VERSIONS_MANAGE_ID, target_version).await?;
+
     Ok(request)
 }
 
@@ -61,31 +68,11 @@ async fn handle_set_stage_current_version(
     let majordomo_arc = get_majordomo();
     let manager = majordomo_arc.get_manager_by_id(STAGES_MANAGE_ID).unwrap();
 
-    let stage_entity = match manager.get_entity_by_id(stage_id, &vec![]).await {
-        Ok(e) => e,
-        Err(e) => {
-            // 不存在
-            return Err(Status::aborted(format!(
-                "{} {}",
-                e.operation(),
-                e.details()
-            )));
-        }
-    };
-
-    if !stage_entity
-        .get_array(STAGES_VERSIONS_FIELD_ID.to_string())
-        .unwrap()
-        .iter()
-        .map(|v| bson::from_bson::<Version>(v.clone()).unwrap())
-        .any(|v| v.name == *target_version)
-    {
-        return Err(Status::invalid_argument("版本不存在"));
-    };
-
     let query_doc = doc! {
         ID_FIELD_ID.to_string():stage_id,
     };
+
+    // TODO: 更新版本数据文件软连接
 
     let mut modify_doc = bson::Document::new();
     modify_doc.insert(STAGES_CURRENT_VERSION_FIELD_ID.to_string(), target_version);

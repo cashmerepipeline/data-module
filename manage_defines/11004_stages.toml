@@ -14,8 +14,7 @@ schema = [
     { data_type = "String", name_map = { zh = "数据", en = "data_id"}, removed = false },
 
     # 2002
-    # version: {files: [file_infos], description: "", status: "done", created_at: "", updated_at: ""]}
-    { data_type = "Array", name_map = { zh = "版本", en = "versions"}, removed = false },
+    { data_type = "String", name_map = { zh = "阶段", en = "stage"}, removed = false },
     
     # 2003
     # 预览文件表

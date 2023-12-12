@@ -1,42 +1,47 @@
-///
+//
 //  Generated code. Do not modify.
 //  source: version.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
+
+// ignore_for_file: annotate_overrides, camel_case_types, comment_references
+// ignore_for_file: constant_identifier_names, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_final_fields
+// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
 
 import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class Version extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Version', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..pPS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'files')
-    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'removed')
-    ..hasRequiredFields = false
-  ;
-
-  Version._() : super();
   factory Version({
     $core.String? name,
     $core.Iterable<$core.String>? files,
     $core.bool? removed,
   }) {
-    final _result = create();
+    final $result = create();
     if (name != null) {
-      _result.name = name;
+      $result.name = name;
     }
     if (files != null) {
-      _result.files.addAll(files);
+      $result.files.addAll(files);
     }
     if (removed != null) {
-      _result.removed = removed;
+      $result.removed = removed;
     }
-    return _result;
+    return $result;
   }
+  Version._() : super();
   factory Version.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Version.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Version', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'name')
+    ..pPS(2, _omitFieldNames ? '' : 'files')
+    ..aOB(3, _omitFieldNames ? '' : 'removed')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -46,8 +51,10 @@ class Version extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  Version copyWith(void Function(Version) updates) => super.copyWith((message) => updates(message as Version)) as Version; // ignore: deprecated_member_use
+  Version copyWith(void Function(Version) updates) => super.copyWith((message) => updates(message as Version)) as Version;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static Version create() => Version._();
   Version createEmptyInstance() => create();
@@ -65,9 +72,15 @@ class Version extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearName() => clearField(1);
 
+  /// protobuf不支持嵌套repeated，所以使用 “,” 分隔的字符串, 形式为["sub_dir, ...,file_name"]
+  /// 路径不允许使用相对路径符号"."和".."
+  /// 文件集为多个文件列表
+  /// 文件序列为规则: ["base_name, start, end, padding, extension"]
+  /// 使用bson格式存储
   @$pb.TagNumber(2)
   $core.List<$core.String> get files => $_getList(1);
 
+  /// 移除标记，文件不删除
   @$pb.TagNumber(3)
   $core.bool get removed => $_getBF(2);
   @$pb.TagNumber(3)
@@ -78,29 +91,31 @@ class Version extends $pb.GeneratedMessage {
   void clearRemoved() => clearField(3);
 }
 
+/// 添加数据版本到阶段
 class AddStageVersionRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddStageVersionRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stageId')
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'version')
-    ..hasRequiredFields = false
-  ;
-
-  AddStageVersionRequest._() : super();
   factory AddStageVersionRequest({
     $core.String? stageId,
     $core.String? version,
   }) {
-    final _result = create();
+    final $result = create();
     if (stageId != null) {
-      _result.stageId = stageId;
+      $result.stageId = stageId;
     }
     if (version != null) {
-      _result.version = version;
+      $result.version = version;
     }
-    return _result;
+    return $result;
   }
+  AddStageVersionRequest._() : super();
   factory AddStageVersionRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AddStageVersionRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddStageVersionRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'stageId')
+    ..aOS(3, _omitFieldNames ? '' : 'version')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -110,8 +125,10 @@ class AddStageVersionRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddStageVersionRequest copyWith(void Function(AddStageVersionRequest) updates) => super.copyWith((message) => updates(message as AddStageVersionRequest)) as AddStageVersionRequest; // ignore: deprecated_member_use
+  AddStageVersionRequest copyWith(void Function(AddStageVersionRequest) updates) => super.copyWith((message) => updates(message as AddStageVersionRequest)) as AddStageVersionRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static AddStageVersionRequest create() => AddStageVersionRequest._();
   AddStageVersionRequest createEmptyInstance() => create();
@@ -129,6 +146,7 @@ class AddStageVersionRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearStageId() => clearField(1);
 
+  /// 版本一般有具体的含义，不只是一个数字，比如"v001"
   @$pb.TagNumber(3)
   $core.String get version => $_getSZ(1);
   @$pb.TagNumber(3)
@@ -140,23 +158,24 @@ class AddStageVersionRequest extends $pb.GeneratedMessage {
 }
 
 class AddStageVersionResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddStageVersionResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'result')
-    ..hasRequiredFields = false
-  ;
-
-  AddStageVersionResponse._() : super();
   factory AddStageVersionResponse({
     $core.String? result,
   }) {
-    final _result = create();
+    final $result = create();
     if (result != null) {
-      _result.result = result;
+      $result.result = result;
     }
-    return _result;
+    return $result;
   }
+  AddStageVersionResponse._() : super();
   factory AddStageVersionResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AddStageVersionResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddStageVersionResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'result')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -166,8 +185,10 @@ class AddStageVersionResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddStageVersionResponse copyWith(void Function(AddStageVersionResponse) updates) => super.copyWith((message) => updates(message as AddStageVersionResponse)) as AddStageVersionResponse; // ignore: deprecated_member_use
+  AddStageVersionResponse copyWith(void Function(AddStageVersionResponse) updates) => super.copyWith((message) => updates(message as AddStageVersionResponse)) as AddStageVersionResponse;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static AddStageVersionResponse create() => AddStageVersionResponse._();
   AddStageVersionResponse createEmptyInstance() => create();
@@ -176,6 +197,7 @@ class AddStageVersionResponse extends $pb.GeneratedMessage {
   static AddStageVersionResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddStageVersionResponse>(create);
   static AddStageVersionResponse? _defaultInstance;
 
+  /// 成功返回 "ok"
   @$pb.TagNumber(1)
   $core.String get result => $_getSZ(0);
   @$pb.TagNumber(1)
@@ -186,24 +208,26 @@ class AddStageVersionResponse extends $pb.GeneratedMessage {
   void clearResult() => clearField(1);
 }
 
+/// 取得数据阶段版本表
 class ListStageVersionsRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ListStageVersionsRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stageId')
-    ..hasRequiredFields = false
-  ;
-
-  ListStageVersionsRequest._() : super();
   factory ListStageVersionsRequest({
     $core.String? stageId,
   }) {
-    final _result = create();
+    final $result = create();
     if (stageId != null) {
-      _result.stageId = stageId;
+      $result.stageId = stageId;
     }
-    return _result;
+    return $result;
   }
+  ListStageVersionsRequest._() : super();
   factory ListStageVersionsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ListStageVersionsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListStageVersionsRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'stageId')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -213,8 +237,10 @@ class ListStageVersionsRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ListStageVersionsRequest copyWith(void Function(ListStageVersionsRequest) updates) => super.copyWith((message) => updates(message as ListStageVersionsRequest)) as ListStageVersionsRequest; // ignore: deprecated_member_use
+  ListStageVersionsRequest copyWith(void Function(ListStageVersionsRequest) updates) => super.copyWith((message) => updates(message as ListStageVersionsRequest)) as ListStageVersionsRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static ListStageVersionsRequest create() => ListStageVersionsRequest._();
   ListStageVersionsRequest createEmptyInstance() => create();
@@ -234,23 +260,24 @@ class ListStageVersionsRequest extends $pb.GeneratedMessage {
 }
 
 class ListStageVersionsResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ListStageVersionsResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..pc<Version>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'versions', $pb.PbFieldType.PM, subBuilder: Version.create)
+  factory ListStageVersionsResponse({
+    $core.Iterable<$core.List<$core.int>>? versions,
+  }) {
+    final $result = create();
+    if (versions != null) {
+      $result.versions.addAll(versions);
+    }
+    return $result;
+  }
+  ListStageVersionsResponse._() : super();
+  factory ListStageVersionsResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ListStageVersionsResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListStageVersionsResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..p<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'versions', $pb.PbFieldType.PY)
     ..hasRequiredFields = false
   ;
 
-  ListStageVersionsResponse._() : super();
-  factory ListStageVersionsResponse({
-    $core.Iterable<Version>? versions,
-  }) {
-    final _result = create();
-    if (versions != null) {
-      _result.versions.addAll(versions);
-    }
-    return _result;
-  }
-  factory ListStageVersionsResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory ListStageVersionsResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -260,8 +287,10 @@ class ListStageVersionsResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ListStageVersionsResponse copyWith(void Function(ListStageVersionsResponse) updates) => super.copyWith((message) => updates(message as ListStageVersionsResponse)) as ListStageVersionsResponse; // ignore: deprecated_member_use
+  ListStageVersionsResponse copyWith(void Function(ListStageVersionsResponse) updates) => super.copyWith((message) => updates(message as ListStageVersionsResponse)) as ListStageVersionsResponse;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static ListStageVersionsResponse create() => ListStageVersionsResponse._();
   ListStageVersionsResponse createEmptyInstance() => create();
@@ -271,32 +300,34 @@ class ListStageVersionsResponse extends $pb.GeneratedMessage {
   static ListStageVersionsResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<Version> get versions => $_getList(0);
+  $core.List<$core.List<$core.int>> get versions => $_getList(0);
 }
 
+/// 改变阶段文件连接
 class SetStageCurrentVersionRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SetStageCurrentVersionRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stageId')
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'targetVersion')
-    ..hasRequiredFields = false
-  ;
-
-  SetStageCurrentVersionRequest._() : super();
   factory SetStageCurrentVersionRequest({
     $core.String? stageId,
     $core.String? targetVersion,
   }) {
-    final _result = create();
+    final $result = create();
     if (stageId != null) {
-      _result.stageId = stageId;
+      $result.stageId = stageId;
     }
     if (targetVersion != null) {
-      _result.targetVersion = targetVersion;
+      $result.targetVersion = targetVersion;
     }
-    return _result;
+    return $result;
   }
+  SetStageCurrentVersionRequest._() : super();
   factory SetStageCurrentVersionRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SetStageCurrentVersionRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SetStageCurrentVersionRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'stageId')
+    ..aOS(3, _omitFieldNames ? '' : 'targetVersion')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -306,8 +337,10 @@ class SetStageCurrentVersionRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SetStageCurrentVersionRequest copyWith(void Function(SetStageCurrentVersionRequest) updates) => super.copyWith((message) => updates(message as SetStageCurrentVersionRequest)) as SetStageCurrentVersionRequest; // ignore: deprecated_member_use
+  SetStageCurrentVersionRequest copyWith(void Function(SetStageCurrentVersionRequest) updates) => super.copyWith((message) => updates(message as SetStageCurrentVersionRequest)) as SetStageCurrentVersionRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static SetStageCurrentVersionRequest create() => SetStageCurrentVersionRequest._();
   SetStageCurrentVersionRequest createEmptyInstance() => create();
@@ -336,23 +369,24 @@ class SetStageCurrentVersionRequest extends $pb.GeneratedMessage {
 }
 
 class SetStageCurrentVersionResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SetStageCurrentVersionResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'result')
-    ..hasRequiredFields = false
-  ;
-
-  SetStageCurrentVersionResponse._() : super();
   factory SetStageCurrentVersionResponse({
     $core.String? result,
   }) {
-    final _result = create();
+    final $result = create();
     if (result != null) {
-      _result.result = result;
+      $result.result = result;
     }
-    return _result;
+    return $result;
   }
+  SetStageCurrentVersionResponse._() : super();
   factory SetStageCurrentVersionResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SetStageCurrentVersionResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SetStageCurrentVersionResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'result')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -362,8 +396,10 @@ class SetStageCurrentVersionResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SetStageCurrentVersionResponse copyWith(void Function(SetStageCurrentVersionResponse) updates) => super.copyWith((message) => updates(message as SetStageCurrentVersionResponse)) as SetStageCurrentVersionResponse; // ignore: deprecated_member_use
+  SetStageCurrentVersionResponse copyWith(void Function(SetStageCurrentVersionResponse) updates) => super.copyWith((message) => updates(message as SetStageCurrentVersionResponse)) as SetStageCurrentVersionResponse;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static SetStageCurrentVersionResponse create() => SetStageCurrentVersionResponse._();
   SetStageCurrentVersionResponse createEmptyInstance() => create();
@@ -372,6 +408,7 @@ class SetStageCurrentVersionResponse extends $pb.GeneratedMessage {
   static SetStageCurrentVersionResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SetStageCurrentVersionResponse>(create);
   static SetStageCurrentVersionResponse? _defaultInstance;
 
+  /// 成功返回 当前版本
   @$pb.TagNumber(1)
   $core.String get result => $_getSZ(0);
   @$pb.TagNumber(1)
@@ -382,29 +419,31 @@ class SetStageCurrentVersionResponse extends $pb.GeneratedMessage {
   void clearResult() => clearField(1);
 }
 
+/// 删除数据版本
 class RemoveStageVersionRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RemoveStageVersionRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stageId')
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'version')
-    ..hasRequiredFields = false
-  ;
-
-  RemoveStageVersionRequest._() : super();
   factory RemoveStageVersionRequest({
     $core.String? stageId,
     $core.String? version,
   }) {
-    final _result = create();
+    final $result = create();
     if (stageId != null) {
-      _result.stageId = stageId;
+      $result.stageId = stageId;
     }
     if (version != null) {
-      _result.version = version;
+      $result.version = version;
     }
-    return _result;
+    return $result;
   }
+  RemoveStageVersionRequest._() : super();
   factory RemoveStageVersionRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory RemoveStageVersionRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RemoveStageVersionRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'stageId')
+    ..aOS(3, _omitFieldNames ? '' : 'version')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -414,8 +453,10 @@ class RemoveStageVersionRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RemoveStageVersionRequest copyWith(void Function(RemoveStageVersionRequest) updates) => super.copyWith((message) => updates(message as RemoveStageVersionRequest)) as RemoveStageVersionRequest; // ignore: deprecated_member_use
+  RemoveStageVersionRequest copyWith(void Function(RemoveStageVersionRequest) updates) => super.copyWith((message) => updates(message as RemoveStageVersionRequest)) as RemoveStageVersionRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static RemoveStageVersionRequest create() => RemoveStageVersionRequest._();
   RemoveStageVersionRequest createEmptyInstance() => create();
@@ -444,23 +485,24 @@ class RemoveStageVersionRequest extends $pb.GeneratedMessage {
 }
 
 class RemoveStageVersionResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RemoveStageVersionResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'result')
-    ..hasRequiredFields = false
-  ;
-
-  RemoveStageVersionResponse._() : super();
   factory RemoveStageVersionResponse({
     $core.String? result,
   }) {
-    final _result = create();
+    final $result = create();
     if (result != null) {
-      _result.result = result;
+      $result.result = result;
     }
-    return _result;
+    return $result;
   }
+  RemoveStageVersionResponse._() : super();
   factory RemoveStageVersionResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory RemoveStageVersionResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RemoveStageVersionResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'result')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -470,8 +512,10 @@ class RemoveStageVersionResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RemoveStageVersionResponse copyWith(void Function(RemoveStageVersionResponse) updates) => super.copyWith((message) => updates(message as RemoveStageVersionResponse)) as RemoveStageVersionResponse; // ignore: deprecated_member_use
+  RemoveStageVersionResponse copyWith(void Function(RemoveStageVersionResponse) updates) => super.copyWith((message) => updates(message as RemoveStageVersionResponse)) as RemoveStageVersionResponse;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static RemoveStageVersionResponse create() => RemoveStageVersionResponse._();
   RemoveStageVersionResponse createEmptyInstance() => create();
@@ -480,6 +524,7 @@ class RemoveStageVersionResponse extends $pb.GeneratedMessage {
   static RemoveStageVersionResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RemoveStageVersionResponse>(create);
   static RemoveStageVersionResponse? _defaultInstance;
 
+  /// 成功返回 "ok"
   @$pb.TagNumber(1)
   $core.String get result => $_getSZ(0);
   @$pb.TagNumber(1)
@@ -490,150 +535,37 @@ class RemoveStageVersionResponse extends $pb.GeneratedMessage {
   void clearResult() => clearField(1);
 }
 
-class AddFileToVersionRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddFileToVersionRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stageId')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'version')
-    ..pPS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'filePath')
-    ..hasRequiredFields = false
-  ;
-
-  AddFileToVersionRequest._() : super();
-  factory AddFileToVersionRequest({
-    $core.String? stageId,
-    $core.String? version,
-    $core.Iterable<$core.String>? filePath,
-  }) {
-    final _result = create();
-    if (stageId != null) {
-      _result.stageId = stageId;
-    }
-    if (version != null) {
-      _result.version = version;
-    }
-    if (filePath != null) {
-      _result.filePath.addAll(filePath);
-    }
-    return _result;
-  }
-  factory AddFileToVersionRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory AddFileToVersionRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  AddFileToVersionRequest clone() => AddFileToVersionRequest()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  AddFileToVersionRequest copyWith(void Function(AddFileToVersionRequest) updates) => super.copyWith((message) => updates(message as AddFileToVersionRequest)) as AddFileToVersionRequest; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static AddFileToVersionRequest create() => AddFileToVersionRequest._();
-  AddFileToVersionRequest createEmptyInstance() => create();
-  static $pb.PbList<AddFileToVersionRequest> createRepeated() => $pb.PbList<AddFileToVersionRequest>();
-  @$core.pragma('dart2js:noInline')
-  static AddFileToVersionRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddFileToVersionRequest>(create);
-  static AddFileToVersionRequest? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get stageId => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set stageId($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasStageId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearStageId() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.String get version => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set version($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasVersion() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearVersion() => clearField(2);
-
-  @$pb.TagNumber(3)
-  $core.List<$core.String> get filePath => $_getList(2);
-}
-
-class AddFileToVersionResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddFileToVersionResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'result')
-    ..hasRequiredFields = false
-  ;
-
-  AddFileToVersionResponse._() : super();
-  factory AddFileToVersionResponse({
-    $core.String? result,
-  }) {
-    final _result = create();
-    if (result != null) {
-      _result.result = result;
-    }
-    return _result;
-  }
-  factory AddFileToVersionResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory AddFileToVersionResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  AddFileToVersionResponse clone() => AddFileToVersionResponse()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  AddFileToVersionResponse copyWith(void Function(AddFileToVersionResponse) updates) => super.copyWith((message) => updates(message as AddFileToVersionResponse)) as AddFileToVersionResponse; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static AddFileToVersionResponse create() => AddFileToVersionResponse._();
-  AddFileToVersionResponse createEmptyInstance() => create();
-  static $pb.PbList<AddFileToVersionResponse> createRepeated() => $pb.PbList<AddFileToVersionResponse>();
-  @$core.pragma('dart2js:noInline')
-  static AddFileToVersionResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddFileToVersionResponse>(create);
-  static AddFileToVersionResponse? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get result => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set result($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasResult() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearResult() => clearField(1);
-}
-
+/// 添加文件到数据阶段，文件路径以版本路径为根，<version_root>/["sub_dir", ..., "file_name"]
+/// 路径在使用时再拼接
 class AddFileSetToVersionRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddFileSetToVersionRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stageId')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'version')
-    ..pPS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'filePathes')
-    ..hasRequiredFields = false
-  ;
-
-  AddFileSetToVersionRequest._() : super();
   factory AddFileSetToVersionRequest({
     $core.String? stageId,
     $core.String? version,
-    $core.Iterable<$core.String>? filePathes,
+    $core.String? dataPath,
   }) {
-    final _result = create();
+    final $result = create();
     if (stageId != null) {
-      _result.stageId = stageId;
+      $result.stageId = stageId;
     }
     if (version != null) {
-      _result.version = version;
+      $result.version = version;
     }
-    if (filePathes != null) {
-      _result.filePathes.addAll(filePathes);
+    if (dataPath != null) {
+      $result.dataPath = dataPath;
     }
-    return _result;
+    return $result;
   }
+  AddFileSetToVersionRequest._() : super();
   factory AddFileSetToVersionRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AddFileSetToVersionRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddFileSetToVersionRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'stageId')
+    ..aOS(2, _omitFieldNames ? '' : 'version')
+    ..aOS(3, _omitFieldNames ? '' : 'dataPath')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -643,8 +575,10 @@ class AddFileSetToVersionRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddFileSetToVersionRequest copyWith(void Function(AddFileSetToVersionRequest) updates) => super.copyWith((message) => updates(message as AddFileSetToVersionRequest)) as AddFileSetToVersionRequest; // ignore: deprecated_member_use
+  AddFileSetToVersionRequest copyWith(void Function(AddFileSetToVersionRequest) updates) => super.copyWith((message) => updates(message as AddFileSetToVersionRequest)) as AddFileSetToVersionRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static AddFileSetToVersionRequest create() => AddFileSetToVersionRequest._();
   AddFileSetToVersionRequest createEmptyInstance() => create();
@@ -671,28 +605,36 @@ class AddFileSetToVersionRequest extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearVersion() => clearField(2);
 
+  /// 因为不支持嵌套repeated，所以使用“,”分隔的字符串, 形式为["sub_dir, ...,file_name"]
   @$pb.TagNumber(3)
-  $core.List<$core.String> get filePathes => $_getList(2);
+  $core.String get dataPath => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set dataPath($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasDataPath() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearDataPath() => clearField(3);
 }
 
 class AddFileSetToVersionResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddFileSetToVersionResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'result')
-    ..hasRequiredFields = false
-  ;
-
-  AddFileSetToVersionResponse._() : super();
   factory AddFileSetToVersionResponse({
     $core.String? result,
   }) {
-    final _result = create();
+    final $result = create();
     if (result != null) {
-      _result.result = result;
+      $result.result = result;
     }
-    return _result;
+    return $result;
   }
+  AddFileSetToVersionResponse._() : super();
   factory AddFileSetToVersionResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AddFileSetToVersionResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddFileSetToVersionResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'result')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -702,8 +644,10 @@ class AddFileSetToVersionResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddFileSetToVersionResponse copyWith(void Function(AddFileSetToVersionResponse) updates) => super.copyWith((message) => updates(message as AddFileSetToVersionResponse)) as AddFileSetToVersionResponse; // ignore: deprecated_member_use
+  AddFileSetToVersionResponse copyWith(void Function(AddFileSetToVersionResponse) updates) => super.copyWith((message) => updates(message as AddFileSetToVersionResponse)) as AddFileSetToVersionResponse;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static AddFileSetToVersionResponse create() => AddFileSetToVersionResponse._();
   AddFileSetToVersionResponse createEmptyInstance() => create();
@@ -712,6 +656,7 @@ class AddFileSetToVersionResponse extends $pb.GeneratedMessage {
   static AddFileSetToVersionResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddFileSetToVersionResponse>(create);
   static AddFileSetToVersionResponse? _defaultInstance;
 
+  /// 成功返回 "ok"
   @$pb.TagNumber(1)
   $core.String get result => $_getSZ(0);
   @$pb.TagNumber(1)
@@ -722,54 +667,39 @@ class AddFileSetToVersionResponse extends $pb.GeneratedMessage {
   void clearResult() => clearField(1);
 }
 
+/// 数据类型为文件序列时, 序列文件直接存储在版本目录下
+/// 使用规则解析文件路径[base_name, start, end, padding, extension]，不记录所有文件的路径
+/// 严格使用这个顺序，不使用类似{base_name: name, start: start, end: end, padding: padding, ext: ext, number_pos: [mid, end]}的格式
+/// 文件、文件集、序列存储形式上一致，易于mongodb文件查询
 class AddFileSequenceToVersionRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddFileSequenceToVersionRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stageId')
-    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'padding', $pb.PbFieldType.O3)
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'version')
-    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'start', $pb.PbFieldType.O3)
-    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'end', $pb.PbFieldType.O3)
-    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'baseName')
-    ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'extension')
+  factory AddFileSequenceToVersionRequest({
+    $core.String? stageId,
+    $core.String? version,
+    $core.String? dataPath,
+  }) {
+    final $result = create();
+    if (stageId != null) {
+      $result.stageId = stageId;
+    }
+    if (version != null) {
+      $result.version = version;
+    }
+    if (dataPath != null) {
+      $result.dataPath = dataPath;
+    }
+    return $result;
+  }
+  AddFileSequenceToVersionRequest._() : super();
+  factory AddFileSequenceToVersionRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AddFileSequenceToVersionRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddFileSequenceToVersionRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'stageId')
+    ..aOS(2, _omitFieldNames ? '' : 'version')
+    ..aOS(3, _omitFieldNames ? '' : 'dataPath')
     ..hasRequiredFields = false
   ;
 
-  AddFileSequenceToVersionRequest._() : super();
-  factory AddFileSequenceToVersionRequest({
-    $core.String? stageId,
-    $core.int? padding,
-    $core.String? version,
-    $core.int? start,
-    $core.int? end,
-    $core.String? baseName,
-    $core.String? extension_8,
-  }) {
-    final _result = create();
-    if (stageId != null) {
-      _result.stageId = stageId;
-    }
-    if (padding != null) {
-      _result.padding = padding;
-    }
-    if (version != null) {
-      _result.version = version;
-    }
-    if (start != null) {
-      _result.start = start;
-    }
-    if (end != null) {
-      _result.end = end;
-    }
-    if (baseName != null) {
-      _result.baseName = baseName;
-    }
-    if (extension_8 != null) {
-      _result.extension_8 = extension_8;
-    }
-    return _result;
-  }
-  factory AddFileSequenceToVersionRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory AddFileSequenceToVersionRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -779,8 +709,10 @@ class AddFileSequenceToVersionRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddFileSequenceToVersionRequest copyWith(void Function(AddFileSequenceToVersionRequest) updates) => super.copyWith((message) => updates(message as AddFileSequenceToVersionRequest)) as AddFileSequenceToVersionRequest; // ignore: deprecated_member_use
+  AddFileSequenceToVersionRequest copyWith(void Function(AddFileSequenceToVersionRequest) updates) => super.copyWith((message) => updates(message as AddFileSequenceToVersionRequest)) as AddFileSequenceToVersionRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static AddFileSequenceToVersionRequest create() => AddFileSequenceToVersionRequest._();
   AddFileSequenceToVersionRequest createEmptyInstance() => create();
@@ -799,78 +731,43 @@ class AddFileSequenceToVersionRequest extends $pb.GeneratedMessage {
   void clearStageId() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.int get padding => $_getIZ(1);
+  $core.String get version => $_getSZ(1);
   @$pb.TagNumber(2)
-  set padding($core.int v) { $_setSignedInt32(1, v); }
+  set version($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasPadding() => $_has(1);
+  $core.bool hasVersion() => $_has(1);
   @$pb.TagNumber(2)
-  void clearPadding() => clearField(2);
+  void clearVersion() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.String get version => $_getSZ(2);
+  $core.String get dataPath => $_getSZ(2);
   @$pb.TagNumber(3)
-  set version($core.String v) { $_setString(2, v); }
+  set dataPath($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(3)
-  $core.bool hasVersion() => $_has(2);
+  $core.bool hasDataPath() => $_has(2);
   @$pb.TagNumber(3)
-  void clearVersion() => clearField(3);
-
-  @$pb.TagNumber(5)
-  $core.int get start => $_getIZ(3);
-  @$pb.TagNumber(5)
-  set start($core.int v) { $_setSignedInt32(3, v); }
-  @$pb.TagNumber(5)
-  $core.bool hasStart() => $_has(3);
-  @$pb.TagNumber(5)
-  void clearStart() => clearField(5);
-
-  @$pb.TagNumber(6)
-  $core.int get end => $_getIZ(4);
-  @$pb.TagNumber(6)
-  set end($core.int v) { $_setSignedInt32(4, v); }
-  @$pb.TagNumber(6)
-  $core.bool hasEnd() => $_has(4);
-  @$pb.TagNumber(6)
-  void clearEnd() => clearField(6);
-
-  @$pb.TagNumber(7)
-  $core.String get baseName => $_getSZ(5);
-  @$pb.TagNumber(7)
-  set baseName($core.String v) { $_setString(5, v); }
-  @$pb.TagNumber(7)
-  $core.bool hasBaseName() => $_has(5);
-  @$pb.TagNumber(7)
-  void clearBaseName() => clearField(7);
-
-  @$pb.TagNumber(8)
-  $core.String get extension_8 => $_getSZ(6);
-  @$pb.TagNumber(8)
-  set extension_8($core.String v) { $_setString(6, v); }
-  @$pb.TagNumber(8)
-  $core.bool hasExtension_8() => $_has(6);
-  @$pb.TagNumber(8)
-  void clearExtension_8() => clearField(8);
+  void clearDataPath() => clearField(3);
 }
 
 class AddFileSequenceToVersionResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AddFileSequenceToVersionResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'result')
-    ..hasRequiredFields = false
-  ;
-
-  AddFileSequenceToVersionResponse._() : super();
   factory AddFileSequenceToVersionResponse({
     $core.String? result,
   }) {
-    final _result = create();
+    final $result = create();
     if (result != null) {
-      _result.result = result;
+      $result.result = result;
     }
-    return _result;
+    return $result;
   }
+  AddFileSequenceToVersionResponse._() : super();
   factory AddFileSequenceToVersionResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AddFileSequenceToVersionResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddFileSequenceToVersionResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'result')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -880,8 +777,10 @@ class AddFileSequenceToVersionResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AddFileSequenceToVersionResponse copyWith(void Function(AddFileSequenceToVersionResponse) updates) => super.copyWith((message) => updates(message as AddFileSequenceToVersionResponse)) as AddFileSequenceToVersionResponse; // ignore: deprecated_member_use
+  AddFileSequenceToVersionResponse copyWith(void Function(AddFileSequenceToVersionResponse) updates) => super.copyWith((message) => updates(message as AddFileSequenceToVersionResponse)) as AddFileSequenceToVersionResponse;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static AddFileSequenceToVersionResponse create() => AddFileSequenceToVersionResponse._();
   AddFileSequenceToVersionResponse createEmptyInstance() => create();
@@ -890,6 +789,7 @@ class AddFileSequenceToVersionResponse extends $pb.GeneratedMessage {
   static AddFileSequenceToVersionResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddFileSequenceToVersionResponse>(create);
   static AddFileSequenceToVersionResponse? _defaultInstance;
 
+  /// 成功返回 "ok"
   @$pb.TagNumber(1)
   $core.String get result => $_getSZ(0);
   @$pb.TagNumber(1)
@@ -900,34 +800,36 @@ class AddFileSequenceToVersionResponse extends $pb.GeneratedMessage {
   void clearResult() => clearField(1);
 }
 
+/// 从版本中移除多个文件，只支持文件、文件集， 不支持文件序列
 class RemoveFilesFromVersionRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RemoveFilesFromVersionRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stageId')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'version')
-    ..pPS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'filePathes')
-    ..hasRequiredFields = false
-  ;
-
-  RemoveFilesFromVersionRequest._() : super();
   factory RemoveFilesFromVersionRequest({
     $core.String? stageId,
     $core.String? version,
     $core.Iterable<$core.String>? filePathes,
   }) {
-    final _result = create();
+    final $result = create();
     if (stageId != null) {
-      _result.stageId = stageId;
+      $result.stageId = stageId;
     }
     if (version != null) {
-      _result.version = version;
+      $result.version = version;
     }
     if (filePathes != null) {
-      _result.filePathes.addAll(filePathes);
+      $result.filePathes.addAll(filePathes);
     }
-    return _result;
+    return $result;
   }
+  RemoveFilesFromVersionRequest._() : super();
   factory RemoveFilesFromVersionRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory RemoveFilesFromVersionRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RemoveFilesFromVersionRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'stageId')
+    ..aOS(2, _omitFieldNames ? '' : 'version')
+    ..pPS(3, _omitFieldNames ? '' : 'filePathes')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -937,8 +839,10 @@ class RemoveFilesFromVersionRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RemoveFilesFromVersionRequest copyWith(void Function(RemoveFilesFromVersionRequest) updates) => super.copyWith((message) => updates(message as RemoveFilesFromVersionRequest)) as RemoveFilesFromVersionRequest; // ignore: deprecated_member_use
+  RemoveFilesFromVersionRequest copyWith(void Function(RemoveFilesFromVersionRequest) updates) => super.copyWith((message) => updates(message as RemoveFilesFromVersionRequest)) as RemoveFilesFromVersionRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static RemoveFilesFromVersionRequest create() => RemoveFilesFromVersionRequest._();
   RemoveFilesFromVersionRequest createEmptyInstance() => create();
@@ -970,23 +874,24 @@ class RemoveFilesFromVersionRequest extends $pb.GeneratedMessage {
 }
 
 class RemoveFilesFromVersionResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RemoveFilesFromVersionResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'result')
-    ..hasRequiredFields = false
-  ;
-
-  RemoveFilesFromVersionResponse._() : super();
   factory RemoveFilesFromVersionResponse({
     $core.String? result,
   }) {
-    final _result = create();
+    final $result = create();
     if (result != null) {
-      _result.result = result;
+      $result.result = result;
     }
-    return _result;
+    return $result;
   }
+  RemoveFilesFromVersionResponse._() : super();
   factory RemoveFilesFromVersionResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory RemoveFilesFromVersionResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RemoveFilesFromVersionResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'result')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -996,8 +901,10 @@ class RemoveFilesFromVersionResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RemoveFilesFromVersionResponse copyWith(void Function(RemoveFilesFromVersionResponse) updates) => super.copyWith((message) => updates(message as RemoveFilesFromVersionResponse)) as RemoveFilesFromVersionResponse; // ignore: deprecated_member_use
+  RemoveFilesFromVersionResponse copyWith(void Function(RemoveFilesFromVersionResponse) updates) => super.copyWith((message) => updates(message as RemoveFilesFromVersionResponse)) as RemoveFilesFromVersionResponse;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static RemoveFilesFromVersionResponse create() => RemoveFilesFromVersionResponse._();
   RemoveFilesFromVersionResponse createEmptyInstance() => create();
@@ -1006,6 +913,7 @@ class RemoveFilesFromVersionResponse extends $pb.GeneratedMessage {
   static RemoveFilesFromVersionResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RemoveFilesFromVersionResponse>(create);
   static RemoveFilesFromVersionResponse? _defaultInstance;
 
+  /// 成功返回被删除的文件路径
   @$pb.TagNumber(1)
   $core.String get result => $_getSZ(0);
   @$pb.TagNumber(1)
@@ -1016,29 +924,31 @@ class RemoveFilesFromVersionResponse extends $pb.GeneratedMessage {
   void clearResult() => clearField(1);
 }
 
+/// 列出版本文件目录下的文件和文件夹
 class ListVersionFolderRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ListVersionFolderRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stageId')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'version')
-    ..hasRequiredFields = false
-  ;
-
-  ListVersionFolderRequest._() : super();
   factory ListVersionFolderRequest({
     $core.String? stageId,
     $core.String? version,
   }) {
-    final _result = create();
+    final $result = create();
     if (stageId != null) {
-      _result.stageId = stageId;
+      $result.stageId = stageId;
     }
     if (version != null) {
-      _result.version = version;
+      $result.version = version;
     }
-    return _result;
+    return $result;
   }
+  ListVersionFolderRequest._() : super();
   factory ListVersionFolderRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ListVersionFolderRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListVersionFolderRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'stageId')
+    ..aOS(2, _omitFieldNames ? '' : 'version')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1048,8 +958,10 @@ class ListVersionFolderRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ListVersionFolderRequest copyWith(void Function(ListVersionFolderRequest) updates) => super.copyWith((message) => updates(message as ListVersionFolderRequest)) as ListVersionFolderRequest; // ignore: deprecated_member_use
+  ListVersionFolderRequest copyWith(void Function(ListVersionFolderRequest) updates) => super.copyWith((message) => updates(message as ListVersionFolderRequest)) as ListVersionFolderRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static ListVersionFolderRequest create() => ListVersionFolderRequest._();
   ListVersionFolderRequest createEmptyInstance() => create();
@@ -1078,28 +990,29 @@ class ListVersionFolderRequest extends $pb.GeneratedMessage {
 }
 
 class ListVersionFolderResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ListVersionFolderResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'folders')
-    ..pPS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'files')
-    ..hasRequiredFields = false
-  ;
-
-  ListVersionFolderResponse._() : super();
   factory ListVersionFolderResponse({
     $core.Iterable<$core.String>? folders,
     $core.Iterable<$core.String>? files,
   }) {
-    final _result = create();
+    final $result = create();
     if (folders != null) {
-      _result.folders.addAll(folders);
+      $result.folders.addAll(folders);
     }
     if (files != null) {
-      _result.files.addAll(files);
+      $result.files.addAll(files);
     }
-    return _result;
+    return $result;
   }
+  ListVersionFolderResponse._() : super();
   factory ListVersionFolderResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ListVersionFolderResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListVersionFolderResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..pPS(1, _omitFieldNames ? '' : 'folders')
+    ..pPS(2, _omitFieldNames ? '' : 'files')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1109,8 +1022,10 @@ class ListVersionFolderResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ListVersionFolderResponse copyWith(void Function(ListVersionFolderResponse) updates) => super.copyWith((message) => updates(message as ListVersionFolderResponse)) as ListVersionFolderResponse; // ignore: deprecated_member_use
+  ListVersionFolderResponse copyWith(void Function(ListVersionFolderResponse) updates) => super.copyWith((message) => updates(message as ListVersionFolderResponse)) as ListVersionFolderResponse;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static ListVersionFolderResponse create() => ListVersionFolderResponse._();
   ListVersionFolderResponse createEmptyInstance() => create();
@@ -1119,41 +1034,46 @@ class ListVersionFolderResponse extends $pb.GeneratedMessage {
   static ListVersionFolderResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListVersionFolderResponse>(create);
   static ListVersionFolderResponse? _defaultInstance;
 
+  /// 文件夹
   @$pb.TagNumber(1)
   $core.List<$core.String> get folders => $_getList(0);
 
+  /// 文件
   @$pb.TagNumber(2)
   $core.List<$core.String> get files => $_getList(1);
 }
 
+/// 删除版本目录下的文件或文件夹，若文件或文件夹在版本文件列表中，否则返回，不做任何操作
+/// 注意路径表示规则
 class DeleteVersionFolderEntriesRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeleteVersionFolderEntriesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stageId')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'version')
-    ..pPS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'filePathes')
-    ..hasRequiredFields = false
-  ;
-
-  DeleteVersionFolderEntriesRequest._() : super();
   factory DeleteVersionFolderEntriesRequest({
     $core.String? stageId,
     $core.String? version,
     $core.Iterable<$core.String>? filePathes,
   }) {
-    final _result = create();
+    final $result = create();
     if (stageId != null) {
-      _result.stageId = stageId;
+      $result.stageId = stageId;
     }
     if (version != null) {
-      _result.version = version;
+      $result.version = version;
     }
     if (filePathes != null) {
-      _result.filePathes.addAll(filePathes);
+      $result.filePathes.addAll(filePathes);
     }
-    return _result;
+    return $result;
   }
+  DeleteVersionFolderEntriesRequest._() : super();
   factory DeleteVersionFolderEntriesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory DeleteVersionFolderEntriesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DeleteVersionFolderEntriesRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'stageId')
+    ..aOS(2, _omitFieldNames ? '' : 'version')
+    ..pPS(3, _omitFieldNames ? '' : 'filePathes')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1163,8 +1083,10 @@ class DeleteVersionFolderEntriesRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  DeleteVersionFolderEntriesRequest copyWith(void Function(DeleteVersionFolderEntriesRequest) updates) => super.copyWith((message) => updates(message as DeleteVersionFolderEntriesRequest)) as DeleteVersionFolderEntriesRequest; // ignore: deprecated_member_use
+  DeleteVersionFolderEntriesRequest copyWith(void Function(DeleteVersionFolderEntriesRequest) updates) => super.copyWith((message) => updates(message as DeleteVersionFolderEntriesRequest)) as DeleteVersionFolderEntriesRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static DeleteVersionFolderEntriesRequest create() => DeleteVersionFolderEntriesRequest._();
   DeleteVersionFolderEntriesRequest createEmptyInstance() => create();
@@ -1196,23 +1118,24 @@ class DeleteVersionFolderEntriesRequest extends $pb.GeneratedMessage {
 }
 
 class DeleteVersionFolderEntriesResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'DeleteVersionFolderEntriesResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..pPS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'result')
-    ..hasRequiredFields = false
-  ;
-
-  DeleteVersionFolderEntriesResponse._() : super();
   factory DeleteVersionFolderEntriesResponse({
     $core.Iterable<$core.String>? result,
   }) {
-    final _result = create();
+    final $result = create();
     if (result != null) {
-      _result.result.addAll(result);
+      $result.result.addAll(result);
     }
-    return _result;
+    return $result;
   }
+  DeleteVersionFolderEntriesResponse._() : super();
   factory DeleteVersionFolderEntriesResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory DeleteVersionFolderEntriesResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DeleteVersionFolderEntriesResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..pPS(1, _omitFieldNames ? '' : 'result')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1222,8 +1145,10 @@ class DeleteVersionFolderEntriesResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  DeleteVersionFolderEntriesResponse copyWith(void Function(DeleteVersionFolderEntriesResponse) updates) => super.copyWith((message) => updates(message as DeleteVersionFolderEntriesResponse)) as DeleteVersionFolderEntriesResponse; // ignore: deprecated_member_use
+  DeleteVersionFolderEntriesResponse copyWith(void Function(DeleteVersionFolderEntriesResponse) updates) => super.copyWith((message) => updates(message as DeleteVersionFolderEntriesResponse)) as DeleteVersionFolderEntriesResponse;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static DeleteVersionFolderEntriesResponse create() => DeleteVersionFolderEntriesResponse._();
   DeleteVersionFolderEntriesResponse createEmptyInstance() => create();
@@ -1232,7 +1157,11 @@ class DeleteVersionFolderEntriesResponse extends $pb.GeneratedMessage {
   static DeleteVersionFolderEntriesResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<DeleteVersionFolderEntriesResponse>(create);
   static DeleteVersionFolderEntriesResponse? _defaultInstance;
 
+  /// 成功返回被删除的文件路径
   @$pb.TagNumber(1)
   $core.List<$core.String> get result => $_getList(0);
 }
 
+
+const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
+const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

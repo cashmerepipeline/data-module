@@ -13,6 +13,7 @@ use majordomo::{self, get_majordomo};
 
 use crate::ids_codes::manage_ids::*;
 use managers::ManagerTrait;
+use validates::validate_entity_id;
 use view::add_query_filters;
 
 #[async_trait]
@@ -57,6 +58,8 @@ async fn validate_request_params(
             t!("规格编号不能为空"),
         ));
     }
+
+    validate_entity_id(&SPECSES_MANAGE_ID, specs_id).await?;
     
     Ok(request)
 }
@@ -74,7 +77,6 @@ async fn handle_list_specs_data(
     let manager = majordomo_arc.get_manager_by_id(manage_id).unwrap();
 
     // 可读性过滤, 没有设置过滤即不可读
-    // TODO: 根据组改写，加入可读过滤项
     let mut matches = doc! {};
     if let Some(filter_doc) =
         add_query_filters(&account_id.to_string(), &role_group, &manage_id.to_string()).await

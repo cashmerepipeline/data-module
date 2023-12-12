@@ -1,36 +1,42 @@
-///
+//
 //  Generated code. Do not modify.
 //  source: set_data.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
+
+// ignore_for_file: annotate_overrides, camel_case_types, comment_references
+// ignore_for_file: constant_identifier_names, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_final_fields
+// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
 
 import 'dart:core' as $core;
 
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-import 'set_data_info.pb.dart' as $0;
 import 'file_info.pb.dart' as $1;
+import 'set_data_info.pb.dart' as $0;
 
+/// 取得数据集合信息
 class GetSetDataInfoRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetSetDataInfoRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dataId')
-    ..hasRequiredFields = false
-  ;
-
-  GetSetDataInfoRequest._() : super();
   factory GetSetDataInfoRequest({
     $core.String? dataId,
   }) {
-    final _result = create();
+    final $result = create();
     if (dataId != null) {
-      _result.dataId = dataId;
+      $result.dataId = dataId;
     }
-    return _result;
+    return $result;
   }
+  GetSetDataInfoRequest._() : super();
   factory GetSetDataInfoRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory GetSetDataInfoRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetSetDataInfoRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'dataId')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -40,8 +46,10 @@ class GetSetDataInfoRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GetSetDataInfoRequest copyWith(void Function(GetSetDataInfoRequest) updates) => super.copyWith((message) => updates(message as GetSetDataInfoRequest)) as GetSetDataInfoRequest; // ignore: deprecated_member_use
+  GetSetDataInfoRequest copyWith(void Function(GetSetDataInfoRequest) updates) => super.copyWith((message) => updates(message as GetSetDataInfoRequest)) as GetSetDataInfoRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static GetSetDataInfoRequest create() => GetSetDataInfoRequest._();
   GetSetDataInfoRequest createEmptyInstance() => create();
@@ -61,23 +69,24 @@ class GetSetDataInfoRequest extends $pb.GeneratedMessage {
 }
 
 class GetSetDataInfoResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetSetDataInfoResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOM<$0.SetDataInfo>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dataInfo', subBuilder: $0.SetDataInfo.create)
-    ..hasRequiredFields = false
-  ;
-
-  GetSetDataInfoResponse._() : super();
   factory GetSetDataInfoResponse({
     $0.SetDataInfo? dataInfo,
   }) {
-    final _result = create();
+    final $result = create();
     if (dataInfo != null) {
-      _result.dataInfo = dataInfo;
+      $result.dataInfo = dataInfo;
     }
-    return _result;
+    return $result;
   }
+  GetSetDataInfoResponse._() : super();
   factory GetSetDataInfoResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory GetSetDataInfoResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetSetDataInfoResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOM<$0.SetDataInfo>(1, _omitFieldNames ? '' : 'dataInfo', subBuilder: $0.SetDataInfo.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -87,8 +96,10 @@ class GetSetDataInfoResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GetSetDataInfoResponse copyWith(void Function(GetSetDataInfoResponse) updates) => super.copyWith((message) => updates(message as GetSetDataInfoResponse)) as GetSetDataInfoResponse; // ignore: deprecated_member_use
+  GetSetDataInfoResponse copyWith(void Function(GetSetDataInfoResponse) updates) => super.copyWith((message) => updates(message as GetSetDataInfoResponse)) as GetSetDataInfoResponse;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static GetSetDataInfoResponse create() => GetSetDataInfoResponse._();
   GetSetDataInfoResponse createEmptyInstance() => create();
@@ -109,17 +120,8 @@ class GetSetDataInfoResponse extends $pb.GeneratedMessage {
   $0.SetDataInfo ensureDataInfo() => $_ensure(0);
 }
 
+/// 上传单个文件到集合
 class SetDataUploadFileRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SetDataUploadFileRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dataId')
-    ..a<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'totalChunks', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$fixnum.Int64>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'currentChunkIndex', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'chunk', $pb.PbFieldType.OY)
-    ..aOM<$1.FileInfo>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fileInfo', subBuilder: $1.FileInfo.create)
-    ..hasRequiredFields = false
-  ;
-
-  SetDataUploadFileRequest._() : super();
   factory SetDataUploadFileRequest({
     $core.String? dataId,
     $fixnum.Int64? totalChunks,
@@ -127,26 +129,37 @@ class SetDataUploadFileRequest extends $pb.GeneratedMessage {
     $core.List<$core.int>? chunk,
     $1.FileInfo? fileInfo,
   }) {
-    final _result = create();
+    final $result = create();
     if (dataId != null) {
-      _result.dataId = dataId;
+      $result.dataId = dataId;
     }
     if (totalChunks != null) {
-      _result.totalChunks = totalChunks;
+      $result.totalChunks = totalChunks;
     }
     if (currentChunkIndex != null) {
-      _result.currentChunkIndex = currentChunkIndex;
+      $result.currentChunkIndex = currentChunkIndex;
     }
     if (chunk != null) {
-      _result.chunk = chunk;
+      $result.chunk = chunk;
     }
     if (fileInfo != null) {
-      _result.fileInfo = fileInfo;
+      $result.fileInfo = fileInfo;
     }
-    return _result;
+    return $result;
   }
+  SetDataUploadFileRequest._() : super();
   factory SetDataUploadFileRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SetDataUploadFileRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SetDataUploadFileRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'dataId')
+    ..a<$fixnum.Int64>(2, _omitFieldNames ? '' : 'totalChunks', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$fixnum.Int64>(3, _omitFieldNames ? '' : 'currentChunkIndex', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$core.List<$core.int>>(4, _omitFieldNames ? '' : 'chunk', $pb.PbFieldType.OY)
+    ..aOM<$1.FileInfo>(5, _omitFieldNames ? '' : 'fileInfo', subBuilder: $1.FileInfo.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -156,8 +169,10 @@ class SetDataUploadFileRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SetDataUploadFileRequest copyWith(void Function(SetDataUploadFileRequest) updates) => super.copyWith((message) => updates(message as SetDataUploadFileRequest)) as SetDataUploadFileRequest; // ignore: deprecated_member_use
+  SetDataUploadFileRequest copyWith(void Function(SetDataUploadFileRequest) updates) => super.copyWith((message) => updates(message as SetDataUploadFileRequest)) as SetDataUploadFileRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static SetDataUploadFileRequest create() => SetDataUploadFileRequest._();
   SetDataUploadFileRequest createEmptyInstance() => create();
@@ -215,23 +230,24 @@ class SetDataUploadFileRequest extends $pb.GeneratedMessage {
 }
 
 class SetDataUploadFileResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SetDataUploadFileResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'result')
-    ..hasRequiredFields = false
-  ;
-
-  SetDataUploadFileResponse._() : super();
   factory SetDataUploadFileResponse({
     $core.String? result,
   }) {
-    final _result = create();
+    final $result = create();
     if (result != null) {
-      _result.result = result;
+      $result.result = result;
     }
-    return _result;
+    return $result;
   }
+  SetDataUploadFileResponse._() : super();
   factory SetDataUploadFileResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SetDataUploadFileResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SetDataUploadFileResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'result')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -241,8 +257,10 @@ class SetDataUploadFileResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SetDataUploadFileResponse copyWith(void Function(SetDataUploadFileResponse) updates) => super.copyWith((message) => updates(message as SetDataUploadFileResponse)) as SetDataUploadFileResponse; // ignore: deprecated_member_use
+  SetDataUploadFileResponse copyWith(void Function(SetDataUploadFileResponse) updates) => super.copyWith((message) => updates(message as SetDataUploadFileResponse)) as SetDataUploadFileResponse;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static SetDataUploadFileResponse create() => SetDataUploadFileResponse._();
   SetDataUploadFileResponse createEmptyInstance() => create();
@@ -261,18 +279,8 @@ class SetDataUploadFileResponse extends $pb.GeneratedMessage {
   void clearResult() => clearField(1);
 }
 
+/// 上传多个文件到集合, 批量上传可能不是很需要
 class SetDataUploadFilesRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SetDataUploadFilesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dataId')
-    ..a<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'currentTotalChunks', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$fixnum.Int64>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'currentChunkIndex', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$core.List<$core.int>>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'chunk', $pb.PbFieldType.OY)
-    ..pc<$1.FileInfo>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fileInfo', $pb.PbFieldType.PM, subBuilder: $1.FileInfo.create)
-    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'currentMd5')
-    ..hasRequiredFields = false
-  ;
-
-  SetDataUploadFilesRequest._() : super();
   factory SetDataUploadFilesRequest({
     $core.String? dataId,
     $fixnum.Int64? currentTotalChunks,
@@ -281,29 +289,41 @@ class SetDataUploadFilesRequest extends $pb.GeneratedMessage {
     $core.Iterable<$1.FileInfo>? fileInfo,
     $core.String? currentMd5,
   }) {
-    final _result = create();
+    final $result = create();
     if (dataId != null) {
-      _result.dataId = dataId;
+      $result.dataId = dataId;
     }
     if (currentTotalChunks != null) {
-      _result.currentTotalChunks = currentTotalChunks;
+      $result.currentTotalChunks = currentTotalChunks;
     }
     if (currentChunkIndex != null) {
-      _result.currentChunkIndex = currentChunkIndex;
+      $result.currentChunkIndex = currentChunkIndex;
     }
     if (chunk != null) {
-      _result.chunk = chunk;
+      $result.chunk = chunk;
     }
     if (fileInfo != null) {
-      _result.fileInfo.addAll(fileInfo);
+      $result.fileInfo.addAll(fileInfo);
     }
     if (currentMd5 != null) {
-      _result.currentMd5 = currentMd5;
+      $result.currentMd5 = currentMd5;
     }
-    return _result;
+    return $result;
   }
+  SetDataUploadFilesRequest._() : super();
   factory SetDataUploadFilesRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SetDataUploadFilesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SetDataUploadFilesRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'dataId')
+    ..a<$fixnum.Int64>(2, _omitFieldNames ? '' : 'currentTotalChunks', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$fixnum.Int64>(3, _omitFieldNames ? '' : 'currentChunkIndex', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$core.List<$core.int>>(4, _omitFieldNames ? '' : 'chunk', $pb.PbFieldType.OY)
+    ..pc<$1.FileInfo>(5, _omitFieldNames ? '' : 'fileInfo', $pb.PbFieldType.PM, subBuilder: $1.FileInfo.create)
+    ..aOS(6, _omitFieldNames ? '' : 'currentMd5')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -313,8 +333,10 @@ class SetDataUploadFilesRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SetDataUploadFilesRequest copyWith(void Function(SetDataUploadFilesRequest) updates) => super.copyWith((message) => updates(message as SetDataUploadFilesRequest)) as SetDataUploadFilesRequest; // ignore: deprecated_member_use
+  SetDataUploadFilesRequest copyWith(void Function(SetDataUploadFilesRequest) updates) => super.copyWith((message) => updates(message as SetDataUploadFilesRequest)) as SetDataUploadFilesRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static SetDataUploadFilesRequest create() => SetDataUploadFilesRequest._();
   SetDataUploadFilesRequest createEmptyInstance() => create();
@@ -373,23 +395,24 @@ class SetDataUploadFilesRequest extends $pb.GeneratedMessage {
 }
 
 class SetDataUploadFilesResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SetDataUploadFilesResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'result')
-    ..hasRequiredFields = false
-  ;
-
-  SetDataUploadFilesResponse._() : super();
   factory SetDataUploadFilesResponse({
     $core.String? result,
   }) {
-    final _result = create();
+    final $result = create();
     if (result != null) {
-      _result.result = result;
+      $result.result = result;
     }
-    return _result;
+    return $result;
   }
+  SetDataUploadFilesResponse._() : super();
   factory SetDataUploadFilesResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SetDataUploadFilesResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SetDataUploadFilesResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'result')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -399,8 +422,10 @@ class SetDataUploadFilesResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SetDataUploadFilesResponse copyWith(void Function(SetDataUploadFilesResponse) updates) => super.copyWith((message) => updates(message as SetDataUploadFilesResponse)) as SetDataUploadFilesResponse; // ignore: deprecated_member_use
+  SetDataUploadFilesResponse copyWith(void Function(SetDataUploadFilesResponse) updates) => super.copyWith((message) => updates(message as SetDataUploadFilesResponse)) as SetDataUploadFilesResponse;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static SetDataUploadFilesResponse create() => SetDataUploadFilesResponse._();
   SetDataUploadFilesResponse createEmptyInstance() => create();
@@ -419,24 +444,26 @@ class SetDataUploadFilesResponse extends $pb.GeneratedMessage {
   void clearResult() => clearField(1);
 }
 
+/// 下载文件集合
 class SetDataDownloadSetRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SetDataDownloadSetRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dataId')
-    ..hasRequiredFields = false
-  ;
-
-  SetDataDownloadSetRequest._() : super();
   factory SetDataDownloadSetRequest({
     $core.String? dataId,
   }) {
-    final _result = create();
+    final $result = create();
     if (dataId != null) {
-      _result.dataId = dataId;
+      $result.dataId = dataId;
     }
-    return _result;
+    return $result;
   }
+  SetDataDownloadSetRequest._() : super();
   factory SetDataDownloadSetRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SetDataDownloadSetRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SetDataDownloadSetRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'dataId')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -446,8 +473,10 @@ class SetDataDownloadSetRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SetDataDownloadSetRequest copyWith(void Function(SetDataDownloadSetRequest) updates) => super.copyWith((message) => updates(message as SetDataDownloadSetRequest)) as SetDataDownloadSetRequest; // ignore: deprecated_member_use
+  SetDataDownloadSetRequest copyWith(void Function(SetDataDownloadSetRequest) updates) => super.copyWith((message) => updates(message as SetDataDownloadSetRequest)) as SetDataDownloadSetRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static SetDataDownloadSetRequest create() => SetDataDownloadSetRequest._();
   SetDataDownloadSetRequest createEmptyInstance() => create();
@@ -467,18 +496,6 @@ class SetDataDownloadSetRequest extends $pb.GeneratedMessage {
 }
 
 class SetDataDownloadSetResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SetDataDownloadSetResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dataId')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'setName')
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'fileCounts', $pb.PbFieldType.OU3)
-    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'currentFile')
-    ..a<$fixnum.Int64>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'totalChancks', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'currentChunck', $pb.PbFieldType.OU3)
-    ..a<$core.List<$core.int>>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'chunck', $pb.PbFieldType.OY)
-    ..hasRequiredFields = false
-  ;
-
-  SetDataDownloadSetResponse._() : super();
   factory SetDataDownloadSetResponse({
     $core.String? dataId,
     $core.String? setName,
@@ -488,32 +505,45 @@ class SetDataDownloadSetResponse extends $pb.GeneratedMessage {
     $core.int? currentChunck,
     $core.List<$core.int>? chunck,
   }) {
-    final _result = create();
+    final $result = create();
     if (dataId != null) {
-      _result.dataId = dataId;
+      $result.dataId = dataId;
     }
     if (setName != null) {
-      _result.setName = setName;
+      $result.setName = setName;
     }
     if (fileCounts != null) {
-      _result.fileCounts = fileCounts;
+      $result.fileCounts = fileCounts;
     }
     if (currentFile != null) {
-      _result.currentFile = currentFile;
+      $result.currentFile = currentFile;
     }
     if (totalChancks != null) {
-      _result.totalChancks = totalChancks;
+      $result.totalChancks = totalChancks;
     }
     if (currentChunck != null) {
-      _result.currentChunck = currentChunck;
+      $result.currentChunck = currentChunck;
     }
     if (chunck != null) {
-      _result.chunck = chunck;
+      $result.chunck = chunck;
     }
-    return _result;
+    return $result;
   }
+  SetDataDownloadSetResponse._() : super();
   factory SetDataDownloadSetResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SetDataDownloadSetResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SetDataDownloadSetResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'dataId')
+    ..aOS(2, _omitFieldNames ? '' : 'setName')
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'fileCounts', $pb.PbFieldType.OU3)
+    ..aOS(4, _omitFieldNames ? '' : 'currentFile')
+    ..a<$fixnum.Int64>(5, _omitFieldNames ? '' : 'totalChancks', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$core.int>(6, _omitFieldNames ? '' : 'currentChunck', $pb.PbFieldType.OU3)
+    ..a<$core.List<$core.int>>(7, _omitFieldNames ? '' : 'chunck', $pb.PbFieldType.OY)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -523,8 +553,10 @@ class SetDataDownloadSetResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SetDataDownloadSetResponse copyWith(void Function(SetDataDownloadSetResponse) updates) => super.copyWith((message) => updates(message as SetDataDownloadSetResponse)) as SetDataDownloadSetResponse; // ignore: deprecated_member_use
+  SetDataDownloadSetResponse copyWith(void Function(SetDataDownloadSetResponse) updates) => super.copyWith((message) => updates(message as SetDataDownloadSetResponse)) as SetDataDownloadSetResponse;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static SetDataDownloadSetResponse create() => SetDataDownloadSetResponse._();
   SetDataDownloadSetResponse createEmptyInstance() => create();
@@ -597,3 +629,6 @@ class SetDataDownloadSetResponse extends $pb.GeneratedMessage {
   void clearChunck() => clearField(7);
 }
 
+
+const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
+const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

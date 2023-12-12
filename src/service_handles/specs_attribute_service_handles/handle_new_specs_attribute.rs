@@ -110,7 +110,7 @@ async fn handle_new_specs_attribute(
     new_entity_doc.insert(DESCRIPTION_FIELD_ID.to_string(), description.clone());
     new_entity_doc.insert(SPECS_ATTRIBUTES_INDEX_FIELD_ID.to_string(), *manage_id);
     new_entity_doc.insert(SPECS_ATTRIBUTES_MANAGE_ID_FIELD_ID.to_string(), *manage_id);
-    new_entity_doc.insert(SPECS_ATTRIBUTES_DATA_TYPE_FIELD_ID.to_string(), *data_type);
+    new_entity_doc.insert(SPECS_ATTRIBUTES_DATA_TYPE_FIELD_ID.to_string(), data_type.clone());
     new_entity_doc.insert(SPECS_ATTRIBUTES_DEFAULT_VALUE_FIELD_ID.to_string(), bson::to_bson(default_value).unwrap());
 
     let new_specs_result = specs_manager

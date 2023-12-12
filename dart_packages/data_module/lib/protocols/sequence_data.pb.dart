@@ -1,28 +1,22 @@
-///
+//
 //  Generated code. Do not modify.
 //  source: sequence_data.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
+
+// ignore_for_file: annotate_overrides, camel_case_types, comment_references
+// ignore_for_file: constant_identifier_names, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_final_fields
+// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
 
 import 'dart:core' as $core;
 
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
+/// 序列数据信息
+/// 文件名格式：prefix_name.pattern.type_suffix
 class SequenceDataInfo extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SequenceDataInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'prefixName')
-    ..a<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequencePattern', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$fixnum.Int64>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'typeSuffix', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$fixnum.Int64>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'startIndex', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$fixnum.Int64>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'endIndex', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$fixnum.Int64>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'totalSize', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'md5')
-    ..hasRequiredFields = false
-  ;
-
-  SequenceDataInfo._() : super();
   factory SequenceDataInfo({
     $core.String? prefixName,
     $fixnum.Int64? sequencePattern,
@@ -32,32 +26,45 @@ class SequenceDataInfo extends $pb.GeneratedMessage {
     $fixnum.Int64? totalSize,
     $core.String? md5,
   }) {
-    final _result = create();
+    final $result = create();
     if (prefixName != null) {
-      _result.prefixName = prefixName;
+      $result.prefixName = prefixName;
     }
     if (sequencePattern != null) {
-      _result.sequencePattern = sequencePattern;
+      $result.sequencePattern = sequencePattern;
     }
     if (typeSuffix != null) {
-      _result.typeSuffix = typeSuffix;
+      $result.typeSuffix = typeSuffix;
     }
     if (startIndex != null) {
-      _result.startIndex = startIndex;
+      $result.startIndex = startIndex;
     }
     if (endIndex != null) {
-      _result.endIndex = endIndex;
+      $result.endIndex = endIndex;
     }
     if (totalSize != null) {
-      _result.totalSize = totalSize;
+      $result.totalSize = totalSize;
     }
     if (md5 != null) {
-      _result.md5 = md5;
+      $result.md5 = md5;
     }
-    return _result;
+    return $result;
   }
+  SequenceDataInfo._() : super();
   factory SequenceDataInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SequenceDataInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SequenceDataInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'prefixName')
+    ..a<$fixnum.Int64>(2, _omitFieldNames ? '' : 'sequencePattern', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$fixnum.Int64>(3, _omitFieldNames ? '' : 'typeSuffix', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$fixnum.Int64>(4, _omitFieldNames ? '' : 'startIndex', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$fixnum.Int64>(5, _omitFieldNames ? '' : 'endIndex', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$fixnum.Int64>(6, _omitFieldNames ? '' : 'totalSize', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..aOS(7, _omitFieldNames ? '' : 'md5')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -67,8 +74,10 @@ class SequenceDataInfo extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SequenceDataInfo copyWith(void Function(SequenceDataInfo) updates) => super.copyWith((message) => updates(message as SequenceDataInfo)) as SequenceDataInfo; // ignore: deprecated_member_use
+  SequenceDataInfo copyWith(void Function(SequenceDataInfo) updates) => super.copyWith((message) => updates(message as SequenceDataInfo)) as SequenceDataInfo;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static SequenceDataInfo create() => SequenceDataInfo._();
   SequenceDataInfo createEmptyInstance() => create();
@@ -141,20 +150,8 @@ class SequenceDataInfo extends $pb.GeneratedMessage {
   void clearMd5() => clearField(7);
 }
 
+/// 上传文件序列
 class SequenceDataUploadSequenceRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SequenceDataUploadSequenceRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceName')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'serialPattern')
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceLength', $pb.PbFieldType.OU3)
-    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'currentFile')
-    ..a<$fixnum.Int64>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'totalChancks', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$fixnum.Int64>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'currentChunck', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$core.List<$core.int>>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'chunck', $pb.PbFieldType.OY)
-    ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dataId')
-    ..hasRequiredFields = false
-  ;
-
-  SequenceDataUploadSequenceRequest._() : super();
   factory SequenceDataUploadSequenceRequest({
     $core.String? sequenceName,
     $core.String? serialPattern,
@@ -165,35 +162,49 @@ class SequenceDataUploadSequenceRequest extends $pb.GeneratedMessage {
     $core.List<$core.int>? chunck,
     $core.String? dataId,
   }) {
-    final _result = create();
+    final $result = create();
     if (sequenceName != null) {
-      _result.sequenceName = sequenceName;
+      $result.sequenceName = sequenceName;
     }
     if (serialPattern != null) {
-      _result.serialPattern = serialPattern;
+      $result.serialPattern = serialPattern;
     }
     if (sequenceLength != null) {
-      _result.sequenceLength = sequenceLength;
+      $result.sequenceLength = sequenceLength;
     }
     if (currentFile != null) {
-      _result.currentFile = currentFile;
+      $result.currentFile = currentFile;
     }
     if (totalChancks != null) {
-      _result.totalChancks = totalChancks;
+      $result.totalChancks = totalChancks;
     }
     if (currentChunck != null) {
-      _result.currentChunck = currentChunck;
+      $result.currentChunck = currentChunck;
     }
     if (chunck != null) {
-      _result.chunck = chunck;
+      $result.chunck = chunck;
     }
     if (dataId != null) {
-      _result.dataId = dataId;
+      $result.dataId = dataId;
     }
-    return _result;
+    return $result;
   }
+  SequenceDataUploadSequenceRequest._() : super();
   factory SequenceDataUploadSequenceRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SequenceDataUploadSequenceRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SequenceDataUploadSequenceRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'sequenceName')
+    ..aOS(2, _omitFieldNames ? '' : 'serialPattern')
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'sequenceLength', $pb.PbFieldType.OU3)
+    ..aOS(4, _omitFieldNames ? '' : 'currentFile')
+    ..a<$fixnum.Int64>(5, _omitFieldNames ? '' : 'totalChancks', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$fixnum.Int64>(6, _omitFieldNames ? '' : 'currentChunck', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$core.List<$core.int>>(7, _omitFieldNames ? '' : 'chunck', $pb.PbFieldType.OY)
+    ..aOS(8, _omitFieldNames ? '' : 'dataId')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -203,8 +214,10 @@ class SequenceDataUploadSequenceRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SequenceDataUploadSequenceRequest copyWith(void Function(SequenceDataUploadSequenceRequest) updates) => super.copyWith((message) => updates(message as SequenceDataUploadSequenceRequest)) as SequenceDataUploadSequenceRequest; // ignore: deprecated_member_use
+  SequenceDataUploadSequenceRequest copyWith(void Function(SequenceDataUploadSequenceRequest) updates) => super.copyWith((message) => updates(message as SequenceDataUploadSequenceRequest)) as SequenceDataUploadSequenceRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static SequenceDataUploadSequenceRequest create() => SequenceDataUploadSequenceRequest._();
   SequenceDataUploadSequenceRequest createEmptyInstance() => create();
@@ -287,23 +300,24 @@ class SequenceDataUploadSequenceRequest extends $pb.GeneratedMessage {
 }
 
 class SequenceDataUploadSequenceResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SequenceDataUploadSequenceResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'result')
-    ..hasRequiredFields = false
-  ;
-
-  SequenceDataUploadSequenceResponse._() : super();
   factory SequenceDataUploadSequenceResponse({
     $core.String? result,
   }) {
-    final _result = create();
+    final $result = create();
     if (result != null) {
-      _result.result = result;
+      $result.result = result;
     }
-    return _result;
+    return $result;
   }
+  SequenceDataUploadSequenceResponse._() : super();
   factory SequenceDataUploadSequenceResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SequenceDataUploadSequenceResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SequenceDataUploadSequenceResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'result')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -313,8 +327,10 @@ class SequenceDataUploadSequenceResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SequenceDataUploadSequenceResponse copyWith(void Function(SequenceDataUploadSequenceResponse) updates) => super.copyWith((message) => updates(message as SequenceDataUploadSequenceResponse)) as SequenceDataUploadSequenceResponse; // ignore: deprecated_member_use
+  SequenceDataUploadSequenceResponse copyWith(void Function(SequenceDataUploadSequenceResponse) updates) => super.copyWith((message) => updates(message as SequenceDataUploadSequenceResponse)) as SequenceDataUploadSequenceResponse;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static SequenceDataUploadSequenceResponse create() => SequenceDataUploadSequenceResponse._();
   SequenceDataUploadSequenceResponse createEmptyInstance() => create();
@@ -333,24 +349,26 @@ class SequenceDataUploadSequenceResponse extends $pb.GeneratedMessage {
   void clearResult() => clearField(1);
 }
 
+/// 下载文件序列
 class SequenceDataDownloadSequenceRequest extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SequenceDataDownloadSequenceRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dataId')
-    ..hasRequiredFields = false
-  ;
-
-  SequenceDataDownloadSequenceRequest._() : super();
   factory SequenceDataDownloadSequenceRequest({
     $core.String? dataId,
   }) {
-    final _result = create();
+    final $result = create();
     if (dataId != null) {
-      _result.dataId = dataId;
+      $result.dataId = dataId;
     }
-    return _result;
+    return $result;
   }
+  SequenceDataDownloadSequenceRequest._() : super();
   factory SequenceDataDownloadSequenceRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SequenceDataDownloadSequenceRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SequenceDataDownloadSequenceRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'dataId')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -360,8 +378,10 @@ class SequenceDataDownloadSequenceRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SequenceDataDownloadSequenceRequest copyWith(void Function(SequenceDataDownloadSequenceRequest) updates) => super.copyWith((message) => updates(message as SequenceDataDownloadSequenceRequest)) as SequenceDataDownloadSequenceRequest; // ignore: deprecated_member_use
+  SequenceDataDownloadSequenceRequest copyWith(void Function(SequenceDataDownloadSequenceRequest) updates) => super.copyWith((message) => updates(message as SequenceDataDownloadSequenceRequest)) as SequenceDataDownloadSequenceRequest;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static SequenceDataDownloadSequenceRequest create() => SequenceDataDownloadSequenceRequest._();
   SequenceDataDownloadSequenceRequest createEmptyInstance() => create();
@@ -381,19 +401,6 @@ class SequenceDataDownloadSequenceRequest extends $pb.GeneratedMessage {
 }
 
 class SequenceDataDownloadSequenceResponse extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SequenceDataDownloadSequenceResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceName')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'serialPattern')
-    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sequenceLength', $pb.PbFieldType.OU3)
-    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'currentFile')
-    ..a<$fixnum.Int64>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'totalChancks', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$fixnum.Int64>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'currentChunck', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
-    ..a<$core.List<$core.int>>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'chunck', $pb.PbFieldType.OY)
-    ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dataId')
-    ..hasRequiredFields = false
-  ;
-
-  SequenceDataDownloadSequenceResponse._() : super();
   factory SequenceDataDownloadSequenceResponse({
     $core.String? sequenceName,
     $core.String? serialPattern,
@@ -404,35 +411,49 @@ class SequenceDataDownloadSequenceResponse extends $pb.GeneratedMessage {
     $core.List<$core.int>? chunck,
     $core.String? dataId,
   }) {
-    final _result = create();
+    final $result = create();
     if (sequenceName != null) {
-      _result.sequenceName = sequenceName;
+      $result.sequenceName = sequenceName;
     }
     if (serialPattern != null) {
-      _result.serialPattern = serialPattern;
+      $result.serialPattern = serialPattern;
     }
     if (sequenceLength != null) {
-      _result.sequenceLength = sequenceLength;
+      $result.sequenceLength = sequenceLength;
     }
     if (currentFile != null) {
-      _result.currentFile = currentFile;
+      $result.currentFile = currentFile;
     }
     if (totalChancks != null) {
-      _result.totalChancks = totalChancks;
+      $result.totalChancks = totalChancks;
     }
     if (currentChunck != null) {
-      _result.currentChunck = currentChunck;
+      $result.currentChunck = currentChunck;
     }
     if (chunck != null) {
-      _result.chunck = chunck;
+      $result.chunck = chunck;
     }
     if (dataId != null) {
-      _result.dataId = dataId;
+      $result.dataId = dataId;
     }
-    return _result;
+    return $result;
   }
+  SequenceDataDownloadSequenceResponse._() : super();
   factory SequenceDataDownloadSequenceResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SequenceDataDownloadSequenceResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SequenceDataDownloadSequenceResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'sequenceName')
+    ..aOS(2, _omitFieldNames ? '' : 'serialPattern')
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'sequenceLength', $pb.PbFieldType.OU3)
+    ..aOS(4, _omitFieldNames ? '' : 'currentFile')
+    ..a<$fixnum.Int64>(5, _omitFieldNames ? '' : 'totalChancks', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$fixnum.Int64>(6, _omitFieldNames ? '' : 'currentChunck', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
+    ..a<$core.List<$core.int>>(7, _omitFieldNames ? '' : 'chunck', $pb.PbFieldType.OY)
+    ..aOS(8, _omitFieldNames ? '' : 'dataId')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -442,8 +463,10 @@ class SequenceDataDownloadSequenceResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SequenceDataDownloadSequenceResponse copyWith(void Function(SequenceDataDownloadSequenceResponse) updates) => super.copyWith((message) => updates(message as SequenceDataDownloadSequenceResponse)) as SequenceDataDownloadSequenceResponse; // ignore: deprecated_member_use
+  SequenceDataDownloadSequenceResponse copyWith(void Function(SequenceDataDownloadSequenceResponse) updates) => super.copyWith((message) => updates(message as SequenceDataDownloadSequenceResponse)) as SequenceDataDownloadSequenceResponse;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static SequenceDataDownloadSequenceResponse create() => SequenceDataDownloadSequenceResponse._();
   SequenceDataDownloadSequenceResponse createEmptyInstance() => create();
@@ -525,3 +548,6 @@ class SequenceDataDownloadSequenceResponse extends $pb.GeneratedMessage {
   void clearDataId() => clearField(8);
 }
 
+
+const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
+const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

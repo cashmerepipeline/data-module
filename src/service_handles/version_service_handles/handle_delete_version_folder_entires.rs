@@ -3,6 +3,7 @@ use dependencies_sync::tonic::async_trait;
 use dependencies_sync::tonic::{Request, Response, Status};
 use dependencies_sync::rust_i18n::{self, t};
 use dependencies_sync::futures::TryFutureExt;
+use validates::validate_entity_id;
 
 use crate::data_server::data_stage::{delete_version_folder_entries, get_version_folder};
 use majordomo::{self, get_majordomo};
@@ -49,6 +50,13 @@ async fn validate_view_rules(
 async fn validate_request_params(
     request: Request<DeleteVersionFolderEntriesRequest>,
 ) -> Result<Request<DeleteVersionFolderEntriesRequest>, Status> {
+    let version_id = &request.get_ref().version_id;
+
+    if version_id.is_empty() {
+        return Err(Status::invalid_argument("version 不能为空"));
+    }
+    
+    validate_entity_id(&VERSIONS_MANAGE_ID, version_id).await?;
     Ok(request)
 }
 
@@ -57,17 +65,8 @@ async fn handle_delete_version_folder_entries(
 ) -> Result<Response<DeleteVersionFolderEntriesResponse>, Status> {
     let (_account_id, _groups, _role_group) = request_account_context(request.metadata())?;
 
-    let stage_id = &request.get_ref().stage_id;
-    let version = &request.get_ref().version;
+    let version_id = &request.get_ref().version_id;
     let file_pathes = &request.get_ref().file_pathes;
-
-    // 请求有效性验证
-    if stage_id.is_empty() {
-        return Err(Status::invalid_argument("stage_id 不能为空"));
-    }
-    if version.is_empty() {
-        return Err(Status::invalid_argument("version 不能为空"));
-    }
 
     let majordomo_arc = get_majordomo();
     let stage_manager = majordomo_arc.get_manager_by_id(STAGES_MANAGE_ID).unwrap();

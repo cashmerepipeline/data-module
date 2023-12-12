@@ -43,44 +43,6 @@ impl DataType {
         }
     }
 }
-/// 文件信息
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct FileInfo {
-    #[prost(string, tag = "1")]
-    pub file_name: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub md5: ::prost::alloc::string::String,
-    #[prost(uint64, tag = "3")]
-    pub size: u64,
-    #[prost(int64, tag = "4")]
-    pub last_modified_time: i64,
-}
-/// 文件容器，用于文件管理引导
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DataPath {
-    /// 单文件时不使用起始路径
-    /// 文件集合时为文件集合名，也是集合目录名
-    /// 序列时为文件的base_name，也是序列所在目录名，不包含扩展名
-    #[prost(string, tag = "2")]
-    pub start_path: ::prost::alloc::string::String,
-    /// 文件路径相对起始路径
-    /// {"path_str":file_info}
-    #[prost(map = "string, message", tag = "4")]
-    pub files: ::std::collections::HashMap<::prost::alloc::string::String, FileInfo>,
-    /// 如果数据是序列，则有以下字段
-    #[prost(uint32, tag = "5")]
-    pub padding: u32,
-    #[prost(uint32, tag = "6")]
-    pub start: u32,
-    #[prost(uint32, tag = "7")]
-    pub end: u32,
-    #[prost(string, tag = "8")]
-    pub ext: ::prost::alloc::string::String,
-}
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -194,8 +156,8 @@ pub struct NewSpecsAttributeRequest {
     pub manage_id: i32,
     #[prost(message, optional, tag = "2")]
     pub name: ::core::option::Option<::manage_define::cashmere::Name>,
-    #[prost(enumeration = "::manage_define::cashmere::FieldDataType", tag = "3")]
-    pub data_type: i32,
+    #[prost(string, tag = "3")]
+    pub data_type: ::prost::alloc::string::String,
     #[prost(string, tag = "4")]
     pub description: ::prost::alloc::string::String,
     #[prost(bytes = "vec", tag = "5")]
@@ -328,6 +290,20 @@ pub struct MarkDataRemovedResponse {
     #[prost(string, tag = "1")]
     pub result: ::prost::alloc::string::String,
 }
+/// 文件信息
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct FileInfo {
+    #[prost(string, tag = "1")]
+    pub file_name: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub md5: ::prost::alloc::string::String,
+    #[prost(uint64, tag = "3")]
+    pub size: u64,
+    #[prost(int64, tag = "4")]
+    pub last_modified_time: i64,
+}
 /// 上传文件数据
 /// 第一个包编号为0，包含文件信息等信息，最后一个包块编号为0, 即从0开始，到0结束
 /// 第一个包和最后一个包不包含文件数据，作为传输标记用，用于建立连接等操作
@@ -347,10 +323,10 @@ pub struct UploadFileToVersionRequest {
     pub data_type: i32,
     #[prost(string, tag = "12")]
     pub sub_path: ::prost::alloc::string::String,
-    /// 阶段，如：开发，测试，生产
+    /// 阶段名，如：开发，测试，生产
     #[prost(string, tag = "8")]
     pub stage: ::prost::alloc::string::String,
-    /// 版本，如：v01
+    /// 版本名，如：v01
     #[prost(string, tag = "9")]
     pub version: ::prost::alloc::string::String,
     #[prost(uint64, tag = "2")]
@@ -373,7 +349,7 @@ pub struct UploadFileToVersionResponse {
 /// 编号为0请求返回文件信息
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DownloadFileRequest {
+pub struct DownloadFileFromVersionRequest {
     #[prost(string, tag = "6")]
     pub specs_id: ::prost::alloc::string::String,
     #[prost(string, tag = "1")]
@@ -395,7 +371,7 @@ pub struct DownloadFileRequest {
 /// 最后一个包不包含文件数据，作为传输标记用
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct DownloadFileResponse {
+pub struct DownloadFileFromVersionResponse {
     #[prost(string, tag = "1")]
     pub data_id: ::prost::alloc::string::String,
     #[prost(uint64, tag = "3")]
@@ -572,6 +548,70 @@ pub struct SetDataDownloadSetResponse {
     #[prost(bytes = "vec", tag = "7")]
     pub chunck: ::prost::alloc::vec::Vec<u8>,
 }
+/// 数据阶段信息
+#[derive(serde::Serialize, serde::Deserialize)]
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct StageInfo {
+    #[prost(string, tag = "1")]
+    pub name: ::prost::alloc::string::String,
+    /// stage目录下的文件列表, 文件为文件列表，集合为集合目录列表
+    #[prost(bytes = "vec", repeated, tag = "2")]
+    pub versions: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
+    /// 当前连接所指版本
+    #[prost(string, tag = "3")]
+    pub current_version: ::prost::alloc::string::String,
+}
+/// 新阶段
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct AddDataStageRequest {
+    #[prost(string, tag = "1")]
+    pub data_id: ::prost::alloc::string::String,
+    /// 阶段在流程中一般是一项工作的再分解，属于一项工作的完成步骤，所以名称可能具有一定的一般性
+    /// 将作为实体的id，还将作为阶段的路径使用，不能重复
+    /// 阶段的字符集需要注意软件支持的字符集，比如Maya对中文支持友好
+    #[prost(string, tag = "2")]
+    pub stage: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub description: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct AddDataStageResponse {
+    /// 成功返回 "ok"
+    #[prost(string, tag = "1")]
+    pub result: ::prost::alloc::string::String,
+}
+/// 删除阶段，只删除阶段->数据的文件连接，不删除数据
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct RemoveStageRequest {
+    #[prost(string, tag = "1")]
+    pub data_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub stage: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct RemoveStageResponse {
+    /// 成功返回 "ok"
+    #[prost(string, tag = "1")]
+    pub result: ::prost::alloc::string::String,
+}
+/// 取得数据阶段表
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListDataStagesRequest {
+    #[prost(string, tag = "1")]
+    pub data_id: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListDataStagesResponse {
+    #[prost(bytes = "vec", repeated, tag = "1")]
+    pub stages: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
+}
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -596,6 +636,8 @@ pub struct AddStageVersionRequest {
     #[prost(string, tag = "1")]
     pub stage_id: ::prost::alloc::string::String,
     /// 版本一般有具体的含义，不只是一个数字，比如"v001"
+    /// 将作为实体的id，还将作为阶段的路径使用，不能重复
+    /// 阶段的字符集需要注意软件支持的字符集，比如Maya对中文支持友好
     #[prost(string, tag = "3")]
     pub version: ::prost::alloc::string::String,
 }
@@ -651,28 +693,6 @@ pub struct RemoveStageVersionResponse {
     #[prost(string, tag = "1")]
     pub result: ::prost::alloc::string::String,
 }
-/// 添加文件到数据阶段
-/// 文件路径以版本路径为根，<version_root>/\["sub_dir"， “sub_dir", ..., "file_name"\]
-/// 使用列表表示路径，路径在使用时拼接
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct AddDataPathToVersionRequest {
-    #[prost(string, tag = "1")]
-    pub specs_id: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub data_id: ::prost::alloc::string::String,
-    #[prost(string, tag = "3")]
-    pub version: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "4")]
-    pub data_path: ::core::option::Option<DataPath>,
-}
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct AddDataPathToVersionResponse {
-    /// 成功返回"ok"
-    #[prost(string, tag = "1")]
-    pub result: ::prost::alloc::string::String,
-}
 /// 添加文件到数据阶段，文件路径以版本路径为根，<version_root>/\["sub_dir", ..., "file_name"\]
 /// 路径在使用时再拼接
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -683,8 +703,8 @@ pub struct AddFileSetToVersionRequest {
     #[prost(string, tag = "2")]
     pub version: ::prost::alloc::string::String,
     /// 因为不支持嵌套repeated，所以使用“,”分隔的字符串, 形式为\["sub_dir, ...,file_name"\]
-    #[prost(message, repeated, tag = "3")]
-    pub data_pathes: ::prost::alloc::vec::Vec<DataPath>,
+    #[prost(string, tag = "3")]
+    pub data_path: ::prost::alloc::string::String,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -704,8 +724,8 @@ pub struct AddFileSequenceToVersionRequest {
     pub stage_id: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
     pub version: ::prost::alloc::string::String,
-    #[prost(message, optional, tag = "3")]
-    pub data_file_path: ::core::option::Option<DataPath>,
+    #[prost(string, tag = "3")]
+    pub data_path: ::prost::alloc::string::String,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
@@ -757,10 +777,8 @@ pub struct ListVersionFolderResponse {
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DeleteVersionFolderEntriesRequest {
     #[prost(string, tag = "1")]
-    pub stage_id: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub version: ::prost::alloc::string::String,
-    #[prost(string, repeated, tag = "3")]
+    pub version_id: ::prost::alloc::string::String,
+    #[prost(string, repeated, tag = "2")]
     pub file_pathes: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -769,66 +787,4 @@ pub struct DeleteVersionFolderEntriesResponse {
     /// 成功返回被删除的文件路径
     #[prost(string, repeated, tag = "1")]
     pub result: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
-}
-/// 数据阶段信息
-#[derive(serde::Serialize, serde::Deserialize)]
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct StageInfo {
-    #[prost(string, tag = "1")]
-    pub name: ::prost::alloc::string::String,
-    /// stage目录下的文件列表, 文件为文件列表，集合为集合目录列表
-    #[prost(bytes = "vec", repeated, tag = "2")]
-    pub versions: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
-    /// 当前连接所指版本
-    #[prost(string, tag = "3")]
-    pub current_version: ::prost::alloc::string::String,
-}
-/// 新阶段
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct NewStageRequest {
-    #[prost(string, tag = "1")]
-    pub data_id: ::prost::alloc::string::String,
-    /// 这里可能因为软件对路径字符集支持的不同只能使用英文作为文件名，比如Maya
-    #[prost(message, optional, tag = "2")]
-    pub stage_name: ::core::option::Option<::manage_define::cashmere::Name>,
-    #[prost(string, tag = "3")]
-    pub description: ::prost::alloc::string::String,
-}
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct NewStageResponse {
-    /// 成功返回 "ok"
-    #[prost(string, tag = "1")]
-    pub result: ::prost::alloc::string::String,
-}
-/// 删除阶段，只删除阶段->数据的文件连接，不删除数据
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct RemoveStageRequest {
-    #[prost(string, tag = "1")]
-    pub data_id: ::prost::alloc::string::String,
-    #[prost(string, tag = "2")]
-    pub stage: ::prost::alloc::string::String,
-}
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct RemoveStageResponse {
-    /// 成功返回 "ok"
-    #[prost(string, tag = "1")]
-    pub result: ::prost::alloc::string::String,
-}
-/// 取得数据阶段表
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ListStagesRequest {
-    #[prost(string, tag = "1")]
-    pub data_id: ::prost::alloc::string::String,
-}
-#[allow(clippy::derive_partial_eq_without_eq)]
-#[derive(Clone, PartialEq, ::prost::Message)]
-pub struct ListStagesResponse {
-    #[prost(bytes = "vec", repeated, tag = "1")]
-    pub stages: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
 }

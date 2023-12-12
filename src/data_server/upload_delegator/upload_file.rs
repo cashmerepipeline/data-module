@@ -26,23 +26,17 @@ impl UploadDelegator {
     /// 成功返回 （上传文件目录，上传文件路径）
     pub fn prepare_file_uploading(
         &self,
-        specs_id: &String,
-        data_id: &String,
-        stage: &String,
-        version: &String,
+        data_dir_path: &String,
         sub_path: &String,
         file_info: &FileInfo,
         _request_size: u64,
     ) -> Result<(PathBuf, PathBuf), OperationResult> {
         let data_root = &DataServerConfigs::get().root_dir_path;
 
-        let mut data_dir_path = PathBuf::new();
-        data_dir_path.push(data_root);
-        data_dir_path.push(specs_id);
-        data_dir_path.push(data_id);
-        data_dir_path.push(stage);
-        data_dir_path.push(version);
-        data_dir_path.push(sub_path);
+        let mut dir_path = PathBuf::new();
+        dir_path.push(data_root);
+        dir_path.push(data_dir_path);
+        dir_path.push(sub_path);
 
         let file_ext = match Path::new(&file_info.file_name).extension(){
             Some(ext) => ext,
@@ -57,11 +51,11 @@ impl UploadDelegator {
             },
         };
 
-        let mut file_pathbuf = data_dir_path.clone();
+        let mut file_pathbuf = dir_path.clone();
         file_pathbuf.push(file_name);
         file_pathbuf.set_extension(file_ext);
 
-        Ok((data_dir_path.to_path_buf(), file_pathbuf))
+        Ok((dir_path.to_path_buf(), file_pathbuf))
     }
 
     /// 取得上传目标文件，根据条件是否断点续传

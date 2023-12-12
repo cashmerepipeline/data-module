@@ -17,22 +17,22 @@ use request_utils::request_account_context;
 use service_utils::types::UnaryResponseResult;
 
 #[async_trait]
-pub trait HandleListStages {
-    async fn handle_list_stages(
+pub trait HandleListDataStages {
+    async fn handle_list_data_stages(
         &self,
-        request: Request<ListStagesRequest>,
-    ) -> UnaryResponseResult<ListStagesResponse> {
+        request: Request<ListDataStagesRequest>,
+    ) -> UnaryResponseResult<ListDataStagesResponse> {
         validate_view_rules(request)
             .and_then(validate_request_params)
-            .and_then(handle_list_stages)
+            .and_then(handle_list_data_stages)
             .await
     }
 }
 
 
 async fn validate_view_rules(
-    request: Request<ListStagesRequest>,
-) -> Result<Request<ListStagesRequest>, Status> {
+    request: Request<ListDataStagesRequest>,
+) -> Result<Request<ListDataStagesRequest>, Status> {
     #[cfg(feature = "view_rules_validate")]
     {
         let manage_id = STAGES_MANAGE_ID;
@@ -46,8 +46,8 @@ async fn validate_view_rules(
 }
 
 async fn validate_request_params(
-    request: Request<ListStagesRequest>,
-) -> Result<Request<ListStagesRequest>, Status> {
+    request: Request<ListDataStagesRequest>,
+) -> Result<Request<ListDataStagesRequest>, Status> {
     let data_id = &request.get_ref().data_id;
 
     validate_entity_id(&DATAS_MANAGE_ID, data_id).await?;
@@ -55,9 +55,9 @@ async fn validate_request_params(
     Ok(request)
 }
 
-async fn handle_list_stages(
-    request: Request<ListStagesRequest>,
-) -> Result<Response<ListStagesResponse>, Status> {
+async fn handle_list_data_stages(
+    request: Request<ListDataStagesRequest>,
+) -> Result<Response<ListDataStagesResponse>, Status> {
     let (_account_id, _groups, _role_group) = request_account_context(request.metadata())?;
 
     let data_id = &request.get_ref().data_id;
@@ -73,7 +73,7 @@ async fn handle_list_stages(
     let result = manager.get_entities_by_filter(&Some(filter_doc)).await;
 
     match result {
-        Ok(entities) => Ok(Response::new(ListStagesResponse {
+        Ok(entities) => Ok(Response::new(ListDataStagesResponse {
             stages: entities.iter().map(|x| bson::to_vec(x).unwrap()).collect(),
         })),
         Err(e) => Err(Status::aborted(format!(
