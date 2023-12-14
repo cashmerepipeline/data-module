@@ -69,7 +69,7 @@ async fn handle_new_specs_attribute(
 ) -> Result<Response<NewSpecsAttributeResponse>, Status> {
     let (account_id, _groups, role_group) = request_account_context(request.metadata())?;
 
-    let _index = &request.get_ref().index;
+    let index = &request.get_ref().index;
     let name = &request.get_ref().name;
     let manage_id = &request.get_ref().manage_id;
     let default_value = &request.get_ref().default_value;
@@ -108,8 +108,8 @@ async fn handle_new_specs_attribute(
 
     new_entity_doc.insert(NAME_MAP_FIELD_ID.to_string(), name_doc);
     new_entity_doc.insert(DESCRIPTION_FIELD_ID.to_string(), description.clone());
-    new_entity_doc.insert(SPECS_ATTRIBUTES_INDEX_FIELD_ID.to_string(), *manage_id);
-    new_entity_doc.insert(SPECS_ATTRIBUTES_MANAGE_ID_FIELD_ID.to_string(), *manage_id);
+    new_entity_doc.insert(SPECS_ATTRIBUTES_INDEX_FIELD_ID.to_string(), index);
+    new_entity_doc.insert(SPECS_ATTRIBUTES_MANAGE_ID_FIELD_ID.to_string(), manage_id);
     new_entity_doc.insert(SPECS_ATTRIBUTES_DATA_TYPE_FIELD_ID.to_string(), data_type.clone());
     new_entity_doc.insert(SPECS_ATTRIBUTES_DEFAULT_VALUE_FIELD_ID.to_string(), bson::to_bson(default_value).unwrap());
 

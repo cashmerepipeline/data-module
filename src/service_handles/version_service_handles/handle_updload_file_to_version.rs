@@ -1,5 +1,5 @@
 use configs::ConfigTrait;
-use dependencies_sync::bson::doc;
+
 use dependencies_sync::futures::TryFutureExt;
 use dependencies_sync::rust_i18n::{self, t};
 use dependencies_sync::tokio_stream::{wrappers::ReceiverStream, StreamExt};
@@ -10,13 +10,12 @@ use dependencies_sync::{tokio, tokio::sync::mpsc};
 use data_server::file_utils::check_chunk_md5;
 use data_server::ResumePoint;
 use dependencies_sync::log::{debug, error, info};
-use manage_define::general_field_ids::ID_FIELD_ID;
-use managers::ManagerTrait;
+
 use validates::validate_entity_id;
 
 use crate::data_server::version::{add_file_to_data_path, resolve_data_dir_path};
 use crate::data_server_configs::DataServerConfigs;
-use crate::ids_codes::field_ids::*;
+
 use crate::ids_codes::manage_ids::*;
 use crate::protocols::*;
 use crate::validates::{validate_stage, validate_subpath, validate_version};
@@ -85,8 +84,8 @@ async fn handle_upload_file_to_version(
     let sub_path = first_request.sub_path.clone();
     let file_info = first_request.file_info.clone().unwrap();
 
-    validate_entity_id(&SPECSES_MANAGE_ID, &specs_id).await?;
-    validate_entity_id(&DATAS_MANAGE_ID, &data_id).await?;
+    validate_entity_id(SPECSES_MANAGE_ID, &specs_id).await?;
+    validate_entity_id(DATAS_MANAGE_ID, &data_id).await?;
     let stage_id = validate_stage(&data_id, &stage).await?;
     validate_version(&stage_id, &version).await?;
     validate_subpath(&sub_path)?;
@@ -101,7 +100,7 @@ async fn handle_upload_file_to_version(
         Ok(p) => p,
         Err(e) => {
             error!("{}: {}", t!("获取数据路径失败"), e.details());
-            return Err(Status::aborted(format!("{}", t!("获取数据路径失败"),)));
+            return Err(Status::aborted(t!("获取数据路径失败").to_string()));
         }
     };
 
@@ -373,7 +372,7 @@ async fn handle_upload_file_to_version(
         add_file_to_data_path(
             &stage,
             &version,
-            &data_file_path.to_str().unwrap(),
+            data_file_path.to_str().unwrap(),
             &file_info,
             &account_id,
         )

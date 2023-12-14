@@ -1,22 +1,21 @@
 use dependencies_sync::{tokio, tokio::sync::mpsc};
 
 use dependencies_sync::futures::TryFutureExt;
+use dependencies_sync::rust_i18n::{self, t};
 use dependencies_sync::tokio_stream::{wrappers::ReceiverStream, StreamExt};
 use dependencies_sync::tonic::{Response, Status};
-use dependencies_sync::rust_i18n::{self, t};
 
-use dependencies_sync::log::{info, error};
+use dependencies_sync::log::{error, info};
 use dependencies_sync::tonic::async_trait;
 
+use crate::data_server::version::resolve_data_dir_path;
+use crate::ids_codes::manage_ids::{DATAS_MANAGE_ID, SPECSES_MANAGE_ID};
+use crate::protocols::*;
+use crate::validates::{validate_stage, validate_subpath, validate_version};
 use data_server::file_utils::get_chunk_md5;
 use validates::validate_entity_id;
-use crate::data_server::version::resolve_data_dir_path;
-use crate::ids_codes::manage_ids::{SPECSES_MANAGE_ID, DATAS_MANAGE_ID};
-use crate::protocols::*;
-use crate::validates::{validate_version, validate_subpath, validate_stage};
 
 use request_utils::request_account_context;
-
 
 use service_utils::types::{RequestStream, ResponseStream, StreamResponseResult};
 
@@ -82,8 +81,8 @@ async fn handle_download_file_from_version(
     let file_name = first_request.file_name.clone();
     let chunk_index = first_request.chunk_index;
 
-    validate_entity_id(&SPECSES_MANAGE_ID, &specs_id).await?;
-    validate_entity_id(&DATAS_MANAGE_ID, &data_id).await?;
+    validate_entity_id(SPECSES_MANAGE_ID, &specs_id).await?;
+    validate_entity_id(DATAS_MANAGE_ID, &data_id).await?;
     let stage_id = validate_stage(&data_id, &stage).await?;
     validate_version(&stage_id, &version).await?;
     validate_subpath(&sub_path)?;
@@ -92,7 +91,7 @@ async fn handle_download_file_from_version(
         Ok(p) => p,
         Err(e) => {
             error!("{}: {}", t!("获取数据路径失败"), e.details());
-            return Err(Status::aborted(format!("{}", t!("获取数据路径失败"),)));
+            return Err(Status::aborted(t!("获取数据路径失败").to_string()));
         }
     };
 

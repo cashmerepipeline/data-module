@@ -88,8 +88,8 @@ pub struct GetDataServerConfigsResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct NewSpecsRequest {
-    #[prost(int32, tag = "1")]
-    pub manage_id: i32,
+    #[prost(string, tag = "1")]
+    pub manage_id: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
     pub entity_id: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "3")]
@@ -110,8 +110,8 @@ pub struct NewSpecsResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListSpecsRequest {
-    #[prost(int32, tag = "1")]
-    pub manage_id: i32,
+    #[prost(string, tag = "1")]
+    pub manage_id: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
     pub entity_id: ::prost::alloc::string::String,
 }
@@ -152,8 +152,8 @@ pub struct ListSpecsPrefabsResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct NewSpecsAttributeRequest {
-    #[prost(int32, tag = "1")]
-    pub manage_id: i32,
+    #[prost(string, tag = "1")]
+    pub manage_id: ::prost::alloc::string::String,
     #[prost(message, optional, tag = "2")]
     pub name: ::core::option::Option<::manage_define::cashmere::Name>,
     #[prost(string, tag = "3")]
@@ -174,8 +174,8 @@ pub struct NewSpecsAttributeResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct DeleteSpecsAttributeRequest {
-    #[prost(int32, tag = "1")]
-    pub manage_id: i32,
+    #[prost(string, tag = "1")]
+    pub manage_id: ::prost::alloc::string::String,
     #[prost(uint32, tag = "2")]
     pub index: u32,
 }
@@ -188,8 +188,8 @@ pub struct DeleteSpecsAttributeResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct GetSpecsAttributesRequest {
-    #[prost(int32, tag = "1")]
-    pub manage_id: i32,
+    #[prost(string, tag = "1")]
+    pub manage_id: ::prost::alloc::string::String,
 }
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]

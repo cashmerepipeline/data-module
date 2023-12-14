@@ -1,18 +1,15 @@
-use auth::ROLE_GROUP_NAME;
-use dependencies_sync::bson::{self, doc};
-use dependencies_sync::chrono::format::format;
+use dependencies_sync::futures::TryFutureExt;
 use dependencies_sync::rust_i18n::{self, t};
 use dependencies_sync::tonic::async_trait;
-use dependencies_sync::futures::TryFutureExt;
 use dependencies_sync::tonic::{Request, Response, Status};
 
+use crate::ids_codes::field_ids::*;
+use crate::protocols::*;
+use crate::validates::validate_version;
 use majordomo::{self, get_majordomo};
 use managers::utils::make_new_entity_document;
 use validates::validate_entity_id;
-use crate::protocols::*;
-use crate::ids_codes::field_ids::*;
-use crate::validates::validate_version;
-use manage_define::general_field_ids::*;
+
 use crate::ids_codes::manage_ids::*;
 use managers::ManagerTrait;
 use request_utils::request_account_context;
@@ -55,10 +52,10 @@ async fn validate_request_params(
     let stage_id = &request.get_ref().stage_id;
     let version = &request.get_ref().version;
 
-    validate_entity_id(&STAGES_MANAGE_ID, stage_id).await?;
+    validate_entity_id(STAGES_MANAGE_ID, stage_id).await?;
 
     // zh: 版本必须唯一
-    if validate_version(&stage_id, version).await.is_ok() {
+    if validate_version(stage_id, version).await.is_ok() {
         return Err(Status::aborted(format!(
             "{} {}",
             t!("版本已经存在"),
@@ -79,11 +76,16 @@ async fn handle_add_stage_version(
 
     let majordomo_arc = get_majordomo();
     let manager = majordomo_arc.get_manager_by_id(VERSIONS_MANAGE_ID).unwrap();
-    
 
-    let mut new_entity_doc = match make_new_entity_document(&manager, &account_id).await{
+    let mut new_entity_doc = match make_new_entity_document(&manager, &account_id).await {
         Some(r) => r,
-        None => return Err(Status::aborted(format!("{}: {}", t!("取得新实体失败"), "add_stage_version")))
+        None => {
+            return Err(Status::aborted(format!(
+                "{}: {}",
+                t!("取得新实体失败"),
+                "add_stage_version"
+            )))
+        }
     };
     new_entity_doc.insert(VERSIONS_VERSION_FIELD_ID.to_string(), version);
     new_entity_doc.insert(VERSIONS_STAGE_ID_FIELD_ID.to_string(), stage_id);
@@ -93,9 +95,7 @@ async fn handle_add_stage_version(
         .await;
 
     match result {
-        Ok(r) => Ok(Response::new(AddStageVersionResponse {
-            result: r,
-        })),
+        Ok(r) => Ok(Response::new(AddStageVersionResponse { result: r })),
         Err(e) => Err(Status::aborted(format!(
             "{} {}",
             e.operation(),

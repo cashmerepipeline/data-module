@@ -50,7 +50,7 @@ impl ManagerTrait for PrefabsManager {
         ))
     }
 
-    fn get_id(&self) -> i32 {
+    fn get_id(&self) -> &'static str {
         PREFABS_MANAGE_ID
     }
 

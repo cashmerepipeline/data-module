@@ -1,7 +1,7 @@
 use dependencies_sync::bson::{self, doc};
 use dependencies_sync::futures::TryFutureExt;
-use dependencies_sync::tonic::async_trait;
 use dependencies_sync::rust_i18n::{self, t};
+use dependencies_sync::tonic::async_trait;
 use dependencies_sync::tonic::{Request, Response, Status};
 
 use request_utils::request_account_context;
@@ -54,13 +54,11 @@ async fn validate_request_params(
 
     // specs_id 不能为空
     if specs_id.is_empty() {
-        return Err(Status::invalid_argument(
-            t!("规格编号不能为空"),
-        ));
+        return Err(Status::invalid_argument(t!("规格编号不能为空")));
     }
 
-    validate_entity_id(&SPECSES_MANAGE_ID, specs_id).await?;
-    
+    validate_entity_id(SPECSES_MANAGE_ID, specs_id).await?;
+
     Ok(request)
 }
 

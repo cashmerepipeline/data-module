@@ -1,4 +1,4 @@
-use std::path::PathBuf;
+use std::path::{PathBuf, Path};
 
 use dependencies_sync::log::debug;
 use dependencies_sync::tokio::fs;
@@ -27,9 +27,9 @@ impl UploadDelegator {
     /// 检查并读取续传点记录文件，如果存在，则取得续传的位置
     pub async fn check_and_read_resume_point(
         &self,
-        data_file_path: &PathBuf,
+        data_file_path: &Path,
     ) -> Result<ResumePoint, OperationResult> {
-        let mut resume_point_file_path = data_file_path.clone();
+        let mut resume_point_file_path = data_file_path.to_path_buf();
         resume_point_file_path.set_extension("resume");
 
         if resume_point_file_path.exists() {
@@ -97,10 +97,10 @@ impl UploadDelegator {
     /// 记录的师最后一次正确传输的数据块的编号和md5值
     pub async fn record_resume_point(
         &self,
-        data_file_path: &PathBuf,
+        data_file_path: &Path,
         resume_point: ResumePoint,
     ) -> Result<(), OperationResult> {
-        let mut resume_point_file_path = data_file_path.clone();
+        let mut resume_point_file_path = data_file_path.to_path_buf();
         resume_point_file_path.set_extension("resume");
 
         let mut resume_point_file = match File::create(&resume_point_file_path).await {
@@ -145,9 +145,9 @@ impl UploadDelegator {
     /// 删除续传点文件
     pub async fn delete_resume_point_file(
         &self,
-        data_file_path: &PathBuf,
+        data_file_path: &Path,
     ) -> Result<(), OperationResult> {
-        let mut resume_point_file_path = data_file_path.clone();
+        let mut resume_point_file_path = data_file_path.to_path_buf();
         resume_point_file_path.set_extension("resume");
 
         if resume_point_file_path.exists() {

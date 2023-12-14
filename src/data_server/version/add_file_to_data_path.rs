@@ -10,12 +10,10 @@ use managers::ManagerTrait;
 
 use crate::{
     ids_codes::{
-        field_ids::{
-            DATAS_DATA_TYPE_FIELD_ID, VERSIONS_DATA_PATH_FIELD_ID, VERSIONS_STAGE_ID_FIELD_ID,
-        },
+        field_ids::{VERSIONS_DATA_PATH_FIELD_ID, VERSIONS_STAGE_ID_FIELD_ID},
         manage_ids::VERSIONS_MANAGE_ID,
     },
-    protocols::{DataType, FileInfo},
+    protocols::FileInfo,
 };
 
 pub async fn add_file_to_data_path(
@@ -29,8 +27,8 @@ pub async fn add_file_to_data_path(
     let manager = majordomo_arc.get_manager_by_id(VERSIONS_MANAGE_ID).unwrap();
 
     let query_doc = doc! {
-        VERSIONS_STAGE_ID_FIELD_ID.to_string():stage_id.clone(),
-        ID_FIELD_ID.to_string():version.clone(),
+        VERSIONS_STAGE_ID_FIELD_ID.to_string():stage_id,
+        ID_FIELD_ID.to_string():version,
     };
 
     let file_doc = doc! {file_path:bson::to_document(&file_info.clone()).unwrap()};
@@ -38,7 +36,7 @@ pub async fn add_file_to_data_path(
     modify_doc.insert(VERSIONS_DATA_PATH_FIELD_ID.to_string(), file_doc);
 
     if let Err(err) = manager
-        .update_entity_map_field(query_doc, modify_doc, &account_id)
+        .update_entity_map_field(query_doc, modify_doc, account_id)
         .await
     {
         log::error!("{}: {}", t!("添加文件路径到版本失败"), version);

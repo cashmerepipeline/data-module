@@ -2,16 +2,15 @@ use dependencies_sync::bson::{self, doc};
 use dependencies_sync::futures::TryFutureExt;
 use dependencies_sync::tonic::async_trait;
 
+use crate::ids_codes::field_ids::*;
+use crate::ids_codes::manage_ids::*;
+use crate::protocols::*;
 use dependencies_sync::tonic::{Request, Response, Status};
 use majordomo::{self, get_majordomo};
-use validates::validate_entity_id;
-use crate::protocols::*;
-use crate::ids_codes::field_ids::*;
 use manage_define::general_field_ids::*;
-use crate::ids_codes::manage_ids::*;
 use managers::ManagerTrait;
 use request_utils::request_account_context;
-
+use validates::validate_entity_id;
 
 use service_utils::types::UnaryResponseResult;
 
@@ -51,8 +50,8 @@ async fn validate_request_params(
     let stage_id = &request.get_ref().stage_id;
     let target_version = &request.get_ref().target_version;
 
-    validate_entity_id(&STAGES_MANAGE_ID, stage_id).await?;
-    validate_entity_id(&VERSIONS_MANAGE_ID, target_version).await?;
+    validate_entity_id(STAGES_MANAGE_ID, stage_id).await?;
+    validate_entity_id(VERSIONS_MANAGE_ID, target_version).await?;
 
     Ok(request)
 }

@@ -1,7 +1,7 @@
-pub const SPECS_ATTRIBUTES_MANAGE_ID:i32 = 11001; 
-pub const DATAS_MANAGE_ID:i32 = 11002; 
-pub const SPECSES_MANAGE_ID:i32 = 11003; 
-pub const STAGES_MANAGE_ID:i32 = 11004; 
-pub const PREFABS_MANAGE_ID:i32 = 11005; 
-pub const DATA_SERVER_MANAGE_ID:i32 = 11006; 
-pub const VERSIONS_MANAGE_ID:i32 = 11007; 
+pub const SPECS_ATTRIBUTES_MANAGE_ID: &str = "规格"; 
+pub const DATAS_MANAGE_ID: &str = "数据"; 
+pub const SPECSES_MANAGE_ID: &str = "规格"; 
+pub const STAGES_MANAGE_ID: &str = "阶段"; 
+pub const PREFABS_MANAGE_ID: &str = "预制件"; 
+pub const DATA_SERVER_MANAGE_ID: &str = "数据服务器"; 
+pub const VERSIONS_MANAGE_ID: &str = "版本"; 

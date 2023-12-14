@@ -53,7 +53,7 @@ impl ManagerTrait for DatasManager {
         ))
     }
 
-    fn get_id(&self) -> i32 {
+    fn get_id(&self) -> &'static str {
         DATAS_MANAGE_ID
     }
 

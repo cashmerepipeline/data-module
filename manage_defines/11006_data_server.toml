@@ -3,8 +3,8 @@
 # 
 # 不存存储数据，只用于权限控制
 
-id = 11006
-name_map = { zh = "数据服务", en = "data_server" }
+id = "数据服务器"
+name_map = { zh = "数据服务器", en = "data_server" }
 is_searchable = true
 description = ""
 

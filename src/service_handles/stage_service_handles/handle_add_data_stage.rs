@@ -1,4 +1,3 @@
-use dependencies_sync::bson::{self, doc};
 use dependencies_sync::futures::TryFutureExt;
 use dependencies_sync::rust_i18n::{self, t};
 use dependencies_sync::tonic::async_trait;
@@ -16,7 +15,7 @@ use request_utils::request_account_context;
 use dependencies_sync::tonic::{Request, Response, Status};
 
 use service_utils::types::UnaryResponseResult;
-use validates::{validate_description_length, validate_name, validate_entity_id};
+use validates::{validate_description_length, validate_entity_id};
 
 #[async_trait]
 pub trait HandleAddDataStage {
@@ -54,8 +53,8 @@ async fn validate_request_params(
     let data_id = &request.get_ref().data_id;
     let stage = &request.get_ref().stage;
     let description = &request.get_ref().description;
-    
-    validate_entity_id(&DATAS_MANAGE_ID, data_id).await?;
+
+    validate_entity_id(DATAS_MANAGE_ID, data_id).await?;
 
     if stage.is_empty() {
         return Err(Status::invalid_argument(format!(

@@ -2,7 +2,7 @@
 # 规格, 资产、资产组合等在规定指标下的产出, 可以对应变体（Variables）
 #
 
-id = 11003
+id = "规格"
 name_map = { zh = "规格", en = "specses" }
 is_searchable = true
 description = ""

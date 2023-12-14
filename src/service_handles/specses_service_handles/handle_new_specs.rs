@@ -104,7 +104,7 @@ async fn handle_new_specs(
         .unwrap()
         .to_owned();
 
-    new_entity_doc.insert(SPECSES_MANAGE_ID_FIELD_ID.to_string(), *manage_id);
+    new_entity_doc.insert(SPECSES_MANAGE_ID_FIELD_ID.to_string(), manage_id);
     new_entity_doc.insert(SPECSES_ENTITY_ID_FIELD_ID.to_string(), entity_id.clone());
     new_entity_doc.insert(NAME_MAP_FIELD_ID.to_string(), name_doc);
     new_entity_doc.insert(DESCRIPTION_FIELD_ID.to_string(), description.clone());

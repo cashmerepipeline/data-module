@@ -4,7 +4,7 @@ package data.cashmere;
 import "name.proto";
 
 message NewSpecsAttributeRequest{
-    int32 manage_id = 1;
+    string manage_id = 1;
     .cashmere.Name name = 2;
     string data_type = 3;
     string description = 4;
@@ -17,7 +17,7 @@ message NewSpecsAttributeResponse{
 
 
 message DeleteSpecsAttributeRequest{
-    int32 manage_id = 1;
+    string manage_id = 1;
     uint32 index = 2;
 }
 message DeleteSpecsAttributeResponse{
@@ -25,7 +25,7 @@ message DeleteSpecsAttributeResponse{
 }
 
 message GetSpecsAttributesRequest{
-    int32 manage_id = 1;
+    string manage_id = 1;
 }
 message GetSpecsAttributesResponse{
   repeated bytes attributes = 1;

@@ -2,7 +2,7 @@
 # 阶段，数据产出的不同阶段, 例如：设计，开发，测试，上线
 #
 
-id = 11004
+id = "阶段"
 name_map = { zh = "阶段", en = "stages" }
 is_searchable = true
 description = ""

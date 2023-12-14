@@ -22,7 +22,10 @@ pub async fn resolve_data_dir_path(
     if format_map["manage"] == "manage_id" {
         let majordomo_arc = majordomo::get_majordomo();
         let manager = majordomo_arc.get_manager_by_id(SPECSES_MANAGE_ID).unwrap();
-        let specs_entity = manager.get_entity_by_id(&specs_id.to_string(), &vec![]).await.unwrap();
+        let specs_entity = manager
+            .get_entity_by_id(&specs_id.to_string(), &vec![])
+            .await
+            .unwrap();
         let manage_id = specs_entity
             .get_i32(SPECSES_MANAGE_ID_FIELD_ID.to_string())
             .unwrap();
@@ -51,8 +54,8 @@ pub async fn resolve_data_dir_path(
         let majordomo_arc = majordomo::get_majordomo();
         let manager = majordomo_arc.get_manager_by_id(STAGES_MANAGE_ID).unwrap();
         let query_doc = doc! {
-          STAGES_DATA_ID_FIELD_ID.to_string(): data_id.clone(),
-          STAGES_STAGE_FIELD_ID.to_string(): stage.clone(),
+          STAGES_DATA_ID_FIELD_ID.to_string(): data_id,
+          STAGES_STAGE_FIELD_ID.to_string(): stage,
         };
         let stage_id = match manager.entity_exists(&query_doc).await {
             Some(id) => id,
@@ -76,14 +79,14 @@ pub async fn resolve_data_dir_path(
         let version_manager = majordomo_arc.get_manager_by_id(VERSIONS_MANAGE_ID).unwrap();
 
         let query_doc = doc! {
-          STAGES_DATA_ID_FIELD_ID.to_string(): data_id.clone(),
-          STAGES_STAGE_FIELD_ID.to_string(): stage.clone(),
+          STAGES_DATA_ID_FIELD_ID.to_string(): data_id,
+          STAGES_STAGE_FIELD_ID.to_string(): stage,
         };
         let stage_id = stage_manager.entity_exists(&query_doc).await.unwrap();
 
         let query_doc = doc! {
-          VERSIONS_STAGE_ID_FIELD_ID.to_string(): stage.clone(),
-          VERSIONS_VERSION_FIELD_ID.to_string(): version.clone(),
+          VERSIONS_STAGE_ID_FIELD_ID.to_string(): stage,
+          VERSIONS_VERSION_FIELD_ID.to_string(): version,
         };
 
         let version_id = match version_manager.entity_exists(&query_doc).await {

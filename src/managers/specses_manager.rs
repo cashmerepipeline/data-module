@@ -50,7 +50,7 @@ impl ManagerTrait for SpecsesManager {
         ))
     }
 
-    fn get_id(&self) -> i32 {
+    fn get_id(&self) -> &'static str {
         SPECSES_MANAGE_ID
     }
 

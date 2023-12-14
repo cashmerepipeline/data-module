@@ -1,4 +1,8 @@
-use dependencies_sync::{tonic::Status, bson::doc, rust_i18n::{self, t}};
+use dependencies_sync::{
+    bson::doc,
+    rust_i18n::{self, t},
+    tonic::Status,
+};
 use managers::ManagerTrait;
 
 use crate::ids_codes::field_ids::*;
@@ -10,8 +14,8 @@ pub async fn validate_version(stage: &str, version: &str) -> Result<(), Status> 
     let versino_manager = majordomo_arc.get_manager_by_id(VERSIONS_MANAGE_ID).unwrap();
 
     let query_doc = doc! {
-        VERSIONS_STAGE_ID_FIELD_ID.to_string(): stage.clone(),
-        VERSIONS_VERSION_FIELD_ID.to_string(): version.clone()
+        VERSIONS_STAGE_ID_FIELD_ID.to_string(): stage,
+        VERSIONS_VERSION_FIELD_ID.to_string(): version
     };
 
     if versino_manager.entity_exists(&query_doc).await.is_none() {

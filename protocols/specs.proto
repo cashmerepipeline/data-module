@@ -4,7 +4,7 @@ package data.cashmere;
 import "name.proto";
 
 message NewSpecsRequest{
-    int32 manage_id = 1;
+    string manage_id = 1;
     string entity_id = 2;
     .cashmere.Name name = 3;
     string description = 4;
@@ -17,7 +17,7 @@ message NewSpecsResponse{
 }
 
 message ListSpecsRequest{
-    int32 manage_id = 1;
+    string manage_id = 1;
     string entity_id = 2;
 }
 message ListSpecsResponse{

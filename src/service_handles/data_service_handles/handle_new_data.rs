@@ -4,14 +4,13 @@ use dependencies_sync::tonic::async_trait;
 use validates::validate_entity_id;
 use validates::validate_name;
 
-
 use crate::ids_codes::field_ids::*;
 use crate::ids_codes::manage_ids::*;
 use crate::protocols::*;
 use majordomo::{self, get_majordomo};
 use manage_define::general_field_ids::*;
-use managers::ManagerTrait;
 use managers::utils::make_new_entity_document;
+use managers::ManagerTrait;
 use request_utils::request_account_context;
 
 use dependencies_sync::tonic::{Request, Response, Status};
@@ -54,7 +53,7 @@ async fn validate_request_params(
     let specs_id = &request.get_ref().specs_id;
     let name = &request.get_ref().name;
 
-    validate_entity_id(&SPECSES_MANAGE_ID, specs_id).await?;
+    validate_entity_id(SPECSES_MANAGE_ID, specs_id).await?;
     validate_name(name)?;
 
     Ok(request)
@@ -94,9 +93,7 @@ async fn handle_new_data(
             .await;
 
         match result {
-            Ok(r) => Ok(Response::new(NewDataResponse {
-                result: r,
-            })),
+            Ok(r) => Ok(Response::new(NewDataResponse { result: r })),
             Err(e) => Err(Status::aborted(format!(
                 "{} {}",
                 e.operation(),

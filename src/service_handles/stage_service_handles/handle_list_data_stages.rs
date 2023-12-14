@@ -1,18 +1,16 @@
-use dependencies_sync::tonic::async_trait;
 use dependencies_sync::bson::{self, Document};
-use dependencies_sync::tonic::{Request, Response, Status};
 use dependencies_sync::futures::TryFutureExt;
+use dependencies_sync::tonic::async_trait;
+use dependencies_sync::tonic::{Request, Response, Status};
 
+use crate::ids_codes::field_ids::*;
+use crate::protocols::*;
 use majordomo::{self, get_majordomo};
 use validates::validate_entity_id;
-use crate::protocols::*;
-use crate::ids_codes::field_ids::*;
 
 use crate::ids_codes::manage_ids::*;
 use managers::ManagerTrait;
 use request_utils::request_account_context;
-
-
 
 use service_utils::types::UnaryResponseResult;
 
@@ -29,7 +27,6 @@ pub trait HandleListDataStages {
     }
 }
 
-
 async fn validate_view_rules(
     request: Request<ListDataStagesRequest>,
 ) -> Result<Request<ListDataStagesRequest>, Status> {
@@ -37,7 +34,9 @@ async fn validate_view_rules(
     {
         let manage_id = STAGES_MANAGE_ID;
         let (_account_id, _groups, role_group) = request_account_context(request.metadata())?;
-        if let Err(e) = view::validates::validate_collection_can_write(&manage_id, &role_group).await {
+        if let Err(e) =
+            view::validates::validate_collection_can_write(&manage_id, &role_group).await
+        {
             return Err(e);
         }
     }
@@ -50,7 +49,7 @@ async fn validate_request_params(
 ) -> Result<Request<ListDataStagesRequest>, Status> {
     let data_id = &request.get_ref().data_id;
 
-    validate_entity_id(&DATAS_MANAGE_ID, data_id).await?;
+    validate_entity_id(DATAS_MANAGE_ID, data_id).await?;
 
     Ok(request)
 }
@@ -63,9 +62,7 @@ async fn handle_list_data_stages(
     let data_id = &request.get_ref().data_id;
 
     let majordomo_arc = get_majordomo();
-    let manager = majordomo_arc
-        .get_manager_by_id(STAGES_MANAGE_ID)
-        .unwrap();
+    let manager = majordomo_arc.get_manager_by_id(STAGES_MANAGE_ID).unwrap();
 
     let mut filter_doc = Document::new();
     filter_doc.insert(STAGES_DATA_ID_FIELD_ID.to_string(), data_id);
