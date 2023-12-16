@@ -147,6 +147,8 @@ class AddStageVersionRequest extends $pb.GeneratedMessage {
   void clearStageId() => clearField(1);
 
   /// 版本一般有具体的含义，不只是一个数字，比如"v001"
+  /// 将作为实体的id，还将作为阶段的路径使用，不能重复
+  /// 阶段的字符集需要注意软件支持的字符集，比如Maya对中文支持友好
   @$pb.TagNumber(3)
   $core.String get version => $_getSZ(1);
   @$pb.TagNumber(3)
@@ -1047,16 +1049,12 @@ class ListVersionFolderResponse extends $pb.GeneratedMessage {
 /// 注意路径表示规则
 class DeleteVersionFolderEntriesRequest extends $pb.GeneratedMessage {
   factory DeleteVersionFolderEntriesRequest({
-    $core.String? stageId,
-    $core.String? version,
+    $core.String? versionId,
     $core.Iterable<$core.String>? filePathes,
   }) {
     final $result = create();
-    if (stageId != null) {
-      $result.stageId = stageId;
-    }
-    if (version != null) {
-      $result.version = version;
+    if (versionId != null) {
+      $result.versionId = versionId;
     }
     if (filePathes != null) {
       $result.filePathes.addAll(filePathes);
@@ -1068,9 +1066,8 @@ class DeleteVersionFolderEntriesRequest extends $pb.GeneratedMessage {
   factory DeleteVersionFolderEntriesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DeleteVersionFolderEntriesRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'stageId')
-    ..aOS(2, _omitFieldNames ? '' : 'version')
-    ..pPS(3, _omitFieldNames ? '' : 'filePathes')
+    ..aOS(1, _omitFieldNames ? '' : 'versionId')
+    ..pPS(2, _omitFieldNames ? '' : 'filePathes')
     ..hasRequiredFields = false
   ;
 
@@ -1096,25 +1093,16 @@ class DeleteVersionFolderEntriesRequest extends $pb.GeneratedMessage {
   static DeleteVersionFolderEntriesRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get stageId => $_getSZ(0);
+  $core.String get versionId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set stageId($core.String v) { $_setString(0, v); }
+  set versionId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasStageId() => $_has(0);
+  $core.bool hasVersionId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearStageId() => clearField(1);
+  void clearVersionId() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get version => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set version($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasVersion() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearVersion() => clearField(2);
-
-  @$pb.TagNumber(3)
-  $core.List<$core.String> get filePathes => $_getList(2);
+  $core.List<$core.String> get filePathes => $_getList(1);
 }
 
 class DeleteVersionFolderEntriesResponse extends $pb.GeneratedMessage {

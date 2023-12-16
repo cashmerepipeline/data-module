@@ -1,5 +1,6 @@
 use std::io::SeekFrom;
 use std::path::PathBuf;
+use std::sync::Arc;
 
 use dependencies_sync::bytes;
 use dependencies_sync::log::error;
@@ -15,12 +16,11 @@ use cash_result::{Failed, OperationResult};
 use configs::ConfigTrait;
 
 use crate::DataServerConfigs;
+use crate::data_server::return_back_download_delegator;
 
-#[derive(Debug, Default)]
+#[derive(Debug, Clone)]
 /// 上传代理
-pub struct DownloadDelegator {
-    pub transfer_chunk_size: usize,
-}
+pub struct DownloadDelegator; 
 
 impl DownloadDelegator {
     pub async fn check_request_file_exists(
@@ -176,5 +176,11 @@ impl DownloadDelegator {
         });
 
         Ok(())
+    }
+}
+
+impl Drop for DownloadDelegator {
+    fn drop(&mut self) {
+        return_back_download_delegator(Arc::new(self.clone()));
     }
 }

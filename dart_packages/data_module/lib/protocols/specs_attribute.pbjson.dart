@@ -17,7 +17,7 @@ import 'dart:typed_data' as $typed_data;
 const NewSpecsAttributeRequest$json = {
   '1': 'NewSpecsAttributeRequest',
   '2': [
-    {'1': 'manage_id', '3': 1, '4': 1, '5': 5, '10': 'manageId'},
+    {'1': 'manage_id', '3': 1, '4': 1, '5': 9, '10': 'manageId'},
     {'1': 'name', '3': 2, '4': 1, '5': 11, '6': '.cashmere.Name', '10': 'name'},
     {'1': 'data_type', '3': 3, '4': 1, '5': 9, '10': 'dataType'},
     {'1': 'description', '3': 4, '4': 1, '5': 9, '10': 'description'},
@@ -28,7 +28,7 @@ const NewSpecsAttributeRequest$json = {
 
 /// Descriptor for `NewSpecsAttributeRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List newSpecsAttributeRequestDescriptor = $convert.base64Decode(
-    'ChhOZXdTcGVjc0F0dHJpYnV0ZVJlcXVlc3QSGwoJbWFuYWdlX2lkGAEgASgFUghtYW5hZ2VJZB'
+    'ChhOZXdTcGVjc0F0dHJpYnV0ZVJlcXVlc3QSGwoJbWFuYWdlX2lkGAEgASgJUghtYW5hZ2VJZB'
     'IiCgRuYW1lGAIgASgLMg4uY2FzaG1lcmUuTmFtZVIEbmFtZRIbCglkYXRhX3R5cGUYAyABKAlS'
     'CGRhdGFUeXBlEiAKC2Rlc2NyaXB0aW9uGAQgASgJUgtkZXNjcmlwdGlvbhIjCg1kZWZhdWx0X3'
     'ZhbHVlGAUgASgMUgxkZWZhdWx0VmFsdWUSFAoFaW5kZXgYBiABKAVSBWluZGV4');
@@ -49,14 +49,14 @@ final $typed_data.Uint8List newSpecsAttributeResponseDescriptor = $convert.base6
 const DeleteSpecsAttributeRequest$json = {
   '1': 'DeleteSpecsAttributeRequest',
   '2': [
-    {'1': 'manage_id', '3': 1, '4': 1, '5': 5, '10': 'manageId'},
+    {'1': 'manage_id', '3': 1, '4': 1, '5': 9, '10': 'manageId'},
     {'1': 'index', '3': 2, '4': 1, '5': 13, '10': 'index'},
   ],
 };
 
 /// Descriptor for `DeleteSpecsAttributeRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List deleteSpecsAttributeRequestDescriptor = $convert.base64Decode(
-    'ChtEZWxldGVTcGVjc0F0dHJpYnV0ZVJlcXVlc3QSGwoJbWFuYWdlX2lkGAEgASgFUghtYW5hZ2'
+    'ChtEZWxldGVTcGVjc0F0dHJpYnV0ZVJlcXVlc3QSGwoJbWFuYWdlX2lkGAEgASgJUghtYW5hZ2'
     'VJZBIUCgVpbmRleBgCIAEoDVIFaW5kZXg=');
 
 @$core.Deprecated('Use deleteSpecsAttributeResponseDescriptor instead')
@@ -75,13 +75,13 @@ final $typed_data.Uint8List deleteSpecsAttributeResponseDescriptor = $convert.ba
 const GetSpecsAttributesRequest$json = {
   '1': 'GetSpecsAttributesRequest',
   '2': [
-    {'1': 'manage_id', '3': 1, '4': 1, '5': 5, '10': 'manageId'},
+    {'1': 'manage_id', '3': 1, '4': 1, '5': 9, '10': 'manageId'},
   ],
 };
 
 /// Descriptor for `GetSpecsAttributesRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List getSpecsAttributesRequestDescriptor = $convert.base64Decode(
-    'ChlHZXRTcGVjc0F0dHJpYnV0ZXNSZXF1ZXN0EhsKCW1hbmFnZV9pZBgBIAEoBVIIbWFuYWdlSW'
+    'ChlHZXRTcGVjc0F0dHJpYnV0ZXNSZXF1ZXN0EhsKCW1hbmFnZV9pZBgBIAEoCVIIbWFuYWdlSW'
     'Q=');
 
 @$core.Deprecated('Use getSpecsAttributesResponseDescriptor instead')

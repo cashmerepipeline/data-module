@@ -17,7 +17,7 @@ import 'dart:typed_data' as $typed_data;
 const NewSpecsRequest$json = {
   '1': 'NewSpecsRequest',
   '2': [
-    {'1': 'manage_id', '3': 1, '4': 1, '5': 5, '10': 'manageId'},
+    {'1': 'manage_id', '3': 1, '4': 1, '5': 9, '10': 'manageId'},
     {'1': 'entity_id', '3': 2, '4': 1, '5': 9, '10': 'entityId'},
     {'1': 'name', '3': 3, '4': 1, '5': 11, '6': '.cashmere.Name', '10': 'name'},
     {'1': 'description', '3': 4, '4': 1, '5': 9, '10': 'description'},
@@ -27,7 +27,7 @@ const NewSpecsRequest$json = {
 
 /// Descriptor for `NewSpecsRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List newSpecsRequestDescriptor = $convert.base64Decode(
-    'Cg9OZXdTcGVjc1JlcXVlc3QSGwoJbWFuYWdlX2lkGAEgASgFUghtYW5hZ2VJZBIbCgllbnRpdH'
+    'Cg9OZXdTcGVjc1JlcXVlc3QSGwoJbWFuYWdlX2lkGAEgASgJUghtYW5hZ2VJZBIbCgllbnRpdH'
     'lfaWQYAiABKAlSCGVudGl0eUlkEiIKBG5hbWUYAyABKAsyDi5jYXNobWVyZS5OYW1lUgRuYW1l'
     'EiAKC2Rlc2NyaXB0aW9uGAQgASgJUgtkZXNjcmlwdGlvbhIYCgd0YXJnZXRzGAUgASgMUgd0YX'
     'JnZXRz');
@@ -48,14 +48,14 @@ final $typed_data.Uint8List newSpecsResponseDescriptor = $convert.base64Decode(
 const ListSpecsRequest$json = {
   '1': 'ListSpecsRequest',
   '2': [
-    {'1': 'manage_id', '3': 1, '4': 1, '5': 5, '10': 'manageId'},
+    {'1': 'manage_id', '3': 1, '4': 1, '5': 9, '10': 'manageId'},
     {'1': 'entity_id', '3': 2, '4': 1, '5': 9, '10': 'entityId'},
   ],
 };
 
 /// Descriptor for `ListSpecsRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List listSpecsRequestDescriptor = $convert.base64Decode(
-    'ChBMaXN0U3BlY3NSZXF1ZXN0EhsKCW1hbmFnZV9pZBgBIAEoBVIIbWFuYWdlSWQSGwoJZW50aX'
+    'ChBMaXN0U3BlY3NSZXF1ZXN0EhsKCW1hbmFnZV9pZBgBIAEoCVIIbWFuYWdlSWQSGwoJZW50aX'
     'R5X2lkGAIgASgJUghlbnRpdHlJZA==');
 
 @$core.Deprecated('Use listSpecsResponseDescriptor instead')

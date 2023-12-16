@@ -1,8 +1,9 @@
+use configs::ConfigTrait;
 use dependencies_sync::parking_lot::RwLock;
 use std::sync::Arc;
 
-use crate::data_server;
 use crate::data_server::upload_delegator::UploadDelegator;
+use crate::{data_server, DataServerConfigs};
 
 /// 接收器池表
 static mut UPLOAD_DELEGATORS_POOL: Option<Arc<RwLock<UploadDelegatorsPool>>> = None;
@@ -17,9 +18,7 @@ pub fn init_upload_delegators_pool(max_upload_number: u16) -> Arc<RwLock<UploadD
     let transfer_chunk_size = data_server::get_data_server().transfer_chunck_size as usize;
 
     for _i in 0..max_upload_number {
-        let new_receiver = Arc::new(UploadDelegator {
-            transfer_chunk_size,
-        });
+        let new_receiver = Arc::new(UploadDelegator {});
         delegators.push(new_receiver)
     }
 
@@ -28,12 +27,11 @@ pub fn init_upload_delegators_pool(max_upload_number: u16) -> Arc<RwLock<UploadD
     }))
 }
 
-pub fn get_upload_delegator_pool(
-    max_upload_number: Option<u16>,
-) -> Arc<RwLock<UploadDelegatorsPool>> {
+pub fn get_upload_delegator_pool() -> Arc<RwLock<UploadDelegatorsPool>> {
     unsafe {
         if UPLOAD_DELEGATORS_POOL.is_none() {
-            let pool = init_upload_delegators_pool(max_upload_number.unwrap_or(256));
+            let max_upload_number = DataServerConfigs::get().max_file_upload_number;
+            let pool = init_upload_delegators_pool(max_upload_number);
             UPLOAD_DELEGATORS_POOL.replace(pool);
         }
         UPLOAD_DELEGATORS_POOL.clone().unwrap()
@@ -43,7 +41,7 @@ pub fn get_upload_delegator_pool(
 impl UploadDelegatorsPool {
     pub fn request_delegator(&self) -> Option<Arc<UploadDelegator>> {
         let mut delegators = self.delegators.write();
-        
+
         delegators.pop()
     }
 

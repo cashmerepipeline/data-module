@@ -69,8 +69,8 @@ impl Default for DataServerConfigs {
             max_sequence_length: 10000,
             transfer_chunk_size: 1024 * 128,
             transfer_timeout: 0,
-            max_file_upload_number: 256,
-            max_file_download_number: 256,
+            max_file_upload_number: 1024,
+            max_file_download_number: 1024,
             internal_root_dir_map,
             file_path_format,
         }

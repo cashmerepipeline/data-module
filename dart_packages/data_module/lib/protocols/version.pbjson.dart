@@ -249,17 +249,15 @@ final $typed_data.Uint8List listVersionFolderResponseDescriptor = $convert.base6
 const DeleteVersionFolderEntriesRequest$json = {
   '1': 'DeleteVersionFolderEntriesRequest',
   '2': [
-    {'1': 'stage_id', '3': 1, '4': 1, '5': 9, '10': 'stageId'},
-    {'1': 'version', '3': 2, '4': 1, '5': 9, '10': 'version'},
-    {'1': 'file_pathes', '3': 3, '4': 3, '5': 9, '10': 'filePathes'},
+    {'1': 'version_id', '3': 1, '4': 1, '5': 9, '10': 'versionId'},
+    {'1': 'file_pathes', '3': 2, '4': 3, '5': 9, '10': 'filePathes'},
   ],
 };
 
 /// Descriptor for `DeleteVersionFolderEntriesRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List deleteVersionFolderEntriesRequestDescriptor = $convert.base64Decode(
-    'CiFEZWxldGVWZXJzaW9uRm9sZGVyRW50cmllc1JlcXVlc3QSGQoIc3RhZ2VfaWQYASABKAlSB3'
-    'N0YWdlSWQSGAoHdmVyc2lvbhgCIAEoCVIHdmVyc2lvbhIfCgtmaWxlX3BhdGhlcxgDIAMoCVIK'
-    'ZmlsZVBhdGhlcw==');
+    'CiFEZWxldGVWZXJzaW9uRm9sZGVyRW50cmllc1JlcXVlc3QSHQoKdmVyc2lvbl9pZBgBIAEoCV'
+    'IJdmVyc2lvbklkEh8KC2ZpbGVfcGF0aGVzGAIgAygJUgpmaWxlUGF0aGVz');
 
 @$core.Deprecated('Use deleteVersionFolderEntriesResponseDescriptor instead')
 const DeleteVersionFolderEntriesResponse$json = {

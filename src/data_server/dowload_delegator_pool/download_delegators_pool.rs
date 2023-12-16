@@ -1,8 +1,9 @@
+use configs::ConfigTrait;
 use dependencies_sync::parking_lot::RwLock;
 use std::sync::Arc;
 
-use crate::data_server;
 use crate::data_server::download_delegator::DownloadDelegator;
+use crate::{data_server, DataServerConfigs};
 
 /// 接收器池表
 static mut DOWNDLOAD_DELEGATORS_POOL: Option<Arc<RwLock<DownloadDelegatorsPool>>> = None;
@@ -19,9 +20,7 @@ pub fn init_download_delegators_pool(
     let transfer_chunk_size = data_server::get_data_server().transfer_chunck_size as usize;
 
     for _i in 0..max_download_number {
-        let new_receiver = Arc::new(DownloadDelegator{
-            transfer_chunk_size,
-        });
+        let new_receiver = Arc::new(DownloadDelegator{});
         delegators.push(new_receiver)
     }
 
@@ -30,12 +29,11 @@ pub fn init_download_delegators_pool(
     }))
 }
 
-pub fn get_download_delegator_pool(
-    max_download_number: Option<u16>,
-) -> Arc<RwLock<DownloadDelegatorsPool>> {
+pub fn get_download_delegator_pool() -> Arc<RwLock<DownloadDelegatorsPool>> {
     unsafe {
         if DOWNDLOAD_DELEGATORS_POOL.is_none() {
-            let pool = init_download_delegators_pool(max_download_number.unwrap_or(256));
+            let max_download_number = DataServerConfigs::get().max_file_download_number;
+            let pool = init_download_delegators_pool(max_download_number);
             DOWNDLOAD_DELEGATORS_POOL.replace(pool);
         }
         DOWNDLOAD_DELEGATORS_POOL.clone().unwrap()

@@ -17,7 +17,7 @@ import 'package:cashmere_core/protocols/name.pb.dart' as $0;
 
 class NewSpecsAttributeRequest extends $pb.GeneratedMessage {
   factory NewSpecsAttributeRequest({
-    $core.int? manageId,
+    $core.String? manageId,
     $0.Name? name,
     $core.String? dataType,
     $core.String? description,
@@ -50,7 +50,7 @@ class NewSpecsAttributeRequest extends $pb.GeneratedMessage {
   factory NewSpecsAttributeRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NewSpecsAttributeRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'manageId', $pb.PbFieldType.O3)
+    ..aOS(1, _omitFieldNames ? '' : 'manageId')
     ..aOM<$0.Name>(2, _omitFieldNames ? '' : 'name', subBuilder: $0.Name.create)
     ..aOS(3, _omitFieldNames ? '' : 'dataType')
     ..aOS(4, _omitFieldNames ? '' : 'description')
@@ -81,9 +81,9 @@ class NewSpecsAttributeRequest extends $pb.GeneratedMessage {
   static NewSpecsAttributeRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get manageId => $_getIZ(0);
+  $core.String get manageId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set manageId($core.int v) { $_setSignedInt32(0, v); }
+  set manageId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasManageId() => $_has(0);
   @$pb.TagNumber(1)
@@ -189,7 +189,7 @@ class NewSpecsAttributeResponse extends $pb.GeneratedMessage {
 
 class DeleteSpecsAttributeRequest extends $pb.GeneratedMessage {
   factory DeleteSpecsAttributeRequest({
-    $core.int? manageId,
+    $core.String? manageId,
     $core.int? index,
   }) {
     final $result = create();
@@ -206,7 +206,7 @@ class DeleteSpecsAttributeRequest extends $pb.GeneratedMessage {
   factory DeleteSpecsAttributeRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'DeleteSpecsAttributeRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'manageId', $pb.PbFieldType.O3)
+    ..aOS(1, _omitFieldNames ? '' : 'manageId')
     ..a<$core.int>(2, _omitFieldNames ? '' : 'index', $pb.PbFieldType.OU3)
     ..hasRequiredFields = false
   ;
@@ -233,9 +233,9 @@ class DeleteSpecsAttributeRequest extends $pb.GeneratedMessage {
   static DeleteSpecsAttributeRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get manageId => $_getIZ(0);
+  $core.String get manageId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set manageId($core.int v) { $_setSignedInt32(0, v); }
+  set manageId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasManageId() => $_has(0);
   @$pb.TagNumber(1)
@@ -303,7 +303,7 @@ class DeleteSpecsAttributeResponse extends $pb.GeneratedMessage {
 
 class GetSpecsAttributesRequest extends $pb.GeneratedMessage {
   factory GetSpecsAttributesRequest({
-    $core.int? manageId,
+    $core.String? manageId,
   }) {
     final $result = create();
     if (manageId != null) {
@@ -316,7 +316,7 @@ class GetSpecsAttributesRequest extends $pb.GeneratedMessage {
   factory GetSpecsAttributesRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetSpecsAttributesRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'manageId', $pb.PbFieldType.O3)
+    ..aOS(1, _omitFieldNames ? '' : 'manageId')
     ..hasRequiredFields = false
   ;
 
@@ -342,9 +342,9 @@ class GetSpecsAttributesRequest extends $pb.GeneratedMessage {
   static GetSpecsAttributesRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get manageId => $_getIZ(0);
+  $core.String get manageId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set manageId($core.int v) { $_setSignedInt32(0, v); }
+  set manageId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasManageId() => $_has(0);
   @$pb.TagNumber(1)

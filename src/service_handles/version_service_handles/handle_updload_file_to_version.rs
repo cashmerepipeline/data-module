@@ -20,7 +20,7 @@ use crate::ids_codes::manage_ids::*;
 use crate::protocols::*;
 use crate::validates::{validate_stage, validate_subpath, validate_version};
 
-use crate::data_server;
+use crate::data_server::{self, get_upload_delegator, return_back_upload_delegator};
 use request_utils::request_account_context;
 
 use service_utils::types::{RequestStream, ResponseStream, StreamResponseResult};
@@ -90,9 +90,6 @@ async fn handle_upload_file_to_version(
     validate_version(&stage_id, &version).await?;
     validate_subpath(&sub_path)?;
 
-    // 请求上传文件代理
-    let data_server_arc = data_server::get_data_server();
-
     // TODO: 查询目标文件md5，如果相等，直接返回成功
     // 对于大文件生成md5比较耗时，所以客户端可以根据需要优化md5的生成, 一般不需要全文件md5
 
@@ -104,7 +101,7 @@ async fn handle_upload_file_to_version(
         }
     };
 
-    let delegator_arc = if let Some(d) = data_server_arc.get_upload_delegator() {
+    let delegator_arc = if let Some(d) = get_upload_delegator() {
         d
     } else {
         return Err(Status::aborted(format!(
@@ -124,8 +121,6 @@ async fn handle_upload_file_to_version(
         Err(e) => {
             error!("{}: {}", t!("准备上传文件失败"), e.details());
 
-            data_server_arc.return_back_upload_delegator(delegator_arc);
-
             return Err(Status::aborted(format!(
                 "{}-{}",
                 e.details(),
@@ -137,8 +132,6 @@ async fn handle_upload_file_to_version(
     // 磁盘空间是否足够
     if !delegator_arc.check_disk_space_enough(file_info.size).await {
         error!("{}: {}", t!("磁盘空间不足"), t!("无法上传文件"));
-
-        data_server_arc.return_back_upload_delegator(delegator_arc);
 
         return Err(Status::aborted(format!(
             "{}, {}",
@@ -156,8 +149,6 @@ async fn handle_upload_file_to_version(
         Err(e) => {
             error!("{}: {}", t!("获取上传文件失败"), e.details());
 
-            data_server_arc.return_back_upload_delegator(delegator_arc);
-
             return Err(Status::aborted(format!(
                 "{}-{}",
                 e.details(),
@@ -173,7 +164,6 @@ async fn handle_upload_file_to_version(
     {
         Ok(s) => s,
         Err(e) => {
-            data_server_arc.return_back_upload_delegator(delegator_arc);
             return Err(Status::aborted(format!(
                 "{}-{}",
                 e.operation(),
@@ -212,7 +202,6 @@ async fn handle_upload_file_to_version(
     {
         info!("{}: {}", t!("返回起始包编号"), &next_chunk_index);
     } else {
-        data_server_arc.return_back_upload_delegator(delegator_arc);
         return Err(Status::aborted("返回起始包编号失败。"));
     };
 
@@ -366,7 +355,6 @@ async fn handle_upload_file_to_version(
         }
 
         // zh: 必须返还代理，否则代理将丢失
-        data_server_arc.return_back_upload_delegator(delegator_arc);
 
         // 将文件添加到版本的文件表
         add_file_to_data_path(

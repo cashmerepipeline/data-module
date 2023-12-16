@@ -8,18 +8,17 @@ use dependencies_sync::tonic::{Response, Status};
 use dependencies_sync::log::{error, info};
 use dependencies_sync::tonic::async_trait;
 
+use crate::data_server::file_utils::get_chunk_md5;
 use crate::data_server::version::resolve_data_dir_path;
+use crate::data_server::{get_download_delegator, return_back_download_delegator};
 use crate::ids_codes::manage_ids::{DATAS_MANAGE_ID, SPECSES_MANAGE_ID};
 use crate::protocols::*;
 use crate::validates::{validate_stage, validate_subpath, validate_version};
-use data_server::file_utils::get_chunk_md5;
 use validates::validate_entity_id;
 
 use request_utils::request_account_context;
 
 use service_utils::types::{RequestStream, ResponseStream, StreamResponseResult};
-
-use crate::data_server;
 
 #[async_trait]
 pub trait HandleDownloadFileFromVersion {
@@ -98,10 +97,7 @@ async fn handle_download_file_from_version(
     // 交互流
     let (resp_tx, resp_rx) = mpsc::channel(5);
 
-    // 请求上传文件代理
-    let data_server_arc = data_server::get_data_server();
-
-    let delegator = if let Some(d) = data_server_arc.get_download_delegator() {
+    let delegator = if let Some(d) = get_download_delegator() {
         d
     } else {
         return Err(Status::aborted(t!(
@@ -229,7 +225,7 @@ async fn handle_download_file_from_version(
         }
 
         // 文件上传结束后必须返还代理，否则将丢失代理
-        data_server_arc.return_back_download_delegator(delegator);
+
         info!("发送文件结束{}--{}。", data_id, file_name);
         Ok(())
     });

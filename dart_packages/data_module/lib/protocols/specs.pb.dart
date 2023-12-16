@@ -17,7 +17,7 @@ import 'package:cashmere_core/protocols/name.pb.dart' as $0;
 
 class NewSpecsRequest extends $pb.GeneratedMessage {
   factory NewSpecsRequest({
-    $core.int? manageId,
+    $core.String? manageId,
     $core.String? entityId,
     $0.Name? name,
     $core.String? description,
@@ -46,7 +46,7 @@ class NewSpecsRequest extends $pb.GeneratedMessage {
   factory NewSpecsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NewSpecsRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'manageId', $pb.PbFieldType.O3)
+    ..aOS(1, _omitFieldNames ? '' : 'manageId')
     ..aOS(2, _omitFieldNames ? '' : 'entityId')
     ..aOM<$0.Name>(3, _omitFieldNames ? '' : 'name', subBuilder: $0.Name.create)
     ..aOS(4, _omitFieldNames ? '' : 'description')
@@ -76,9 +76,9 @@ class NewSpecsRequest extends $pb.GeneratedMessage {
   static NewSpecsRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get manageId => $_getIZ(0);
+  $core.String get manageId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set manageId($core.int v) { $_setSignedInt32(0, v); }
+  set manageId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasManageId() => $_has(0);
   @$pb.TagNumber(1)
@@ -177,7 +177,7 @@ class NewSpecsResponse extends $pb.GeneratedMessage {
 
 class ListSpecsRequest extends $pb.GeneratedMessage {
   factory ListSpecsRequest({
-    $core.int? manageId,
+    $core.String? manageId,
     $core.String? entityId,
   }) {
     final $result = create();
@@ -194,7 +194,7 @@ class ListSpecsRequest extends $pb.GeneratedMessage {
   factory ListSpecsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListSpecsRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'manageId', $pb.PbFieldType.O3)
+    ..aOS(1, _omitFieldNames ? '' : 'manageId')
     ..aOS(2, _omitFieldNames ? '' : 'entityId')
     ..hasRequiredFields = false
   ;
@@ -221,9 +221,9 @@ class ListSpecsRequest extends $pb.GeneratedMessage {
   static ListSpecsRequest? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get manageId => $_getIZ(0);
+  $core.String get manageId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set manageId($core.int v) { $_setSignedInt32(0, v); }
+  set manageId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasManageId() => $_has(0);
   @$pb.TagNumber(1)

@@ -4,7 +4,7 @@ use std::ffi::OsStr;
 use std::path::{Path, PathBuf};
 
 use dependencies_sync::bytes::{self, BufMut};
-use dependencies_sync::log::{debug, info, error};
+use dependencies_sync::log::{debug, error, info};
 
 use dependencies_sync::fs4;
 use dependencies_sync::rust_i18n::{self, t};
@@ -14,7 +14,6 @@ use dependencies_sync::tokio::fs::{File, OpenOptions};
 use dependencies_sync::tokio::io::{AsyncWriteExt, BufWriter};
 use dependencies_sync::tokio::sync::mpsc;
 use dependencies_sync::tokio::sync::mpsc::Sender;
-
 
 use crate::protocols::FileInfo;
 use crate::DataServerConfigs;
@@ -38,17 +37,17 @@ impl UploadDelegator {
         dir_path.push(data_dir_path);
         dir_path.push(sub_path);
 
-        let file_ext = match Path::new(&file_info.file_name).extension(){
+        let file_ext = match Path::new(&file_info.file_name).extension() {
             Some(ext) => ext,
             None => OsStr::new(""),
         };
 
-        let file_name = match Path::new(&file_info.file_name).file_name(){
+        let file_name = match Path::new(&file_info.file_name).file_name() {
             Some(name) => name,
             None => {
                 error!("{}: {}", t!("无效文件名"), file_info.file_name);
                 return Err(operation_failed("prepare_file_uploading", t!("无效文件名")));
-            },
+            }
         };
 
         let mut file_pathbuf = dir_path.clone();
@@ -182,9 +181,9 @@ impl UploadDelegator {
         // 缓存, 最大为640kb = 1024*128*5，满后写入临时文件,缓存长度是5
         // 每块最大为128kb
         let capacity = 5;
-        let chunk_size = self.transfer_chunk_size;
+        let chunk_size = DataServerConfigs::get().transfer_chunk_size as usize;
 
-        let mut buffer = bytes::BytesMut::with_capacity(capacity * self.transfer_chunk_size);
+        let mut buffer = bytes::BytesMut::with_capacity(capacity * chunk_size);
         let mut writer = BufWriter::new(data_file);
 
         debug!("{}: {}", t!("创建文件写入流"), data_file_path);
