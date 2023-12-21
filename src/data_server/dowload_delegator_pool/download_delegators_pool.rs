@@ -17,7 +17,7 @@ pub fn init_download_delegators_pool(
     max_download_number: u16,
 ) -> Arc<RwLock<DownloadDelegatorsPool>> {
     let mut delegators: Vec<Arc<DownloadDelegator>> = vec![];
-    let transfer_chunk_size = data_server::get_data_server().transfer_chunck_size as usize;
+    let _transfer_chunk_size = data_server::get_data_server().transfer_chunck_size as usize;
 
     for _i in 0..max_download_number {
         let new_receiver = Arc::new(DownloadDelegator{});

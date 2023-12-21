@@ -16,6 +16,7 @@ use crate::{
     protocols::FileInfo,
 };
 
+/// zh: 和数据类型相关，序列文件不需要加入
 pub async fn add_file_to_data_path(
     stage_id: &str,
     version: &str,

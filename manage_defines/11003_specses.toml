@@ -4,7 +4,6 @@
 
 id = "规格"
 name_map = { zh = "规格", en = "specses" }
-is_searchable = true
 description = ""
 
 
@@ -22,9 +21,6 @@ schema = [
     # 2004
     # 相关数据, 数据数量应该有适当的控制，最好不超过10个，否则可能会发生滥用
     { data_type = "Array", name_map = { zh = "数据", en = "data_ids"}, removed = false },
-
-    # done, suspending, cancel
-    # { data_type = "String", name_map = { zh = "状态", en = "status"}, removed = false },
 ]
 
 # 初始实体

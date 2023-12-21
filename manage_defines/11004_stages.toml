@@ -4,7 +4,6 @@
 
 id = "阶段"
 name_map = { zh = "阶段", en = "stages" }
-is_searchable = true
 description = ""
 
 

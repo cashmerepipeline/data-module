@@ -15,7 +15,6 @@ pub struct UploadDelegatorsPool {
 
 pub fn init_upload_delegators_pool(max_upload_number: u16) -> Arc<RwLock<UploadDelegatorsPool>> {
     let mut delegators: Vec<Arc<UploadDelegator>> = vec![];
-    let transfer_chunk_size = data_server::get_data_server().transfer_chunck_size as usize;
 
     for _i in 0..max_upload_number {
         let new_receiver = Arc::new(UploadDelegator {});

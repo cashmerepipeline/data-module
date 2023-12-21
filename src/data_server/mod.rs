@@ -5,9 +5,11 @@ pub use data_server::*;
 pub use upload_delegators_pool::*;
 pub use dowload_delegator_pool::*;
 
+pub mod data;
 pub mod data_stage;
 
 mod data_server;
+
 pub mod version;
 
 mod upload_delegator;

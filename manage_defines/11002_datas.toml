@@ -5,7 +5,6 @@
 
 id = "数据"
 name_map = { zh = "数据", en = "datas" }
-is_searchable = true
 description = ""
 
 
@@ -18,6 +17,8 @@ schema = [
   # 2003
   # [{name:stage, versions:[files or dirs], current_version: file or dir},...}
   { data_type = "Document", name_map = { zh = "阶段表", en = "stages" }, removed = false },
+  # 2004
+  # 简单标记，用于一些数据的标记，复杂标记请用tag标签
   { data_type = "String", name_map = { zh = "标记", en = "mark" }, removed = false },
 ]
 

@@ -1,4 +1,4 @@
-pub const SPECS_ATTRIBUTES_MANAGE_ID: &str = "规格"; 
+pub const SPECS_ATTRIBUTES_MANAGE_ID: &str = "规格属性"; 
 pub const DATAS_MANAGE_ID: &str = "数据"; 
 pub const SPECSES_MANAGE_ID: &str = "规格"; 
 pub const STAGES_MANAGE_ID: &str = "阶段"; 

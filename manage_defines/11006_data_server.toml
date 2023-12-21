@@ -5,7 +5,6 @@
 
 id = "数据服务器"
 name_map = { zh = "数据服务器", en = "data_server" }
-is_searchable = true
 description = ""
 
 

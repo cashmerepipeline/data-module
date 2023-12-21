@@ -13,6 +13,7 @@ use dependencies_sync::log::{debug, error, info};
 
 use validates::validate_entity_id;
 
+use crate::data_server::data::get_data_data_type;
 use crate::data_server::version::{add_file_to_data_path, resolve_data_dir_path};
 use crate::data_server_configs::DataServerConfigs;
 
@@ -20,7 +21,7 @@ use crate::ids_codes::manage_ids::*;
 use crate::protocols::*;
 use crate::validates::{validate_stage, validate_subpath, validate_version};
 
-use crate::data_server::{self, get_upload_delegator, return_back_upload_delegator};
+use crate::data_server::{self, get_upload_delegator};
 use request_utils::request_account_context;
 
 use service_utils::types::{RequestStream, ResponseStream, StreamResponseResult};
@@ -89,6 +90,12 @@ async fn handle_upload_file_to_version(
     let stage_id = validate_stage(&data_id, &stage).await?;
     validate_version(&stage_id, &version).await?;
     validate_subpath(&sub_path)?;
+
+    let data_type = if let Ok(r) = get_data_data_type(&data_id).await {
+        r
+    } else {
+        return Err(Status::data_loss(t!("数据类型取得失败，数据错误")));
+    };
 
     // TODO: 查询目标文件md5，如果相等，直接返回成功
     // 对于大文件生成md5比较耗时，所以客户端可以根据需要优化md5的生成, 一般不需要全文件md5
@@ -354,17 +361,18 @@ async fn handle_upload_file_to_version(
             }
         }
 
-        // zh: 必须返还代理，否则代理将丢失
+        // 将文件添加到版本的文件表,
+        if data_type != DataType::SequenceData {
+            add_file_to_data_path(
+                &stage,
+                &version,
+                data_file_path.to_str().unwrap(),
+                &file_info,
+                &account_id,
+            )
+            .await;
+        }
 
-        // 将文件添加到版本的文件表
-        add_file_to_data_path(
-            &stage,
-            &version,
-            data_file_path.to_str().unwrap(),
-            &file_info,
-            &account_id,
-        )
-        .await;
         Ok(())
     });
 

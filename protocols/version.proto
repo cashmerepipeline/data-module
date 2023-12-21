@@ -1,19 +1,28 @@
 syntax = "proto3";
 package data.cashmere;
 
+// 版本包含一个完整的访问数据路径
 message Version{
-    string name = 1;
+    string manage_id = 1;
+    string specs_id = 2;
+    string data_id = 3;
+    string stage = 4;
+    string version = 5;
     // protobuf不支持嵌套repeated，所以使用 “,” 分隔的字符串, 形式为["sub_dir, ...,file_name"]
     // 路径不允许使用相对路径符号"."和".."
     // 文件集为多个文件列表
     // 文件序列为规则: ["base_name, start, end, padding, extension"]
     // 使用bson格式存储
-    repeated string files = 2;
-    // 移除标记，文件不删除
-    bool removed = 3;
+    repeated string files = 6;
   }
 
-
+// 取得规格版本表
+message ListSpecsVersionsRequest {
+  string specs_id = 1;
+}
+message ListSpecsVersionsResponse {
+  repeated bytes versions = 1;
+}
 
 // 添加数据版本到阶段
 message AddStageVersionRequest {

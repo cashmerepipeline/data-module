@@ -4,7 +4,7 @@ import 'package:data_module/protocols/specs.pb.dart';
 import 'package:bson/bson.dart';
 
 class NewSpecsView extends ViewToRequest<NewSpecsRequest> {
-  final int manageId;
+  final String manageId;
   final String entityId;
   final Name name;
   final String description;

@@ -2,9 +2,8 @@
 # 规格属性， 规格所属管理的规格属性管理, 用于收集规格属性
 #
 
-id = "规格"
-name_map = { zh = "规格", en = "specs_attributes" }
-is_searchable = true
+id = "规格属性"
+name_map = { zh = "规格属性", en = "specs_attributes" }
 description = ""
 
 

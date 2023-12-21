@@ -9,8 +9,8 @@ use dependencies_sync::log::{error, info};
 use dependencies_sync::tonic::async_trait;
 
 use crate::data_server::file_utils::get_chunk_md5;
+use crate::data_server::get_download_delegator;
 use crate::data_server::version::resolve_data_dir_path;
-use crate::data_server::{get_download_delegator, return_back_download_delegator};
 use crate::ids_codes::manage_ids::{DATAS_MANAGE_ID, SPECSES_MANAGE_ID};
 use crate::protocols::*;
 use crate::validates::{validate_stage, validate_subpath, validate_version};

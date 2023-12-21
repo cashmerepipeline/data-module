@@ -612,22 +612,41 @@ pub struct ListDataStagesResponse {
     #[prost(bytes = "vec", repeated, tag = "1")]
     pub stages: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
 }
+/// 版本包含一个完整的访问数据路径
 #[derive(serde::Serialize, serde::Deserialize)]
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Version {
     #[prost(string, tag = "1")]
-    pub name: ::prost::alloc::string::String,
+    pub manage_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "2")]
+    pub specs_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub data_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "4")]
+    pub stage: ::prost::alloc::string::String,
+    #[prost(string, tag = "5")]
+    pub version: ::prost::alloc::string::String,
     /// protobuf不支持嵌套repeated，所以使用 “,” 分隔的字符串, 形式为\["sub_dir, ...,file_name"\]
     /// 路径不允许使用相对路径符号"."和".."
     /// 文件集为多个文件列表
     /// 文件序列为规则: \["base_name, start, end, padding, extension"\]
     /// 使用bson格式存储
-    #[prost(string, repeated, tag = "2")]
+    #[prost(string, repeated, tag = "6")]
     pub files: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
-    /// 移除标记，文件不删除
-    #[prost(bool, tag = "3")]
-    pub removed: bool,
+}
+/// 取得规格版本表
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListSpecsVersionsRequest {
+    #[prost(string, tag = "1")]
+    pub specs_id: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListSpecsVersionsResponse {
+    #[prost(bytes = "vec", repeated, tag = "1")]
+    pub versions: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
 }
 /// 添加数据版本到阶段
 #[allow(clippy::derive_partial_eq_without_eq)]

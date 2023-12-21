@@ -4,7 +4,6 @@
 
 id = "预制件"
 name_map = { zh = "预制件", en = "prefabs" }
-is_searchable = true
 description = ""
 
 

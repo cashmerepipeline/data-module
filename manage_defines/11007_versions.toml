@@ -4,7 +4,6 @@
 
 id = "版本"
 name_map = { zh = "版本", en = "versions" }
-is_searchable = true
 description = ""
 
 

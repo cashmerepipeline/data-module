@@ -22,10 +22,7 @@ pub async fn resolve_data_dir_path(
     if format_map["manage"] == "manage_id" {
         let majordomo_arc = majordomo::get_majordomo();
         let manager = majordomo_arc.get_manager_by_id(SPECSES_MANAGE_ID).unwrap();
-        let specs_entity = manager
-            .get_entity_by_id(&specs_id.to_string(), &vec![])
-            .await
-            .unwrap();
+        let specs_entity = manager.get_entity_by_id(specs_id, &vec![]).await.unwrap();
         let manage_id = specs_entity
             .get_i32(SPECSES_MANAGE_ID_FIELD_ID.to_string())
             .unwrap();
