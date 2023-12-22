@@ -362,15 +362,20 @@ async fn handle_upload_file_to_version(
         }
 
         // 将文件添加到版本的文件表,
+        let data_root = &DataServerConfigs::get().root_dir_path;
+        let mut file_path_comps = data_file_path
+            .components()
+            .map(|p| p.as_os_str().to_str().unwrap())
+            .collect::<Vec<&str>>();
+        if data_root.len() > 0 {
+            file_path_comps.remove(0);
+        }
+        let bingding = file_path_comps.join("/");
+        let file_path_key = bingding.as_str();
+
         if data_type != DataType::SequenceData {
-            add_file_to_data_path(
-                &stage,
-                &version,
-                data_file_path.to_str().unwrap(),
-                &file_info,
-                &account_id,
-            )
-            .await;
+            add_file_to_data_path(&stage_id, &version, file_path_key, &file_info, &account_id)
+                .await;
         }
 
         Ok(())

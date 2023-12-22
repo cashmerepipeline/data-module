@@ -25,13 +25,13 @@ class UploadFileStreamController {
 
   get stream => uploadStreamController.stream;
 
-  UploadFileStreamController(
-    this.specsId,
-    this.dataId,
-    this.filePath,
-    this.stage,
-    this.version,
-  ) {
+  UploadFileStreamController({
+    required this.specsId,
+    required this.dataId,
+    required this.filePath,
+    required this.stage,
+    required this.version,
+  }) {
     uploadStreamController = StreamController<UploadFileToVersionRequest>();
 
     final file = File(filePath);

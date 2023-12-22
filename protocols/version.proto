@@ -1,6 +1,8 @@
 syntax = "proto3";
 package data.cashmere;
 
+import "file_info.proto";
+
 // 版本包含一个完整的访问数据路径
 message Version{
     string manage_id = 1;
@@ -12,8 +14,8 @@ message Version{
     // 路径不允许使用相对路径符号"."和".."
     // 文件集为多个文件列表
     // 文件序列为规则: ["base_name, start, end, padding, extension"]
-    // 使用bson格式存储
-    repeated string files = 6;
+    // bson document格式，包含有文件信息
+    map<string, FileInfo> files = 6;
   }
 
 // 取得规格版本表
@@ -21,7 +23,7 @@ message ListSpecsVersionsRequest {
   string specs_id = 1;
 }
 message ListSpecsVersionsResponse {
-  repeated bytes versions = 1;
+  repeated Version versions = 1;
 }
 
 // 添加数据版本到阶段

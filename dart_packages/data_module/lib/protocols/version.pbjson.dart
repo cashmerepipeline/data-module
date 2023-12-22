@@ -17,16 +17,59 @@ import 'dart:typed_data' as $typed_data;
 const Version$json = {
   '1': 'Version',
   '2': [
-    {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
-    {'1': 'files', '3': 2, '4': 3, '5': 9, '10': 'files'},
-    {'1': 'removed', '3': 3, '4': 1, '5': 8, '10': 'removed'},
+    {'1': 'manage_id', '3': 1, '4': 1, '5': 9, '10': 'manageId'},
+    {'1': 'specs_id', '3': 2, '4': 1, '5': 9, '10': 'specsId'},
+    {'1': 'data_id', '3': 3, '4': 1, '5': 9, '10': 'dataId'},
+    {'1': 'stage', '3': 4, '4': 1, '5': 9, '10': 'stage'},
+    {'1': 'version', '3': 5, '4': 1, '5': 9, '10': 'version'},
+    {'1': 'files', '3': 6, '4': 3, '5': 11, '6': '.data.cashmere.Version.FilesEntry', '10': 'files'},
   ],
+  '3': [Version_FilesEntry$json],
+};
+
+@$core.Deprecated('Use versionDescriptor instead')
+const Version_FilesEntry$json = {
+  '1': 'FilesEntry',
+  '2': [
+    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
+    {'1': 'value', '3': 2, '4': 1, '5': 11, '6': '.data.cashmere.FileInfo', '10': 'value'},
+  ],
+  '7': {'7': true},
 };
 
 /// Descriptor for `Version`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List versionDescriptor = $convert.base64Decode(
-    'CgdWZXJzaW9uEhIKBG5hbWUYASABKAlSBG5hbWUSFAoFZmlsZXMYAiADKAlSBWZpbGVzEhgKB3'
-    'JlbW92ZWQYAyABKAhSB3JlbW92ZWQ=');
+    'CgdWZXJzaW9uEhsKCW1hbmFnZV9pZBgBIAEoCVIIbWFuYWdlSWQSGQoIc3BlY3NfaWQYAiABKA'
+    'lSB3NwZWNzSWQSFwoHZGF0YV9pZBgDIAEoCVIGZGF0YUlkEhQKBXN0YWdlGAQgASgJUgVzdGFn'
+    'ZRIYCgd2ZXJzaW9uGAUgASgJUgd2ZXJzaW9uEjcKBWZpbGVzGAYgAygLMiEuZGF0YS5jYXNobW'
+    'VyZS5WZXJzaW9uLkZpbGVzRW50cnlSBWZpbGVzGlEKCkZpbGVzRW50cnkSEAoDa2V5GAEgASgJ'
+    'UgNrZXkSLQoFdmFsdWUYAiABKAsyFy5kYXRhLmNhc2htZXJlLkZpbGVJbmZvUgV2YWx1ZToCOA'
+    'E=');
+
+@$core.Deprecated('Use listSpecsVersionsRequestDescriptor instead')
+const ListSpecsVersionsRequest$json = {
+  '1': 'ListSpecsVersionsRequest',
+  '2': [
+    {'1': 'specs_id', '3': 1, '4': 1, '5': 9, '10': 'specsId'},
+  ],
+};
+
+/// Descriptor for `ListSpecsVersionsRequest`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List listSpecsVersionsRequestDescriptor = $convert.base64Decode(
+    'ChhMaXN0U3BlY3NWZXJzaW9uc1JlcXVlc3QSGQoIc3BlY3NfaWQYASABKAlSB3NwZWNzSWQ=');
+
+@$core.Deprecated('Use listSpecsVersionsResponseDescriptor instead')
+const ListSpecsVersionsResponse$json = {
+  '1': 'ListSpecsVersionsResponse',
+  '2': [
+    {'1': 'versions', '3': 1, '4': 3, '5': 11, '6': '.data.cashmere.Version', '10': 'versions'},
+  ],
+};
+
+/// Descriptor for `ListSpecsVersionsResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List listSpecsVersionsResponseDescriptor = $convert.base64Decode(
+    'ChlMaXN0U3BlY3NWZXJzaW9uc1Jlc3BvbnNlEjIKCHZlcnNpb25zGAEgAygLMhYuZGF0YS5jYX'
+    'NobWVyZS5WZXJzaW9uUgh2ZXJzaW9ucw==');
 
 @$core.Deprecated('Use addStageVersionRequestDescriptor instead')
 const AddStageVersionRequest$json = {

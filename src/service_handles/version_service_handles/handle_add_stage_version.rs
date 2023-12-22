@@ -87,8 +87,8 @@ async fn handle_add_stage_version(
             )))
         }
     };
-    new_entity_doc.insert(VERSIONS_VERSION_FIELD_ID.to_string(), version);
     new_entity_doc.insert(VERSIONS_STAGE_ID_FIELD_ID.to_string(), stage_id);
+    new_entity_doc.insert(VERSIONS_VERSION_FIELD_ID.to_string(), version);
 
     let result = manager
         .sink_entity(&mut new_entity_doc, &account_id, &role_group)

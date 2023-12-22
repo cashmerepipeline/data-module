@@ -13,21 +13,36 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import 'file_info.pb.dart' as $0;
+
+/// 版本包含一个完整的访问数据路径
 class Version extends $pb.GeneratedMessage {
   factory Version({
-    $core.String? name,
-    $core.Iterable<$core.String>? files,
-    $core.bool? removed,
+    $core.String? manageId,
+    $core.String? specsId,
+    $core.String? dataId,
+    $core.String? stage,
+    $core.String? version,
+    $core.Map<$core.String, $0.FileInfo>? files,
   }) {
     final $result = create();
-    if (name != null) {
-      $result.name = name;
+    if (manageId != null) {
+      $result.manageId = manageId;
+    }
+    if (specsId != null) {
+      $result.specsId = specsId;
+    }
+    if (dataId != null) {
+      $result.dataId = dataId;
+    }
+    if (stage != null) {
+      $result.stage = stage;
+    }
+    if (version != null) {
+      $result.version = version;
     }
     if (files != null) {
       $result.files.addAll(files);
-    }
-    if (removed != null) {
-      $result.removed = removed;
     }
     return $result;
   }
@@ -36,9 +51,12 @@ class Version extends $pb.GeneratedMessage {
   factory Version.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Version', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'name')
-    ..pPS(2, _omitFieldNames ? '' : 'files')
-    ..aOB(3, _omitFieldNames ? '' : 'removed')
+    ..aOS(1, _omitFieldNames ? '' : 'manageId')
+    ..aOS(2, _omitFieldNames ? '' : 'specsId')
+    ..aOS(3, _omitFieldNames ? '' : 'dataId')
+    ..aOS(4, _omitFieldNames ? '' : 'stage')
+    ..aOS(5, _omitFieldNames ? '' : 'version')
+    ..m<$core.String, $0.FileInfo>(6, _omitFieldNames ? '' : 'files', entryClassName: 'Version.FilesEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OM, valueCreator: $0.FileInfo.create, valueDefaultOrMaker: $0.FileInfo.getDefault, packageName: const $pb.PackageName('data.cashmere'))
     ..hasRequiredFields = false
   ;
 
@@ -64,31 +82,152 @@ class Version extends $pb.GeneratedMessage {
   static Version? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get name => $_getSZ(0);
+  $core.String get manageId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) { $_setString(0, v); }
+  set manageId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasName() => $_has(0);
+  $core.bool hasManageId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearName() => clearField(1);
+  void clearManageId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get specsId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set specsId($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasSpecsId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSpecsId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get dataId => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set dataId($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasDataId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearDataId() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get stage => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set stage($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasStage() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearStage() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get version => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set version($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasVersion() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearVersion() => clearField(5);
 
   /// protobuf不支持嵌套repeated，所以使用 “,” 分隔的字符串, 形式为["sub_dir, ...,file_name"]
   /// 路径不允许使用相对路径符号"."和".."
   /// 文件集为多个文件列表
   /// 文件序列为规则: ["base_name, start, end, padding, extension"]
-  /// 使用bson格式存储
-  @$pb.TagNumber(2)
-  $core.List<$core.String> get files => $_getList(1);
+  /// bson document格式，包含有文件信息
+  @$pb.TagNumber(6)
+  $core.Map<$core.String, $0.FileInfo> get files => $_getMap(5);
+}
 
-  /// 移除标记，文件不删除
-  @$pb.TagNumber(3)
-  $core.bool get removed => $_getBF(2);
-  @$pb.TagNumber(3)
-  set removed($core.bool v) { $_setBool(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasRemoved() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearRemoved() => clearField(3);
+/// 取得规格版本表
+class ListSpecsVersionsRequest extends $pb.GeneratedMessage {
+  factory ListSpecsVersionsRequest({
+    $core.String? specsId,
+  }) {
+    final $result = create();
+    if (specsId != null) {
+      $result.specsId = specsId;
+    }
+    return $result;
+  }
+  ListSpecsVersionsRequest._() : super();
+  factory ListSpecsVersionsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ListSpecsVersionsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListSpecsVersionsRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'specsId')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ListSpecsVersionsRequest clone() => ListSpecsVersionsRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ListSpecsVersionsRequest copyWith(void Function(ListSpecsVersionsRequest) updates) => super.copyWith((message) => updates(message as ListSpecsVersionsRequest)) as ListSpecsVersionsRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ListSpecsVersionsRequest create() => ListSpecsVersionsRequest._();
+  ListSpecsVersionsRequest createEmptyInstance() => create();
+  static $pb.PbList<ListSpecsVersionsRequest> createRepeated() => $pb.PbList<ListSpecsVersionsRequest>();
+  @$core.pragma('dart2js:noInline')
+  static ListSpecsVersionsRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListSpecsVersionsRequest>(create);
+  static ListSpecsVersionsRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get specsId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set specsId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSpecsId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSpecsId() => clearField(1);
+}
+
+class ListSpecsVersionsResponse extends $pb.GeneratedMessage {
+  factory ListSpecsVersionsResponse({
+    $core.Iterable<Version>? versions,
+  }) {
+    final $result = create();
+    if (versions != null) {
+      $result.versions.addAll(versions);
+    }
+    return $result;
+  }
+  ListSpecsVersionsResponse._() : super();
+  factory ListSpecsVersionsResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ListSpecsVersionsResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListSpecsVersionsResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..pc<Version>(1, _omitFieldNames ? '' : 'versions', $pb.PbFieldType.PM, subBuilder: Version.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ListSpecsVersionsResponse clone() => ListSpecsVersionsResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ListSpecsVersionsResponse copyWith(void Function(ListSpecsVersionsResponse) updates) => super.copyWith((message) => updates(message as ListSpecsVersionsResponse)) as ListSpecsVersionsResponse;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ListSpecsVersionsResponse create() => ListSpecsVersionsResponse._();
+  ListSpecsVersionsResponse createEmptyInstance() => create();
+  static $pb.PbList<ListSpecsVersionsResponse> createRepeated() => $pb.PbList<ListSpecsVersionsResponse>();
+  @$core.pragma('dart2js:noInline')
+  static ListSpecsVersionsResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListSpecsVersionsResponse>(create);
+  static ListSpecsVersionsResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<Version> get versions => $_getList(0);
 }
 
 /// 添加数据版本到阶段

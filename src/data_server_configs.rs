@@ -38,14 +38,14 @@ impl ConfigTrait for DataServerConfigs {
     }
 
     fn get() -> &'static Self {
-        if let Some(configs) = DATA_SERVER_CONFIGS.get() {
-            return configs;
-        } else {
-            let configs = get_config::<DataServerConfigs>().expect(t!("取得配置失败").as_str());
-            DATA_SERVER_CONFIGS.set(configs).expect("设置配置失败");
+        match DATA_SERVER_CONFIGS.get() {
+            Some(configs) => return configs,
+            None => {
+                let configs = get_config::<DataServerConfigs>().expect(t!("取得配置失败").as_str());
+                DATA_SERVER_CONFIGS.set(configs).expect("设置配置失败");
+                DATA_SERVER_CONFIGS.get().unwrap()
+            }
         }
-
-        DATA_SERVER_CONFIGS.get().unwrap()
     }
 }
 

@@ -1,4 +1,5 @@
 use cash_result::{add_call_name_to_chain, OperationResult};
+use configs::ConfigTrait;
 use dependencies_sync::{
     bson::{self, doc},
     log,
@@ -10,10 +11,10 @@ use managers::ManagerTrait;
 
 use crate::{
     ids_codes::{
-        field_ids::{VERSIONS_DATA_PATH_FIELD_ID, VERSIONS_STAGE_ID_FIELD_ID},
+        field_ids::{VERSIONS_DATA_PATH_FIELD_ID, VERSIONS_STAGE_ID_FIELD_ID, VERSIONS_VERSION_FIELD_ID},
         manage_ids::VERSIONS_MANAGE_ID,
     },
-    protocols::FileInfo,
+    protocols::FileInfo, DataServerConfigs,
 };
 
 /// zh: 和数据类型相关，序列文件不需要加入
@@ -29,7 +30,7 @@ pub async fn add_file_to_data_path(
 
     let query_doc = doc! {
         VERSIONS_STAGE_ID_FIELD_ID.to_string():stage_id,
-        ID_FIELD_ID.to_string():version,
+        VERSIONS_VERSION_FIELD_ID.to_string():version,
     };
 
     let file_doc = doc! {file_path:bson::to_document(&file_info.clone()).unwrap()};

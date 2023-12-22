@@ -631,9 +631,9 @@ pub struct Version {
     /// 路径不允许使用相对路径符号"."和".."
     /// 文件集为多个文件列表
     /// 文件序列为规则: \["base_name, start, end, padding, extension"\]
-    /// 使用bson格式存储
-    #[prost(string, repeated, tag = "6")]
-    pub files: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
+    /// bson document格式，包含有文件信息
+    #[prost(map = "string, message", tag = "6")]
+    pub files: ::std::collections::HashMap<::prost::alloc::string::String, FileInfo>,
 }
 /// 取得规格版本表
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -645,8 +645,8 @@ pub struct ListSpecsVersionsRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListSpecsVersionsResponse {
-    #[prost(bytes = "vec", repeated, tag = "1")]
-    pub versions: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
+    #[prost(message, repeated, tag = "1")]
+    pub versions: ::prost::alloc::vec::Vec<Version>,
 }
 /// 添加数据版本到阶段
 #[allow(clippy::derive_partial_eq_without_eq)]

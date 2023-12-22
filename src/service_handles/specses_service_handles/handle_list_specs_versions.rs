@@ -1,4 +1,6 @@
-use dependencies_sync::bson::{self, doc};
+use std::collections::HashMap;
+
+use dependencies_sync::bson::{self, doc, spec};
 use dependencies_sync::futures::TryFutureExt;
 use dependencies_sync::log;
 use dependencies_sync::rust_i18n::{self, t};
@@ -10,6 +12,7 @@ use request_utils::request_account_context;
 use service_utils::types::UnaryResponseResult;
 
 use crate::ids_codes::field_ids::*;
+use crate::managers::specses_manager;
 use crate::protocols::*;
 use majordomo::{self, get_majordomo};
 
@@ -61,14 +64,23 @@ async fn validate_request_params(
 async fn handle_list_specs_versions(
     request: Request<ListSpecsVersionsRequest>,
 ) -> Result<Response<ListSpecsVersionsResponse>, Status> {
-    let (_account_id, _groups,_role_groupp) = request_account_context(request.metadata())?;
+    let (_account_id, _groups, _role_groupp) = request_account_context(request.metadata())?;
 
     let specs_id = &request.get_ref().specs_id;
 
     let majordomo_arc = get_majordomo();
+    let specses_manager = majordomo_arc.get_manager_by_id(SPECSES_MANAGE_ID).unwrap();
     let data_manager = majordomo_arc.get_manager_by_id(DATAS_MANAGE_ID).unwrap();
     let stages_manager = majordomo_arc.get_manager_by_id(STAGES_MANAGE_ID).unwrap();
     let versions_manager = majordomo_arc.get_manager_by_id(VERSIONS_MANAGE_ID).unwrap();
+
+    let specs_entity = specses_manager
+        .get_entity_by_id(specs_id, &vec![])
+        .await
+        .unwrap();
+    let manage_id = specs_entity
+        .get_str(SPECSES_MANAGE_ID_FIELD_ID.to_string())
+        .unwrap();
 
     let mut datas = vec![];
     let mut match_doc = doc! {};
@@ -78,57 +90,84 @@ async fn handle_list_specs_versions(
         .await
         .map(|docs| {
             docs.iter().for_each(|doc| datas.push(doc.clone()));
-            
-        }){
+        })
+    {
         log::error!("{}: {}", t!("取得规格数据失败"), specs_id);
-        return Err(Status::data_loss(format!("{}: {}", t!("取得规格数据失败"), err.details())));
+        return Err(Status::data_loss(format!(
+            "{}: {}",
+            t!("取得规格数据失败"),
+            err.details()
+        )));
     };
 
-    let mut stages = vec![];
+    let mut versions = vec![];
     if !datas.is_empty() {
         for doc in datas.iter() {
             let data_id = doc.get_str(ID_FIELD_ID.to_string()).unwrap();
             let mut match_doc = doc! {};
             match_doc.insert(STAGES_DATA_ID_FIELD_ID.to_string(), data_id);
 
-            if let Err(err) = stages_manager
+            let stages = match stages_manager
                 .get_entities_by_filter(&Some(match_doc))
                 .await
-                .map(|docs| {
-                    docs.iter().for_each(|doc| {
-                        stages.push(doc.clone());
-                    });
-                    
-                }){
-                log::error!("{}: {}, {}", t!("取得数据阶段失败"), data_id, err.details());
-                return Err(Status::data_loss(format!("{}: {}", t!("取得数据阶段失败"), err.details())));
+            {
+                Ok(r) => r,
+                Err(err) => {
+                    log::error!("{}: {}, {}", t!("取得数据阶段失败"), data_id, err.details());
+                    return Err(Status::data_loss(format!(
+                        "{}: {}",
+                        t!("取得数据阶段失败"),
+                        err.details()
+                    )));
+                }
+            };
+
+            for doc in stages.iter() {
+                let stage_id = doc.get_str(ID_FIELD_ID.to_string()).unwrap();
+                let stage = doc.get_str(STAGES_STAGE_FIELD_ID.to_string()).unwrap();
+                let mut match_doc = doc! {};
+                match_doc.insert(VERSIONS_STAGE_ID_FIELD_ID.to_string(), stage_id);
+
+                if let Err(err) = versions_manager
+                    .get_entities_by_filter(&Some(match_doc))
+                    .await
+                    .map(|docs| {
+                        docs.iter().for_each(|doc| {
+                            let files_doc = doc
+                                .get_document(VERSIONS_DATA_PATH_FIELD_ID.to_string())
+                                .unwrap();
+                            let files: HashMap<String, FileInfo> =
+                                bson::from_document(files_doc.clone()).unwrap();
+                            let version = Version {
+                                manage_id: manage_id.to_string(),
+                                specs_id: specs_id.to_string(),
+                                data_id: data_id.to_string(),
+                                stage: stage.to_string(),
+                                version: doc
+                                    .get_str(VERSIONS_VERSION_FIELD_ID.to_string())
+                                    .unwrap()
+                                    .to_string(),
+                                files,
+                            };
+                            versions.push(version);
+                        });
+                    })
+                {
+                    log::error!(
+                        "{}: {}, {}",
+                        t!("取得阶段版本失败"),
+                        stage_id,
+                        err.details()
+                    );
+                    return Err(Status::data_loss(format!(
+                        "{}: {}",
+                        t!("取得阶段版本失败"),
+                        err.details()
+                    )));
+                }
             }
         }
     }
 
-    let mut versions = vec![];
-    if !stages.is_empty() {
-        for doc in stages.iter() {
-            let stage_id = doc.get_str(ID_FIELD_ID.to_string()).unwrap();
-            let mut match_doc = doc! {};
-            match_doc.insert(VERSIONS_STAGE_ID_FIELD_ID.to_string(), stage_id);
-
-            if let Err(err)= versions_manager
-                .get_entities_by_filter(&Some(match_doc))
-                .await
-                .map(|docs| {
-                    docs.iter().for_each(|doc| {
-                        versions.push(doc.clone());
-                    });
-                    
-                }){
-                  log::error!("{}: {}, {}", t!("取得阶段版本失败"), stage_id, err.details());
-                  return Err(Status::data_loss(format!("{}: {}", t!("取得阶段版本失败"), err.details())));
-                }
-        }
-    }
-
-    Ok(Response::new(ListSpecsVersionsResponse {
-        versions: versions.iter().map(|d| bson::to_vec(d).unwrap()).collect(),
-    }))
+    Ok(Response::new(ListSpecsVersionsResponse { versions }))
 }
