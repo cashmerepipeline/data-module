@@ -17,10 +17,11 @@ class UploadFileStreamController {
   final String stage;
   final String version;
 
-  late StreamController<UploadFileToVersionRequest> uploadStreamController;
-  late UploadFileToVersionRequest firstRequest;
   late FileInfo fileInfo;
   late Uint8List bytes;
+
+  late StreamController<UploadFileToVersionRequest> uploadStreamController;
+  late UploadFileToVersionRequest firstRequest;
   late int totalChuncks;
 
   get stream => uploadStreamController.stream;

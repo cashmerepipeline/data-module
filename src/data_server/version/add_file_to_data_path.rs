@@ -11,7 +11,7 @@ use managers::ManagerTrait;
 
 use crate::{
     ids_codes::{
-        field_ids::{VERSIONS_DATA_PATH_FIELD_ID, VERSIONS_STAGE_ID_FIELD_ID, VERSIONS_VERSION_FIELD_ID},
+        field_ids::{VERSIONS_FILES_FIELD_ID, VERSIONS_STAGE_ID_FIELD_ID, VERSIONS_VERSION_FIELD_ID},
         manage_ids::VERSIONS_MANAGE_ID,
     },
     protocols::FileInfo, DataServerConfigs,
@@ -35,7 +35,8 @@ pub async fn add_file_to_data_path(
 
     let file_doc = doc! {file_path:bson::to_document(&file_info.clone()).unwrap()};
     let mut modify_doc = bson::Document::new();
-    modify_doc.insert(VERSIONS_DATA_PATH_FIELD_ID.to_string(), file_doc);
+    let key = format!("{}.{}", VERSIONS_FILES_FIELD_ID, file_info.md5);
+    modify_doc.insert(key, bson::to_bson(file_info).unwrap());
 
     if let Err(err) = manager
         .update_entity_map_field(query_doc, modify_doc, account_id)

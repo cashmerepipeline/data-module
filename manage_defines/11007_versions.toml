@@ -17,7 +17,7 @@ schema = [
 
     # 2003
     # version: {files: [file_infos], description: "", status: "done", created_at: "", updated_at: ""]}
-    { data_type = "Document", name_map = { zh = "数据路径", en = "data_path"}, removed = false },
+    { data_type = "Document", name_map = { zh = "文件表", en = "files"}, removed = false },
     
     # 2004
     # 预览文件表

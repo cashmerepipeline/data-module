@@ -16,7 +16,7 @@ pub async fn get_data_data_type(data_id: &str) -> Result<DataType, OperationResu
     // 取得data实体
     let data = manager.get_entity_by_id(data_id, &vec![]).await.unwrap();
     let data_type: DataType = match data.get_i32(DATAS_DATA_TYPE_FIELD_ID.to_string()) {
-        Ok(t) => DataType::from_i32(t).unwrap(),
+        Ok(t) => DataType::try_from(t).unwrap(),
         Err(e) => {
             log::error!("{}: {}", t!("取得数据类型失败"), e);
             return Err(operation_failed(

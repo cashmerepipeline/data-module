@@ -5,10 +5,15 @@ import "file_info.proto";
 
 // 版本包含一个完整的访问数据路径
 message Version{
+    // 目标管理编号
     string manage_id = 1;
+    // 规格管理编号
     string specs_id = 2;
+    // 数据集编号
     string data_id = 3;
+    // 阶段
     string stage = 4;
+    // 版本
     string version = 5;
     // protobuf不支持嵌套repeated，所以使用 “,” 分隔的字符串, 形式为["sub_dir, ...,file_name"]
     // 路径不允许使用相对路径符号"."和".."
@@ -23,6 +28,15 @@ message ListSpecsVersionsRequest {
   string specs_id = 1;
 }
 message ListSpecsVersionsResponse {
+  repeated Version versions = 1;
+}
+
+// 取得规格版本表
+message ListDataVersionsRequest {
+  string specs_id = 2;
+  string data_id = 3;
+}
+message ListDataVersionsResponse {
   repeated Version versions = 1;
 }
 

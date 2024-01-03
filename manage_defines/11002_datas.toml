@@ -11,12 +11,11 @@ description = ""
 # 描写，模式
 schema = [
   # 2001
-  { data_type = "String", name_map = { zh = "主管理", en = "specs_id" }, removed = false },
+  { data_type = "String", name_map = { zh = "规格", en = "specs_id" }, removed = false },
   # 2002
   { data_type = "String", name_map = { zh = "类型", en = "data_type" }, removed = false },
   # 2003
-  # [{name:stage, versions:[files or dirs], current_version: file or dir},...}
-  { data_type = "Document", name_map = { zh = "阶段表", en = "stages" }, removed = false },
+  { data_type = "Array", name_map = { zh = "阶段表", en = "stages" }, removed = false },
   # 2004
   # 简单标记，用于一些数据的标记，复杂标记请用tag标签
   { data_type = "String", name_map = { zh = "标记", en = "mark" }, removed = false },

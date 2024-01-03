@@ -81,6 +81,7 @@ class Version extends $pb.GeneratedMessage {
   static Version getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Version>(create);
   static Version? _defaultInstance;
 
+  /// 目标管理编号
   @$pb.TagNumber(1)
   $core.String get manageId => $_getSZ(0);
   @$pb.TagNumber(1)
@@ -90,6 +91,7 @@ class Version extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearManageId() => clearField(1);
 
+  /// 规格管理编号
   @$pb.TagNumber(2)
   $core.String get specsId => $_getSZ(1);
   @$pb.TagNumber(2)
@@ -99,6 +101,7 @@ class Version extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearSpecsId() => clearField(2);
 
+  /// 数据集编号
   @$pb.TagNumber(3)
   $core.String get dataId => $_getSZ(2);
   @$pb.TagNumber(3)
@@ -108,6 +111,7 @@ class Version extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   void clearDataId() => clearField(3);
 
+  /// 阶段
   @$pb.TagNumber(4)
   $core.String get stage => $_getSZ(3);
   @$pb.TagNumber(4)
@@ -117,6 +121,7 @@ class Version extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   void clearStage() => clearField(4);
 
+  /// 版本
   @$pb.TagNumber(5)
   $core.String get version => $_getSZ(4);
   @$pb.TagNumber(5)
@@ -225,6 +230,115 @@ class ListSpecsVersionsResponse extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static ListSpecsVersionsResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListSpecsVersionsResponse>(create);
   static ListSpecsVersionsResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<Version> get versions => $_getList(0);
+}
+
+/// 取得规格版本表
+class ListDataVersionsRequest extends $pb.GeneratedMessage {
+  factory ListDataVersionsRequest({
+    $core.String? specsId,
+    $core.String? dataId,
+  }) {
+    final $result = create();
+    if (specsId != null) {
+      $result.specsId = specsId;
+    }
+    if (dataId != null) {
+      $result.dataId = dataId;
+    }
+    return $result;
+  }
+  ListDataVersionsRequest._() : super();
+  factory ListDataVersionsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ListDataVersionsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListDataVersionsRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..aOS(2, _omitFieldNames ? '' : 'specsId')
+    ..aOS(3, _omitFieldNames ? '' : 'dataId')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ListDataVersionsRequest clone() => ListDataVersionsRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ListDataVersionsRequest copyWith(void Function(ListDataVersionsRequest) updates) => super.copyWith((message) => updates(message as ListDataVersionsRequest)) as ListDataVersionsRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ListDataVersionsRequest create() => ListDataVersionsRequest._();
+  ListDataVersionsRequest createEmptyInstance() => create();
+  static $pb.PbList<ListDataVersionsRequest> createRepeated() => $pb.PbList<ListDataVersionsRequest>();
+  @$core.pragma('dart2js:noInline')
+  static ListDataVersionsRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListDataVersionsRequest>(create);
+  static ListDataVersionsRequest? _defaultInstance;
+
+  @$pb.TagNumber(2)
+  $core.String get specsId => $_getSZ(0);
+  @$pb.TagNumber(2)
+  set specsId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasSpecsId() => $_has(0);
+  @$pb.TagNumber(2)
+  void clearSpecsId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get dataId => $_getSZ(1);
+  @$pb.TagNumber(3)
+  set dataId($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasDataId() => $_has(1);
+  @$pb.TagNumber(3)
+  void clearDataId() => clearField(3);
+}
+
+class ListDataVersionsResponse extends $pb.GeneratedMessage {
+  factory ListDataVersionsResponse({
+    $core.Iterable<Version>? versions,
+  }) {
+    final $result = create();
+    if (versions != null) {
+      $result.versions.addAll(versions);
+    }
+    return $result;
+  }
+  ListDataVersionsResponse._() : super();
+  factory ListDataVersionsResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ListDataVersionsResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListDataVersionsResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
+    ..pc<Version>(1, _omitFieldNames ? '' : 'versions', $pb.PbFieldType.PM, subBuilder: Version.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ListDataVersionsResponse clone() => ListDataVersionsResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ListDataVersionsResponse copyWith(void Function(ListDataVersionsResponse) updates) => super.copyWith((message) => updates(message as ListDataVersionsResponse)) as ListDataVersionsResponse;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ListDataVersionsResponse create() => ListDataVersionsResponse._();
+  ListDataVersionsResponse createEmptyInstance() => create();
+  static $pb.PbList<ListDataVersionsResponse> createRepeated() => $pb.PbList<ListDataVersionsResponse>();
+  @$core.pragma('dart2js:noInline')
+  static ListDataVersionsResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ListDataVersionsResponse>(create);
+  static ListDataVersionsResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<Version> get versions => $_getList(0);

@@ -617,14 +617,19 @@ pub struct ListDataStagesResponse {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct Version {
+    /// 目标管理编号
     #[prost(string, tag = "1")]
     pub manage_id: ::prost::alloc::string::String,
+    /// 规格管理编号
     #[prost(string, tag = "2")]
     pub specs_id: ::prost::alloc::string::String,
+    /// 数据集编号
     #[prost(string, tag = "3")]
     pub data_id: ::prost::alloc::string::String,
+    /// 阶段
     #[prost(string, tag = "4")]
     pub stage: ::prost::alloc::string::String,
+    /// 版本
     #[prost(string, tag = "5")]
     pub version: ::prost::alloc::string::String,
     /// protobuf不支持嵌套repeated，所以使用 “,” 分隔的字符串, 形式为\["sub_dir, ...,file_name"\]
@@ -645,6 +650,21 @@ pub struct ListSpecsVersionsRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListSpecsVersionsResponse {
+    #[prost(message, repeated, tag = "1")]
+    pub versions: ::prost::alloc::vec::Vec<Version>,
+}
+/// 取得规格版本表
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListDataVersionsRequest {
+    #[prost(string, tag = "2")]
+    pub specs_id: ::prost::alloc::string::String,
+    #[prost(string, tag = "3")]
+    pub data_id: ::prost::alloc::string::String,
+}
+#[allow(clippy::derive_partial_eq_without_eq)]
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct ListDataVersionsResponse {
     #[prost(message, repeated, tag = "1")]
     pub versions: ::prost::alloc::vec::Vec<Version>,
 }

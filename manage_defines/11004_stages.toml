@@ -15,10 +15,6 @@ schema = [
     # 2002
     { data_type = "String", name_map = { zh = "阶段", en = "stage"}, removed = false },
     
-    # 2003
-    # 预览文件表
-    { data_type = "Array", name_map = { zh = "预览", en = "previews"}, removed = false },
-
     # 2004
     { data_type = "String", name_map = { zh = "当前版本", en = "current_version"}, removed = false },
 ]

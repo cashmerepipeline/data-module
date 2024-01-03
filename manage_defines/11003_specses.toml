@@ -10,17 +10,13 @@ description = ""
 # 数据描写 或者 模式
 schema = [
     # 2001
-    { data_type = "Int32", name_map = { zh = "管理", en = "manage_id"}, removed = false },
+    { data_type = "String", name_map = { zh = "管理", en = "manage_id"}, removed = false },
     # 2002
     { data_type = "String", name_map = { zh = "实体", en = "entity_id"}, removed = false },
 
     # 2003
     # bson bytes, 一组规格属性
     { data_type = "Document", name_map = { zh = "指标", en = "targets"}, removed = false },
-    
-    # 2004
-    # 相关数据, 数据数量应该有适当的控制，最好不超过10个，否则可能会发生滥用
-    { data_type = "Array", name_map = { zh = "数据", en = "data_ids"}, removed = false },
 ]
 
 # 初始实体
