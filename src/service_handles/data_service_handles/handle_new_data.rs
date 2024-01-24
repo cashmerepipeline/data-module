@@ -82,7 +82,7 @@ async fn handle_new_data(
         name.language.clone(): name.name.clone()
     };
 
-    if let Some(mut new_entity_doc) = make_new_entity_document(&data_manager, &account_id).await {
+    if let Ok(mut new_entity_doc) = make_new_entity_document(&data_manager, &account_id).await {
         new_entity_doc.insert(NAME_MAP_FIELD_ID.to_string(), local_name);
         new_entity_doc.insert(DATAS_DATA_TYPE_FIELD_ID.to_string(), data_type);
         new_entity_doc.insert(DATAS_SPECS_ID_FIELD_ID.to_string(), specs_id);

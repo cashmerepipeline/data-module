@@ -4,6 +4,7 @@ use dependencies_sync::tonic::async_trait;
 
 
 use dependencies_sync::tonic::{Request, Response, Status};
+use managers::utils::make_new_entity_document;
 
 use crate::ids_codes::field_ids::*;
 use crate::ids_codes::manage_ids::*;
@@ -74,8 +75,7 @@ async fn handle_new_prefab(
 
     // 新建条目
     let new_id = manager.get_new_entity_id(&account_id).await.unwrap();
-    let mut new_entity_doc = Document::new();
-    new_entity_doc.insert(ID_FIELD_ID.to_string(), new_id.to_string());
+    let mut new_entity_doc = make_new_entity_document(&manager, &account_id).await?;
     new_entity_doc.insert(
         NAME_MAP_FIELD_ID.to_string(),
         doc! {name.language.clone():name.name.clone()},

@@ -59,7 +59,7 @@ async fn handle_get_data_info(
     let majordomo_arc = get_majordomo();
     let data_manager = majordomo_arc.get_manager_by_id(DATAS_MANAGE_ID).unwrap();
 
-    let result = data_manager.get_entity_by_id(data_id, &vec![]).await;
+    let result = data_manager.get_entity_by_id(data_id, &vec![], &vec![]).await;
     match result {
         Ok(r) => Ok(Response::new(GetDataInfoResponse {
             data_info: Some(DataInfo {

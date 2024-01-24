@@ -19,6 +19,7 @@ use crate::ids_codes::manage_ids::VERSIONS_MANAGE_ID;
 use crate::protocols::FileInfo;
 use crate::protocols::Version;
 
+/// 取得阶段版本
 pub async fn get_stage_versions(
     manage_id: &str,
     specs_id: &str,

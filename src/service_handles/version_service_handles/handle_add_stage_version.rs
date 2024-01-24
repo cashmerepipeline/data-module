@@ -77,16 +77,8 @@ async fn handle_add_stage_version(
     let majordomo_arc = get_majordomo();
     let manager = majordomo_arc.get_manager_by_id(VERSIONS_MANAGE_ID).unwrap();
 
-    let mut new_entity_doc = match make_new_entity_document(&manager, &account_id).await {
-        Some(r) => r,
-        None => {
-            return Err(Status::aborted(format!(
-                "{}: {}",
-                t!("取得新实体失败"),
-                "add_stage_version"
-            )))
-        }
-    };
+    let mut new_entity_doc = make_new_entity_document(&manager, &account_id).await?;
+
     new_entity_doc.insert(VERSIONS_STAGE_ID_FIELD_ID.to_string(), stage_id);
     new_entity_doc.insert(VERSIONS_VERSION_FIELD_ID.to_string(), version);
 

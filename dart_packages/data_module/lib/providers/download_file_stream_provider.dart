@@ -1,6 +1,8 @@
+import 'dart:io';
+
 import 'package:data_module/file_download_stream_controller.dart';
 import 'package:grpc/grpc.dart';
-
+import 'package:path_provider/path_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'download_file_result.dart';
@@ -9,6 +11,21 @@ import 'download_file_state_provider_arg.dart';
 
 final downloadFileStreamProvider =
     StreamProvider.autoDispose.family<DownloadFileResult, DownloadFileStateProviderArg>((ref, arg) async* {
+  // 查看缓存文件是否存在
+  final md5 = arg.fileInfo.md5;
+  final cacheDir = await getApplicationCacheDirectory();
+  final cacheFile = File('${cacheDir.path}/$md5');
+  
+  if (cacheFile.existsSync()) {
+    final buf = cacheFile.readAsBytesSync();
+    yield DownloadFileResult(
+      data: buf,
+      progress: 1.0,
+      state: DownloadFileStateEnum.completed,
+    );
+    return;
+  }
+
   final streamController = DownloadFileStreamController(
     arg.version.specsId,
     arg.version.dataId,
@@ -40,6 +57,9 @@ final downloadFileStreamProvider =
   }
 
   streamController.close();
+  
+  // 写入缓存
+  cacheFile.writeAsBytesSync(result);
 
   yield DownloadFileResult(
     state: DownloadFileStateEnum.completed,

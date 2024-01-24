@@ -92,7 +92,7 @@ async fn handle_new_specs_attribute(
     let specs_manager = majordomo_arc.get_manager_by_id(SPECS_ATTRIBUTES_MANAGE_ID).unwrap();
 
     // 新建条目
-    let mut new_entity_doc = if let Some(r) = make_new_entity_document(&specs_manager, &account_id).await {
+    let mut new_entity_doc = if let Ok(r) = make_new_entity_document(&specs_manager, &account_id).await {
         r
     } else {
         return Err(Status::aborted(format!(

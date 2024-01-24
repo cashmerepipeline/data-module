@@ -78,7 +78,7 @@ async fn handle_list_data_versions(
     let stages_manager = majordomo_arc.get_manager_by_id(STAGES_MANAGE_ID).unwrap();
 
     let specs_entity = specses_manager
-        .get_entity_by_id(specs_id, &vec![])
+        .get_entity_by_id(specs_id, &vec![], &vec![])
         .await
         .unwrap();
     let manage_id = specs_entity

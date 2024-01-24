@@ -10,8 +10,10 @@ description = ""
 # 数据描写 或者 模式
 schema = [
     # 2001
+    # 目标管理
     { data_type = "String", name_map = { zh = "管理", en = "manage_id"}, removed = false },
     # 2002
+    # 目标实体
     { data_type = "String", name_map = { zh = "实体", en = "entity_id"}, removed = false },
 
     # 2003
