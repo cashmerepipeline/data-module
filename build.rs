@@ -38,6 +38,8 @@ fn main() {
     define_utils::generate_manage_defines(
         &["manage_defines"],
         "src/ids_codes",
+        // None,
         Some("dart_packages/data_module/lib"),
+        Some("data_module")
     );
 }
