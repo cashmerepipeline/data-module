@@ -1,12 +1,7 @@
 import 'dart:async';
-import 'dart:io';
-import 'dart:typed_data';
 
-import 'package:crypto/crypto.dart';
-import 'package:data_module/protocols/file_info.pb.dart';
 import 'package:data_module/protocols/file_transfer.pb.dart';
 import 'package:fixnum/fixnum.dart';
-import 'package:flutter/foundation.dart';
 
 const ChuckSize = 1024 * 10 * 1;
 

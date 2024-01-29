@@ -28,7 +28,7 @@ message ListSpecsVersionsRequest {
   string specs_id = 1;
 }
 message ListSpecsVersionsResponse {
-  repeated Version versions = 1;
+  repeated bytes versions = 1;
 }
 
 // 取得规格版本表
@@ -37,7 +37,7 @@ message ListDataVersionsRequest {
   string data_id = 3;
 }
 message ListDataVersionsResponse {
-  repeated Version versions = 1;
+  repeated bytes versions = 1;
 }
 
 // 添加数据版本到阶段

@@ -1,7 +1,7 @@
 import 'package:bson/bson.dart';
 import 'package:cashmere_core/ids/general_field_ids.dart';
+import 'package:data_module/field_ids.dart';
 import 'package:data_module/views/specs_view.dart';
-import 'package:grpc/grpc.dart';
 
 import 'package:cashmere_core/grpc_call.dart';
 import 'package:data_module/protocols/specs.pb.dart';
@@ -24,6 +24,11 @@ class SpecsesAsyncNotifier extends AutoDisposeFamilyAsyncNotifier<List<Map<Strin
 
   @override
   Future<List<Map<String, dynamic>>> build(SpecsesProviderArg arg) async {
+
+    /* final result = r.where((e) => e.data != null).map((e) => BsonCodec.deserialize(BsonBinary.from(e.data!))).where((e){
+      return e[SPECSES_MANAGE_ID_FIELD_ID.toString()] == arg.manageId && e[SPECSES_ENTITY_ID_FIELD_ID.toString()] == arg.entityId;
+    });
+ */
     return await fetchSpecses(arg);
   }
 }

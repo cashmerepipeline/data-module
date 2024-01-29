@@ -11,10 +11,8 @@ use majordomo::get_majordomo;
 use manage_define::general_field_ids::ID_FIELD_ID;
 use managers::ManagerTrait;
 
-use crate::ids_codes::field_ids::STAGES_STAGE_FIELD_ID;
-use crate::ids_codes::field_ids::VERSIONS_FILES_FIELD_ID;
-use crate::ids_codes::field_ids::VERSIONS_STAGE_ID_FIELD_ID;
-use crate::ids_codes::field_ids::VERSIONS_VERSION_FIELD_ID;
+use crate::ids_codes::version_field_ids::*;
+use crate::ids_codes::field_ids::*;
 use crate::ids_codes::manage_ids::VERSIONS_MANAGE_ID;
 use crate::protocols::FileInfo;
 use crate::protocols::Version;
@@ -25,7 +23,7 @@ pub async fn get_stage_versions(
     specs_id: &str,
     data_id: &str,
     stage_doc: &Document,
-) -> Result<Vec<Version>, Status> {
+) -> Result<Vec<Vec<u8>>, Status> {
     let stage_id = stage_doc.get_str(ID_FIELD_ID.to_string()).unwrap();
     let stage = stage_doc
         .get_str(STAGES_STAGE_FIELD_ID.to_string())
@@ -42,7 +40,13 @@ pub async fn get_stage_versions(
         .await
         .map(|docs| {
             docs.iter().for_each(|doc| {
-                let binding = Document::new();
+                let mut r_doc = doc.to_owned();
+                r_doc.insert(VERSIONS_MANAGE_ID_FIELD_ID, manage_id.to_string());
+                r_doc.insert(VERSIONS_SPECS_ID_FIELD_ID, specs_id.to_string());
+                r_doc.insert(VERSIONS_DATA_ID_FIELD_ID, data_id.to_string());
+                r_doc.insert(VERSIONS_STAGE_FIELD_ID, stage);
+
+                /* let binding = Document::new();
                 let files_doc = doc
                     .get_document(VERSIONS_FILES_FIELD_ID.to_string())
                     .unwrap_or(&binding);
@@ -59,9 +63,10 @@ pub async fn get_stage_versions(
                         .unwrap()
                         .to_string(),
                     files,
-                };
+                }; */
+                let r_vec = bson::to_vec(&r_doc).unwrap();
 
-                versions.push(version);
+                versions.push(r_vec);
             });
         })
     {

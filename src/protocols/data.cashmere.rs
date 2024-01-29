@@ -650,8 +650,8 @@ pub struct ListSpecsVersionsRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListSpecsVersionsResponse {
-    #[prost(message, repeated, tag = "1")]
-    pub versions: ::prost::alloc::vec::Vec<Version>,
+    #[prost(bytes = "vec", repeated, tag = "1")]
+    pub versions: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
 }
 /// 取得规格版本表
 #[allow(clippy::derive_partial_eq_without_eq)]
@@ -665,8 +665,8 @@ pub struct ListDataVersionsRequest {
 #[allow(clippy::derive_partial_eq_without_eq)]
 #[derive(Clone, PartialEq, ::prost::Message)]
 pub struct ListDataVersionsResponse {
-    #[prost(message, repeated, tag = "1")]
-    pub versions: ::prost::alloc::vec::Vec<Version>,
+    #[prost(bytes = "vec", repeated, tag = "1")]
+    pub versions: ::prost::alloc::vec::Vec<::prost::alloc::vec::Vec<u8>>,
 }
 /// 添加数据版本到阶段
 #[allow(clippy::derive_partial_eq_without_eq)]
