@@ -4,8 +4,7 @@
 
 id = "阶段"
 name_map = { zh = "阶段", en = "stages" }
-description = ""
-
+description = { zh = "阶段", en = "stages" }
 
 # 数据描写 或者 模式
 schema = [

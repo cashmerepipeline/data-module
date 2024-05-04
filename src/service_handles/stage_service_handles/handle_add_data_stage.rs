@@ -1,3 +1,4 @@
+use dependencies_sync::bson;
 use dependencies_sync::futures::TryFutureExt;
 use dependencies_sync::rust_i18n::{self, t};
 use dependencies_sync::tonic::async_trait;
@@ -105,7 +106,7 @@ async fn handle_add_data_stage(
     // id使用指定的stage
     new_entity_doc.insert(STAGES_STAGE_FIELD_ID.to_string(), stage.clone());
     new_entity_doc.insert(STAGES_DATA_ID_FIELD_ID.to_string(), data_id.clone());
-    new_entity_doc.insert(DESCRIPTION_FIELD_ID.to_string(), description.clone());
+    new_entity_doc.insert(DESCRIPTION_FIELD_ID.to_string(), bson::to_document(description).unwrap());
 
     let new_id = new_entity_doc
         .get_str(ID_FIELD_ID.to_string())

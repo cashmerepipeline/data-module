@@ -5,7 +5,7 @@
 
 id = "数据"
 name_map = { zh = "数据", en = "datas" }
-description = ""
+description = {  zh = "数据属于规格，即数据是在明确指标下的产物", en = "Data is a product of the spec" }
 
 
 # 描写，模式

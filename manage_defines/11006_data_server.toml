@@ -5,7 +5,7 @@
 
 id = "数据服务器"
 name_map = { zh = "数据服务器", en = "data_server" }
-description = ""
+description = { zh = "数据服务器", en = "data_server" }
 
 
 # 数据描写 或者 模式

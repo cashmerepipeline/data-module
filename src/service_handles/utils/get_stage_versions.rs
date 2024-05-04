@@ -4,6 +4,7 @@ use dependencies_sync::bson;
 use dependencies_sync::bson::doc;
 use dependencies_sync::bson::Document;
 use dependencies_sync::log;
+use dependencies_sync::log::debug;
 use dependencies_sync::rust_i18n::{self, t};
 use dependencies_sync::tonic::Status;
 
@@ -64,6 +65,9 @@ pub async fn get_stage_versions(
                         .to_string(),
                     files,
                 }; */
+                
+                // debug!("{}: {:?}", t!("取得阶段版本"), r_doc);
+
                 let r_vec = bson::to_vec(&r_doc).unwrap();
 
                 versions.push(r_vec);

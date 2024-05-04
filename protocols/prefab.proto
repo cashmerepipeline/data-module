@@ -11,7 +11,7 @@ message NewPrefabRequest{
 
     // 使用bson格式存储修改信息
     bytes modifies = 5;
-    string description = 6;
+    map<string, string> description = 6;
 }
 message NewPrefabResponse{
     string result = 1;

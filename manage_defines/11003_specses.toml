@@ -4,7 +4,7 @@
 
 id = "规格"
 name_map = { zh = "规格", en = "specses" }
-description = ""
+description = { zh = "规格", en = "specses" } 
 
 
 # 数据描写 或者 模式

@@ -4,7 +4,7 @@
 
 id = "规格属性"
 name_map = { zh = "规格属性", en = "specs_attributes" }
-description = ""
+description = { zh = "规格属性", en = "specs_attributes" }
 
 
 # 数据描写 或者 模式

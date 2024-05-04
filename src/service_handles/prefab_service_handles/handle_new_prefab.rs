@@ -1,4 +1,4 @@
-use dependencies_sync::bson::{doc, Document};
+use dependencies_sync::bson::{self, doc, Document};
 use dependencies_sync::futures::TryFutureExt;
 use dependencies_sync::tonic::async_trait;
 
@@ -81,7 +81,7 @@ async fn handle_new_prefab(
         doc! {name.language.clone():name.name.clone()},
     );
     new_entity_doc.insert(PREFABS_SPECS_ID_FIELD_ID.to_string(), specs_id.clone());
-    new_entity_doc.insert(DESCRIPTION_FIELD_ID.to_string(), description.clone());
+    new_entity_doc.insert(DESCRIPTION_FIELD_ID.to_string(), bson::to_document(description).unwrap());
 
     let result = manager
         .sink_entity(&mut new_entity_doc, &account_id, &role_group)

@@ -4,7 +4,7 @@
 
 id = "版本"
 name_map = { zh = "版本", en = "versions" }
-description = ""
+description = { zh = "版本", en = "versions"}
 
 
 # 数据描写 或者 模式
