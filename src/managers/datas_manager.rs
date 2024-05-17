@@ -9,13 +9,13 @@ Modified: !date!
 use std::sync::Arc;
 
 // use dependencies_sync::log::{error, info, warn};
-use dependencies_sync::tonic::async_trait;
 use dependencies_sync::rust_i18n::{self, t};
+use dependencies_sync::tonic::async_trait;
 
 use dependencies_sync::parking_lot::RwLock;
 
+use managers::entity_cache_map::EntityCacheInterface;
 use managers::{Manager, ManagerInner, ManagerTrait};
-
 
 use cash_core::{manage_from_document, Manage};
 use cash_result::*;
@@ -45,10 +45,10 @@ impl ManagerTrait for DatasManager {
         Err(operation_failed(
             "unregister",
             format!(
-                    "{}-{}-{}",
-                    t!("管理器不能被注销"),
-                    self.get_id(),
-                    self.get_name()
+                "{}-{}-{}",
+                t!("管理器不能被注销"),
+                self.get_id(),
+                self.get_name()
             ),
         ))
     }
@@ -61,10 +61,6 @@ impl ManagerTrait for DatasManager {
         "DatasManager".to_string()
     }
 
-    fn has_cache(&self) -> bool {
-        false
-    }
-
     async fn get_manage(&self) -> Arc<RwLock<Manage>> {
         unsafe {
             if DATAS_MANAGE.is_some() {
@@ -72,10 +68,11 @@ impl ManagerTrait for DatasManager {
             } else {
                 let collection_name = MANAGES_MANAGE_ID.to_string();
                 let id_str = DATAS_MANAGE_ID.to_string();
-                let m_doc = match entity::get_entity_by_id(&collection_name, &id_str, &[], &[]).await {
-                    Ok(r) => r,
-                    Err(e) => panic!("{} {}", e.operation(), e.details()),
-                };
+                let m_doc =
+                    match entity::get_entity_by_id(&collection_name, &id_str, &[], &[]).await {
+                        Ok(r) => r,
+                        Err(e) => panic!("{} {}", e.operation(), e.details()),
+                    };
 
                 let manage: Manage = manage_from_document(m_doc).unwrap();
                 DATAS_MANAGE.replace(Arc::new(RwLock::new(manage)));
@@ -91,10 +88,11 @@ impl ManagerTrait for DatasManager {
             } else {
                 let collection_name = MANAGES_MANAGE_ID.to_string();
                 let id_str = DATAS_MANAGE_ID.to_string();
-                let m_doc = match entity::get_entity_by_id(&collection_name, &id_str, &[], &[]).await {
-                    Ok(r) => r,
-                    Err(e) => panic!("{} {}", e.operation(), e.details()),
-                };
+                let m_doc =
+                    match entity::get_entity_by_id(&collection_name, &id_str, &[], &[]).await {
+                        Ok(r) => r,
+                        Err(e) => panic!("{} {}", e.operation(), e.details()),
+                    };
 
                 DATAS_MANAGE_DOCUMENT.replace(Arc::new(RwLock::new(m_doc)));
                 DATAS_MANAGE_DOCUMENT.clone().unwrap()
@@ -102,3 +100,5 @@ impl ManagerTrait for DatasManager {
         }
     }
 }
+
+impl EntityCacheInterface for DatasManager {}
