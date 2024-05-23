@@ -9,7 +9,7 @@ use crate::ids_codes::field_ids::*;
 
 use crate::data_server::data_stage::{get_version_folder, list_version_foler};
 use crate::ids_codes::manage_ids::*;
-use managers::ManagerTrait;
+use managers::entity_interface::EntityInterface;
 use request_utils::request_account_context;
 
 

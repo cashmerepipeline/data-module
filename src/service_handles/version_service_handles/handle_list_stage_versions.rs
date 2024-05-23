@@ -13,7 +13,7 @@ use crate::service_handles::utils::get_stage_versions;
 use majordomo::{self, get_majordomo};
 
 use crate::ids_codes::manage_ids::*;
-use managers::ManagerTrait;
+use managers::entity_interface::EntityInterface;
 use request_utils::request_account_context;
 
 use service_utils::types::UnaryResponseResult;

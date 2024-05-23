@@ -10,7 +10,7 @@ use dependencies_sync::tonic::Status;
 
 use majordomo::get_majordomo;
 use manage_define::general_field_ids::ID_FIELD_ID;
-use managers::ManagerTrait;
+use managers::entity_interface::EntityInterface;
 
 use crate::ids_codes::version_field_ids::*;
 use crate::ids_codes::field_ids::*;

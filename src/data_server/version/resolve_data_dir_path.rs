@@ -4,7 +4,7 @@ use dependencies_sync::{
     bson::doc,
     rust_i18n::{self, t},
 };
-use managers::ManagerTrait;
+use managers::entity_interface::EntityInterface;
 
 use crate::{ids_codes::field_ids::*, ids_codes::manage_ids::*, DataServerConfigs};
 

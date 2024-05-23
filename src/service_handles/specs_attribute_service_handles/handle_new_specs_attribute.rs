@@ -16,7 +16,7 @@ use manage_define::general_field_ids::*;
 use service_utils::types::UnaryResponseResult;
 use validates::{validate_name, validate_manage_id};
 
-use managers::ManagerTrait;
+use managers::entity_interface::EntityInterface;
 use managers::utils::make_new_entity_document;
 use request_utils::request_account_context;
 

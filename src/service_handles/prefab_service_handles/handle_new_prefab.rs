@@ -11,7 +11,7 @@ use crate::ids_codes::manage_ids::*;
 use crate::protocols::*;
 use majordomo::{self, get_majordomo};
 use manage_define::general_field_ids::*;
-use managers::ManagerTrait;
+use managers::entity_interface::EntityInterface;
 use request_utils::request_account_context;
 use validates::validate_name;
 
