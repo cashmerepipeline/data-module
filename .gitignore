@@ -4,3 +4,4 @@ dart_packages/data_module/.flutter-plugins
 dart_packages/data_module/.flutter-plugins-dependencies
 /.idea
 /.vscode
+/dart_packages/data_module/lib/cache_schemas/generate

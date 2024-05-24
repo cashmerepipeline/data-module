@@ -7,7 +7,7 @@ message NewSpecsRequest{
     string manage_id = 1;
     string entity_id = 2;
     .cashmere.Name name = 3;
-    string description = 4;
+    map<string, string> description = 4;
     // bson document
     bytes targets = 5;
 }

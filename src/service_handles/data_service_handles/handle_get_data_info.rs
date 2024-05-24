@@ -6,7 +6,7 @@ use crate::ids_codes::field_ids::*;
 use crate::ids_codes::manage_ids::*;
 use crate::protocols::*;
 use majordomo::{self, get_majordomo};
-use managers::ManagerTrait;
+use managers::entity_interface::EntityInterface;
 use request_utils::request_account_context;
 
 use dependencies_sync::tonic::{Request, Response, Status};

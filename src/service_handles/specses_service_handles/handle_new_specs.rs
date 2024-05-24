@@ -18,7 +18,7 @@ use service_utils::types::UnaryResponseResult;
 use validates::{validate_name, validate_manage_id, validate_entity_id, validate_description_length};
 
 use managers::utils::make_new_entity_document;
-use managers::ManagerTrait;
+use managers::entity_interface::EntityInterface;
 use request_utils::request_account_context;
 
 #[async_trait]
@@ -107,7 +107,7 @@ async fn handle_new_specs(
     new_entity_doc.insert(SPECSES_MANAGE_ID_FIELD_ID.to_string(), manage_id);
     new_entity_doc.insert(SPECSES_ENTITY_ID_FIELD_ID.to_string(), entity_id.clone());
     new_entity_doc.insert(NAME_MAP_FIELD_ID.to_string(), name_doc);
-    new_entity_doc.insert(DESCRIPTION_FIELD_ID.to_string(), description.clone());
+    new_entity_doc.insert(DESCRIPTION_FIELD_ID.to_string(), bson::to_document(description).unwrap());
     new_entity_doc.insert(
         SPECSES_TARGETS_FIELD_ID.to_string(),
         targets_doc,

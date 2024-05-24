@@ -7,7 +7,7 @@ message NewSpecsAttributeRequest{
     string manage_id = 1;
     .cashmere.Name name = 2;
     string data_type = 3;
-    string description = 4;
+    map<string, string> description = 4;
     bytes default_value = 5;
     int32 index = 6;
 }

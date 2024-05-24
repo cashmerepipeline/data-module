@@ -9,7 +9,7 @@ use crate::protocols::*;
 use crate::ids_codes::field_ids::*;
 
 use crate::ids_codes::manage_ids::*;
-use managers::ManagerTrait;
+use managers::entity_interface::EntityInterface;
 use request_utils::request_account_context;
 use service_utils::types::UnaryResponseResult;
 use view::add_query_filters;

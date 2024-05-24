@@ -8,7 +8,7 @@ use crate::protocols::*;
 use dependencies_sync::tonic::{Request, Response, Status};
 use majordomo::{self, get_majordomo};
 use manage_define::general_field_ids::*;
-use managers::ManagerTrait;
+use managers::entity_interface::EntityInterface;
 use request_utils::request_account_context;
 use validates::validate_entity_id;
 

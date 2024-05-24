@@ -3,7 +3,7 @@ use dependencies_sync::{
     rust_i18n::{self, t},
     tonic::Status,
 };
-use managers::ManagerTrait;
+use managers::entity_interface::EntityInterface;
 
 use crate::ids_codes::field_ids::*;
 use crate::ids_codes::manage_ids::*;

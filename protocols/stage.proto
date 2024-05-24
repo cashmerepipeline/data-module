@@ -19,7 +19,7 @@ message AddDataStageRequest {
   // 将作为实体的id，还将作为阶段的路径使用，不能重复
   // 阶段的字符集需要注意软件支持的字符集，比如Maya对中文支持友好
   string stage = 2;
-  string description = 3;
+  map<string, string> description = 3;
 }
 message AddDataStageResponse {
   // 成功返回 "ok"

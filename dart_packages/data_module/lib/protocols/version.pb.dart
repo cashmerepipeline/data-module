@@ -193,7 +193,7 @@ class ListSpecsVersionsRequest extends $pb.GeneratedMessage {
 
 class ListSpecsVersionsResponse extends $pb.GeneratedMessage {
   factory ListSpecsVersionsResponse({
-    $core.Iterable<Version>? versions,
+    $core.Iterable<$core.List<$core.int>>? versions,
   }) {
     final $result = create();
     if (versions != null) {
@@ -206,7 +206,7 @@ class ListSpecsVersionsResponse extends $pb.GeneratedMessage {
   factory ListSpecsVersionsResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListSpecsVersionsResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..pc<Version>(1, _omitFieldNames ? '' : 'versions', $pb.PbFieldType.PM, subBuilder: Version.create)
+    ..p<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'versions', $pb.PbFieldType.PY)
     ..hasRequiredFields = false
   ;
 
@@ -232,7 +232,7 @@ class ListSpecsVersionsResponse extends $pb.GeneratedMessage {
   static ListSpecsVersionsResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<Version> get versions => $_getList(0);
+  $core.List<$core.List<$core.int>> get versions => $_getList(0);
 }
 
 /// 取得规格版本表
@@ -302,7 +302,7 @@ class ListDataVersionsRequest extends $pb.GeneratedMessage {
 
 class ListDataVersionsResponse extends $pb.GeneratedMessage {
   factory ListDataVersionsResponse({
-    $core.Iterable<Version>? versions,
+    $core.Iterable<$core.List<$core.int>>? versions,
   }) {
     final $result = create();
     if (versions != null) {
@@ -315,7 +315,7 @@ class ListDataVersionsResponse extends $pb.GeneratedMessage {
   factory ListDataVersionsResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListDataVersionsResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'data.cashmere'), createEmptyInstance: create)
-    ..pc<Version>(1, _omitFieldNames ? '' : 'versions', $pb.PbFieldType.PM, subBuilder: Version.create)
+    ..p<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'versions', $pb.PbFieldType.PY)
     ..hasRequiredFields = false
   ;
 
@@ -341,7 +341,7 @@ class ListDataVersionsResponse extends $pb.GeneratedMessage {
   static ListDataVersionsResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<Version> get versions => $_getList(0);
+  $core.List<$core.List<$core.int>> get versions => $_getList(0);
 }
 
 /// 添加数据版本到阶段

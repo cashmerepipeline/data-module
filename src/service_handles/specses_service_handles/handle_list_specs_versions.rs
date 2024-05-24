@@ -18,7 +18,7 @@ use crate::service_handles::utils::get_stage_versions;
 use majordomo::{self, get_majordomo};
 
 use crate::ids_codes::manage_ids::*;
-use managers::ManagerTrait;
+use managers::entity_interface::EntityInterface;
 use validates::validate_entity_id;
 
 #[async_trait]
@@ -86,6 +86,7 @@ async fn handle_list_specs_versions(
     let mut datas = vec![];
     let mut match_doc = doc! {};
     match_doc.insert(DATAS_SPECS_ID_FIELD_ID.to_string(), specs_id);
+    
     if let Err(err) = data_manager
         .get_entities_by_filter(&Some(match_doc))
         .await
